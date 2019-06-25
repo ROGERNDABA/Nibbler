@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 13:52:02 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/25 15:10:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ SnakeAllegro::SnakeAllegro(TVertex vt) {
     std::vector<TVertex>* tvt = new std::vector<TVertex>;
     tvt->push_back(vt);
     this->_vertex = tvt;
+    this->randFood();
+    randFood();
     this->init();
 }
 
@@ -94,13 +96,21 @@ void SnakeAllegro::init() {
         ALLEGRO_EVENT ev;
         al_wait_for_event(_eQueue, &ev);
         if (ev.type == ALLEGRO_EVENT_TIMER) {
+            if ((*_vertex)[0].x2 >= WINW || (*_vertex)[0].y2 >= WINH)
+                break;
+            else if ((*_vertex)[0].x1 <= 0 || (*_vertex)[0].y1 <= 0)
+                break;
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
-                // std::cout << it->x1 << std::endl;
-                // std::cout << it->y1 << std::endl;
-                // std::cout << it->x2 << std::endl;
-                // std::cout << it->y2 << std::endl;
+                std::cout << _food.x1 << std::endl;
+                std::cout << _food.y1 << std::endl;
+                std::cout << _food.x2 << std::endl;
+                std::cout << _food.y2 << std::endl;
+
+                it->x1 += 3;
+                it->x2 += 3;
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_filled_rectangle(it->x1 += 3, it->y1, it->x2 += 3, it->y2, al_map_rgb(255, 255, 255));
+                drawRect(*it, al_map_rgb(255, 0, 0));
+                drawRect(_food, al_map_rgb(255, 0, 255));
                 al_flip_display();
             }
         } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -108,4 +118,15 @@ void SnakeAllegro::init() {
         }
         // break;
     }
+}
+
+void SnakeAllegro::randFood() {
+    _food.x1 = 0 + (std::rand() % (WINW - 30) + 1);
+    _food.x2 = _food.x1 + 30;
+    _food.y1 = 0 + (std::rand() % (WINH - 30) + 1);
+    _food.y2 = _food.y1 + 30;
+}
+
+void SnakeAllegro::drawRect(TVertex& tv, ALLEGRO_COLOR alC) {
+    al_draw_filled_rectangle(tv.x1, tv.y1, tv.x2, tv.y2, alC);
 }

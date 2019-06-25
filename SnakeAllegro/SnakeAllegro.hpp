@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 13:07:33 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/25 14:23:52 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class SnakeAllegro {
     ALLEGRO_DISPLAY *_display;
     ALLEGRO_TIMER *_timer;
     ALLEGRO_EVENT_QUEUE *_eQueue;
+    TVertex _food;
 
    public:
     class SnakeAllegroException : std::exception {
@@ -45,6 +46,8 @@ class SnakeAllegro {
     ~SnakeAllegro();
 
     void init();
+    void drawRect(TVertex &, ALLEGRO_COLOR);
+    void randFood();
 };
 
 #endif  //SNAKEALLEGRO_HPP

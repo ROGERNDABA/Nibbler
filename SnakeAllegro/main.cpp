@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 13:12:47 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 13:34:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/25 15:03:14 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 int main(int ac, char* av[]) {
     (void)av;
     (void)ac;
+
+    srand(time(NULL));
 
     TVertex tv;
     tv.x1 = (WINW / 2) - 15;

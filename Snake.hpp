@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 12:34:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/25 14:11:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define SNAKE_HPP
 
 #include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <vector>
