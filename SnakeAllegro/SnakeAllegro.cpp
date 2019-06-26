@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeAllegro.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 15:52:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 20:19:55 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void SnakeAllegro::init() {
     if (!al_init()) {
         throw SnakeAllegroException("Couldn't create window");
     }
+
+    if (!al_init_primitives_addon()) {
+        throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
+    }
+
     _timer = al_create_timer(1.0 / 20);
     if (!_timer) {
         al_destroy_display(_display);
@@ -146,9 +151,6 @@ void SnakeAllegro::init() {
                     drawRect(*it, al_map_rgb(255, 255, 255));
                     drawRect(_food, al_map_rgb(255, 0, 255));
                 }
-
-                // std::cout << "----------> " << WINW << std::endl;
-                // std::cout << "++++++++++> " << WINH << std::endl;
             }
             al_flip_display();
         } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {

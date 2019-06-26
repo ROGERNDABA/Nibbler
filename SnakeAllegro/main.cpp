@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 13:12:47 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 08:48:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 19:59:00 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char* av[]) {
     if (ac == 3) {
         try {
             SnakeAllegro sa(std::stoi(av[1]), std::stoi(av[2]));
-        } catch (const std::exception& e) {
+        } catch (const SnakeAllegro::SnakeAllegroException& e) {
             std::cerr << e.what() << '\n';
             return -1;
         }
