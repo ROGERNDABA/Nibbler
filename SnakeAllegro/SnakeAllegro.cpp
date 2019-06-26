@@ -6,18 +6,27 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 15:10:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 13:32:43 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
-SnakeAllegro::SnakeAllegro(TVertex vt) {
+SnakeAllegro::SnakeAllegro(int w, int h)
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false) {
+    TVertex tv;
+
+    tv.x1 = (WINW / 2) - 15;
+    tv.y1 = (WINH / 2) - 15;
+    tv.x2 = tv.x1 + 30;
+    tv.y2 = tv.y1 + 30;
     std::vector<TVertex>* tvt = new std::vector<TVertex>;
-    tvt->push_back(vt);
+    tvt->push_back(tv);
+    this->_key = new bool[4];
+    std::fill(_key, _key + 4, false);
+    _key[3] = true;
     this->_vertex = tvt;
     this->randFood();
-    randFood();
     this->init();
 }
 
@@ -42,10 +51,11 @@ SnakeAllegro::SnakeAllegroException& SnakeAllegro::SnakeAllegroException::operat
 }
 
 SnakeAllegro::~SnakeAllegro() {
+    delete _vertex;
     al_destroy_timer(_timer);
     al_destroy_display(_display);
     al_destroy_event_queue(_eQueue);
-    std::cout << "GG" << std::endl;
+    std::cout << "\033[31mGame Over\033[m" << std::endl;
 }
 
 SnakeAllegro::SnakeAllegro(SnakeAllegro const& copy) {
@@ -62,7 +72,7 @@ void SnakeAllegro::init() {
     if (!al_init()) {
         throw SnakeAllegroException("Couldn't create window");
     }
-    _timer = al_create_timer(1.0 / 40);
+    _timer = al_create_timer(1.0 / 20);
     if (!_timer) {
         al_destroy_display(_display);
         al_destroy_timer(_timer);
@@ -92,41 +102,179 @@ void SnakeAllegro::init() {
     al_flip_display();
     al_start_timer(_timer);
 
-    while (1) {
+    while (!_doExit) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(_eQueue, &ev);
         if (ev.type == ALLEGRO_EVENT_TIMER) {
+            if (checkFood()) {
+                std::cout << "YES" << std::endl;
+                randFood();
+            }
             if ((*_vertex)[0].x2 >= WINW || (*_vertex)[0].y2 >= WINH)
                 break;
             else if ((*_vertex)[0].x1 <= 0 || (*_vertex)[0].y1 <= 0)
                 break;
-            for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
-                std::cout << _food.x1 << std::endl;
-                std::cout << _food.y1 << std::endl;
-                std::cout << _food.x2 << std::endl;
-                std::cout << _food.y2 << std::endl;
 
-                it->x1 += 3;
-                it->x2 += 3;
-                al_clear_to_color(al_map_rgb(0, 0, 0));
-                drawRect(*it, al_map_rgb(255, 0, 0));
-                drawRect(_food, al_map_rgb(255, 0, 255));
-                al_flip_display();
+            // TVertex tmpTV;
+            // TVertex tmpTV2;
+            al_clear_to_color(al_map_rgb(0, 0, 0));
+            for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
+                if (it == _vertex->begin()) {
+                    if (_key[KEY_UP]) {
+                        it->y1 -= 5;
+                        it->y2 -= 5;
+                    } else if (_key[KEY_DOWN]) {
+                        it->y1 += 5;
+                        it->y2 += 5;
+                    } else if (_key[KEY_LEFT]) {
+                        it->x1 -= 5;
+                        it->x2 -= 5;
+                    } else if (_key[KEY_RIGHT]) {
+                        it->x1 += 5;
+                        it->x2 += 5;
+                    }
+                    drawRect(*it, al_map_rgb(255, 0, 0));
+                    drawRect(_food, al_map_rgb(255, 0, 255));
+                } else if (it == _vertex->begin() + 1) {
+                    if (_key[KEY_UP]) {
+                        it->x1 = (it - 1)->x1;
+                        it->x2 = (it - 1)->x2;
+                        it->y1 = (it - 1)->y1 + 30;
+                        it->y2 = (it - 1)->y2 + 30;
+                    } else if (_key[KEY_DOWN]) {
+                        it->x1 = (it - 1)->x1;
+                        it->x2 = (it - 1)->x2;
+                        it->y1 = (it - 1)->y1 - 30;
+                        it->y2 = (it - 1)->y2 - 30;
+                    } else if (_key[KEY_LEFT]) {
+                        it->x1 = (it - 1)->x1 + 30;
+                        it->x2 = (it - 1)->x2 + 30;
+                        it->y1 = (it - 1)->y1;
+                        it->y2 = (it - 1)->y2;
+                    } else if (_key[KEY_RIGHT]) {
+                        it->x1 = (it - 1)->x1 - 30;
+                        it->x2 = (it - 1)->x2 - 30;
+                        it->y1 = (it - 1)->y1;
+                        it->y2 = (it - 1)->y2;
+                    }
+                    // std::cout << "SIZE : " << _vertex->size() << std::endl;
+                    // std::cout << it->x1 << std::endl;
+                    // std::cout << it->y1 << std::endl;
+                    // std::cout << it->x2 << std::endl;
+                    // std::cout << it->y2 << std::endl;
+                    drawRect(*it, al_map_rgb(255, 0, 0));
+                    drawRect(_food, al_map_rgb(255, 0, 255));
+                }
+
+                // std::cout << "----------> " << WINW << std::endl;
+                // std::cout << "++++++++++> " << WINH << std::endl;
+            }
+            al_flip_display();
+        } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+            int tmp;
+            for (int i = 0; i < 4; i++) {
+                if (_key[i])
+                    tmp = i;
+            }
+            switch (ev.keyboard.keycode) {
+                case ALLEGRO_KEY_UP: {
+                    if (tmp != KEY_DOWN && tmp != KEY_UP) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_UP] = true;
+                    }
+                } break;
+                case ALLEGRO_KEY_DOWN: {
+                    if (tmp != KEY_UP && tmp != KEY_DOWN) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_DOWN] = true;
+                    }
+                } break;
+                case ALLEGRO_KEY_LEFT: {
+                    if (tmp != KEY_RIGHT && tmp != KEY_LEFT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_LEFT] = true;
+                    }
+                } break;
+                case ALLEGRO_KEY_RIGHT: {
+                    if (tmp != KEY_LEFT && tmp != KEY_RIGHT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_RIGHT] = true;
+                    }
+                } break;
+                case ALLEGRO_KEY_ESCAPE:
+                    _doExit = true;
+                    break;
             }
         } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
-        // break;
     }
 }
 
 void SnakeAllegro::randFood() {
     _food.x1 = 0 + (std::rand() % (WINW - 30) + 1);
-    _food.x2 = _food.x1 + 30;
+    _food.x2 = _food.x1 + 15;
     _food.y1 = 0 + (std::rand() % (WINH - 30) + 1);
-    _food.y2 = _food.y1 + 30;
+    _food.y2 = _food.y1 + 15;
+}
+
+bool SnakeAllegro::checkFood() {
+    // TVertex tv;
+
+    // tv.x1 = (*_vertex)[0].x1;
+    // tv.y1 = (WINH / 2) - 15;
+    // tv.x2 = tv.x1 + 30;
+    // tv.y2 = tv.y1 + 30;
+
+    TVertex tmp = (*_vertex)[0];
+    if (_key[KEY_UP]) {
+        if (tmp.y1 <= _food.y2 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
+            // tv.x1 = tmp.x1;
+            // tv.x2 = tmp.x2;
+            // tv.y1 = tmp.y1 + 30;
+            // tv.y2 = tmp.y2 + 30;
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_DOWN]) {
+        if (tmp.y2 >= _food.y1 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
+            // tv.x1 = tmp.x1;
+            // tv.x2 = tmp.x2;
+            // tv.y1 = tmp.y1 - 30;
+            // tv.y2 = tmp.y2 - 30;
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_LEFT]) {
+        if (tmp.x1 <= _food.x2 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
+            // tv.x1 = tmp.x1 + 30;
+            // tv.x2 = tmp.x2 + 30;
+            // tv.y1 = tmp.y1;
+            // tv.y2 = tmp.y2;
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_RIGHT]) {
+        if (tmp.x2 >= _food.x1 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
+            // tv.x1 = tmp.x1 - 30;
+            // tv.x2 = tmp.x2 - 30;
+            // tv.y1 = tmp.y1;
+            // tv.y2 = tmp.y2;
+            _vertex->push_back(tmp);
+            return true;
+        }
+    }
+    return false;
 }
 
 void SnakeAllegro::drawRect(TVertex& tv, ALLEGRO_COLOR alC) {
     al_draw_filled_rectangle(tv.x1, tv.y1, tv.x2, tv.y2, alC);
 }
+
+// void SnakeAllegro::drawRect(TVertex& tv, ALLEGRO_COLOR alC) {
+//     al_draw_filled_rectangle(tv.x1, tv.y1, tv.x2, tv.y2, alC);
+// }

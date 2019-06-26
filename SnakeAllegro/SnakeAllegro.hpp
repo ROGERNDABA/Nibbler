@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 14:23:52 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 10:46:06 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@
 #include <allegro5/allegro_primitives.h>
 #include <Snake.hpp>
 
+enum E_KEYS {
+    KEY_UP,
+    KEY_DOWN,
+    KEY_LEFT,
+    KEY_RIGHT
+};
+
+typedef struct SVertex {
+    float x1;
+    float y1;
+    float x2;
+    float y2;
+} TVertex;
+
 class SnakeAllegro {
    private:
     std::vector<TVertex> *_vertex;
@@ -26,6 +40,13 @@ class SnakeAllegro {
     ALLEGRO_TIMER *_timer;
     ALLEGRO_EVENT_QUEUE *_eQueue;
     TVertex _food;
+    int WINW;
+    int WINH;
+
+    bool *_key;
+    int _prevKey;
+    bool _doExit;
+    // bool _speed;
 
    public:
     class SnakeAllegroException : std::exception {
@@ -39,7 +60,7 @@ class SnakeAllegro {
         virtual const char *what() const throw();
     };
 
-    SnakeAllegro(TVertex);
+    SnakeAllegro(const int, const int);
     SnakeAllegro(std::vector<TVertex> &);
     SnakeAllegro(SnakeAllegro const &);
     SnakeAllegro &operator=(SnakeAllegro const &);
@@ -47,6 +68,7 @@ class SnakeAllegro {
 
     void init();
     void drawRect(TVertex &, ALLEGRO_COLOR);
+    bool checkFood();
     void randFood();
 };
 
