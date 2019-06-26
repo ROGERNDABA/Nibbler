@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 20:19:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 20:50:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void SnakeAllegro::init() {
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
     }
 
-    _timer = al_create_timer(1.0 / 20);
+    _timer = al_create_timer(1.0 / 10);
     if (!_timer) {
         al_destroy_display(_display);
         al_destroy_timer(_timer);
@@ -112,7 +112,6 @@ void SnakeAllegro::init() {
         al_wait_for_event(_eQueue, &ev);
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             if (checkFood()) {
-                std::cout << "YES" << std::endl;
                 randFood();
             }
             if ((*_vertex)[0].x2 >= WINW || (*_vertex)[0].y2 >= WINH)
@@ -206,47 +205,24 @@ void SnakeAllegro::randFood() {
 }
 
 bool SnakeAllegro::checkFood() {
-    // TVertex tv;
-
-    // tv.x1 = (*_vertex)[0].x1;
-    // tv.y1 = (WINH / 2) - 15;
-    // tv.x2 = tv.x1 + 30;
-    // tv.y2 = tv.y1 + 30;
-
     TVertex tmp = (*_vertex)[0];
     if (_key[KEY_UP]) {
         if (tmp.y1 <= _food.y2 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
-            // tv.x1 = tmp.x1;
-            // tv.x2 = tmp.x2;
-            // tv.y1 = tmp.y1 + 30;
-            // tv.y2 = tmp.y2 + 30;
             _vertex->push_back(tmp);
             return true;
         }
     } else if (_key[KEY_DOWN]) {
         if (tmp.y2 >= _food.y1 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
-            // tv.x1 = tmp.x1;
-            // tv.x2 = tmp.x2;
-            // tv.y1 = tmp.y1 - 30;
-            // tv.y2 = tmp.y2 - 30;
             _vertex->push_back(tmp);
             return true;
         }
     } else if (_key[KEY_LEFT]) {
         if (tmp.x1 <= _food.x2 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
-            // tv.x1 = tmp.x1 + 30;
-            // tv.x2 = tmp.x2 + 30;
-            // tv.y1 = tmp.y1;
-            // tv.y2 = tmp.y2;
             _vertex->push_back(tmp);
             return true;
         }
     } else if (_key[KEY_RIGHT]) {
         if (tmp.x2 >= _food.x1 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
-            // tv.x1 = tmp.x1 - 30;
-            // tv.x2 = tmp.x2 - 30;
-            // tv.y1 = tmp.y1;
-            // tv.y2 = tmp.y2;
             _vertex->push_back(tmp);
             return true;
         }
