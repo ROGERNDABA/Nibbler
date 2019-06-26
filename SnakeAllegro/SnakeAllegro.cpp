@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 20:50:12 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 21:16:22 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void SnakeAllegro::init() {
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
     }
 
-    _timer = al_create_timer(1.0 / 10);
+    _timer = al_create_timer(1.0 / 20);
     if (!_timer) {
         al_destroy_display(_display);
         al_destroy_timer(_timer);
