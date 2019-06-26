@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 13:32:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/26 15:52:07 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,34 +135,15 @@ void SnakeAllegro::init() {
                     }
                     drawRect(*it, al_map_rgb(255, 0, 0));
                     drawRect(_food, al_map_rgb(255, 0, 255));
-                } else if (it == _vertex->begin() + 1) {
-                    if (_key[KEY_UP]) {
-                        it->x1 = (it - 1)->x1;
-                        it->x2 = (it - 1)->x2;
-                        it->y1 = (it - 1)->y1 + 30;
-                        it->y2 = (it - 1)->y2 + 30;
-                    } else if (_key[KEY_DOWN]) {
-                        it->x1 = (it - 1)->x1;
-                        it->x2 = (it - 1)->x2;
-                        it->y1 = (it - 1)->y1 - 30;
-                        it->y2 = (it - 1)->y2 - 30;
-                    } else if (_key[KEY_LEFT]) {
-                        it->x1 = (it - 1)->x1 + 30;
-                        it->x2 = (it - 1)->x2 + 30;
-                        it->y1 = (it - 1)->y1;
-                        it->y2 = (it - 1)->y2;
-                    } else if (_key[KEY_RIGHT]) {
-                        it->x1 = (it - 1)->x1 - 30;
-                        it->x2 = (it - 1)->x2 - 30;
-                        it->y1 = (it - 1)->y1;
-                        it->y2 = (it - 1)->y2;
+                } else {
+                    TVertex t = *it;
+                    if (t.x1) {
+                        //     it->x1 = (it - 1)->x1;
+                        //     it->x2 = (it - 1)->x2;
+                        //     it->y1 = (it - 1)->y1 + 30;
+                        //     it->y2 = (it - 1)->y2 + 30;
                     }
-                    // std::cout << "SIZE : " << _vertex->size() << std::endl;
-                    // std::cout << it->x1 << std::endl;
-                    // std::cout << it->y1 << std::endl;
-                    // std::cout << it->x2 << std::endl;
-                    // std::cout << it->y2 << std::endl;
-                    drawRect(*it, al_map_rgb(255, 0, 0));
+                    drawRect(*it, al_map_rgb(255, 255, 255));
                     drawRect(_food, al_map_rgb(255, 0, 255));
                 }
 
