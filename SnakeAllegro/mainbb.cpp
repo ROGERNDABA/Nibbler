@@ -1,139 +1,80 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/24 16:06:09 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/25 13:12:32 by Roger Ndaba      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include <Snake.hpp>
-#include "SnakeAllegro.hpp"
-
-void init(ALLEGRO_DISPLAY &display, ALLEGRO_TIMER &t, ALLEGRO_EVENT_QUEUE &event_queue) {
-}
-
-int main(int ac, char *av[]) {
-    (void)av;
-    (void)ac;
-
-    float x1 = WINW / 2;
-    float y1 = WINH / 2;
-    float x2 = x1 + 30;
-    float y2 = y1 + 30;
-    bool key[4] = {false, false, false, false};
-
-    if (!al_init()) {
-        std::cerr << "Couldn't init allegro" << std::endl;
-        return -1;
+if (ev.type == ALLEGRO_EVENT_TIMER) {
+    if (checkFood()) {
+        randFood();
+        _speed += 0.5;
+        al_set_timer_speed(_timer, 1.0 / _speed);
     }
-    // timer = al_create_timer(1.0 / 160);
-    // if (!timer) {
-    //     fprintf(stderr, "failed to create timer!\n");
-    //     al_destroy_display(display);
-    //     al_destroy_timer(timer);
-    //     return -1;
-    // }
-    // if (!al_install_keyboard()) {
-    //     std::cerr << "failed to initialize the keyboard!" << std::endl;
-    //     al_destroy_display(display);
-    //     al_destroy_timer(timer);
-    //     return -1;
-    // }
-    // display = al_create_display(WINW, WINH);
-    // if (!display) {
-    //     std::cerr << "Couldn't init display" << std::endl;
-    //     return -1;
-    // }
+    if ((*_vertex)[0].x2 >= WINW || (*_vertex)[0].y2 >= WINH)
+        break;
+    else if ((*_vertex)[0].x1 <= 0 || (*_vertex)[0].y1 <= 0)
+        break;
 
-    // event_queue = al_create_event_queue();
-    // if (!event_queue) {
-    //     fprintf(stderr, "failed to create event_queue!\n");
-    //     al_destroy_display(display);
-    //     al_destroy_timer(timer);
-    //     return -1;
-    // }
-
-    al_register_event_source(event_queue, al_get_display_event_source(display));
-    al_register_event_source(event_queue, al_get_keyboard_event_source());
-    al_register_event_source(event_queue, al_get_timer_event_source(timer));
-
+    // TVertex tmpTV;
+    // TVertex tmpTV2;
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_flip_display();
-    al_start_timer(timer);
+    for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
+        if (it == _vertex->begin()) {
+            if (_key[KEY_UP]) {
+                it->y1 -= 15;
+                it->y2 -= 15;
+            } else if (_key[KEY_DOWN]) {
+                it->y1 += 15;
+                it->y2 += 15;
+            } else if (_key[KEY_LEFT]) {
+                it->x1 -= 15;
+                it->x2 -= 15;
+            } else if (_key[KEY_RIGHT]) {
+                it->x1 += 15;
+                it->x2 += 15;
+            }
+            drawRect(*it, al_map_rgb(255, 0, 0));
 
-    while (1) {
-        ALLEGRO_EVENT ev;
-        al_wait_for_event(event_queue, &ev);
-
-        if (ev.type == ALLEGRO_EVENT_TIMER) {
-            if (key[KEY_UP]) {
-                y1 -= 6;
-                y2 -= 6;
-            }
-            if (key[KEY_DOWN]) {
-                y1 += 6;
-                y2 += 6;
-            }
-            if (key[KEY_LEFT]) {
-                x1 -= 6;
-                x2 -= 6;
-            }
-            if (key[KEY_RIGHT]) {
-                x1 += 6;
-                x2 += 6;
-            }
+            //  al_draw_circle
+            drawRect(_food, al_map_rgb(255, 0, 255));
         }
-        if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-            switch (ev.keyboard.keycode) {
-                case ALLEGRO_KEY_UP:
-                    key[KEY_UP] = true;
-                    break;
-
-                case ALLEGRO_KEY_DOWN:
-                    key[KEY_DOWN] = true;
-                    break;
-
-                case ALLEGRO_KEY_LEFT:
-                    key[KEY_LEFT] = true;
-                    break;
-
-                case ALLEGRO_KEY_RIGHT:
-                    key[KEY_RIGHT] = true;
-                    break;
-            }
-        } else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
-            switch (ev.keyboard.keycode) {
-                case ALLEGRO_KEY_UP:
-                    key[KEY_UP] = false;
-                    break;
-
-                case ALLEGRO_KEY_DOWN:
-                    key[KEY_DOWN] = false;
-                    break;
-
-                case ALLEGRO_KEY_LEFT:
-                    key[KEY_LEFT] = false;
-                    break;
-
-                case ALLEGRO_KEY_RIGHT:
-                    key[KEY_RIGHT] = false;
-                    break;
-            }
-        } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-            break;
-        }
-        // al_clear_to_color(al_map_rgb(0, 0, 0));
-        al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 255));
-        al_flip_display();
     }
-
-    // al_rest(10.0);
-
-    al_destroy_display(display);
-
-    return 0;
+    al_flip_display();
+} else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+    int tmp;
+    for (int i = 0; i < 4; i++) {
+        if (_key[i])
+            tmp = i;
+    }
+    std::cout << "YESSSs" << std::endl;
+    switch (ev.keyboard.keycode) {
+        case ALLEGRO_KEY_UP: {
+            if (tmp != KEY_DOWN && tmp != KEY_UP) {
+                _prevKey = tmp;
+                std::fill(_key, _key + 4, false);
+                _key[KEY_UP] = true;
+            }
+        } break;
+        case ALLEGRO_KEY_DOWN: {
+            if (tmp != KEY_UP && tmp != KEY_DOWN) {
+                _prevKey = tmp;
+                std::fill(_key, _key + 4, false);
+                _key[KEY_DOWN] = true;
+            }
+        } break;
+        case ALLEGRO_KEY_LEFT: {
+            if (tmp != KEY_RIGHT && tmp != KEY_LEFT) {
+                _prevKey = tmp;
+                std::fill(_key, _key + 4, false);
+                _key[KEY_LEFT] = true;
+            }
+        } break;
+        case ALLEGRO_KEY_RIGHT: {
+            if (tmp != KEY_LEFT && tmp != KEY_RIGHT) {
+                _prevKey = tmp;
+                std::fill(_key, _key + 4, false);
+                _key[KEY_RIGHT] = true;
+            }
+        } break;
+        case ALLEGRO_KEY_ESCAPE:
+            _doExit = true;
+            break;
+    }
+} else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+    break;
 }
