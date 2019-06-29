@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 13:44:49 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/29 23:00:16 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SNAKESDL_HPP
 #define SNAKESDL_HPP
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <Snake.hpp>
 
 enum E_KEYS {
@@ -34,8 +34,10 @@ class SnakeSDL {
    private:
     std::vector<TVertex> *_vertex;
     SDL_Window *_display;
-    // ALLEGRO_TIMER *_timer;
-    // ALLEGRO_EVENT_QUEUE *_eQueue;
+    SDL_Renderer *_renderer;
+    SDL_Event _event;
+    Uint32 _start;
+    Uint32 _now;
     TVertex _food;
     int WINW;
     int WINH;
@@ -47,8 +49,11 @@ class SnakeSDL {
 
    public:
     class SnakeSDLException : std::exception {
+       private:
+        std::string _exc;
+
        public:
-        SnakeSDLException(void);
+        SnakeSDLException(std::string);
         SnakeSDLException(SnakeSDLException const &);
         SnakeSDLException &operator=(SnakeSDLException const &);
         virtual const char *what() const throw();
@@ -59,6 +64,13 @@ class SnakeSDL {
     SnakeSDL(SnakeSDL const &);
     SnakeSDL &operator=(SnakeSDL const &);
     ~SnakeSDL();
+
+    void init();
+    // void drawRect(TVertex &, ALLEGRO_COLOR);
+    bool checkFood();
+    void randFood();
+    bool moveHead(int);
+    bool checkCollusion(TVertex &);
 };
 
 #endif  //SNAKESDL_HPP
