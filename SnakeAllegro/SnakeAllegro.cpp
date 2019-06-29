@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 11:51:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/29 13:18:42 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,17 @@ bool SnakeAllegro::moveHead(int key) {
             _vertex->insert(_vertex->begin(), tail);
         } break;
     }
+    return (checkCollusion(tail)) ? true : false;
+}
+
+bool SnakeAllegro::checkCollusion(TVertex& tv) {
+    for (std::vector<TVertex>::iterator it = _vertex->begin() + 1; it != _vertex->end(); ++it) {
+        if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
+            return true;
+        }
+    }
+    if (tv.x1 <= 0 || tv.x2 >= WINW || tv.y1 <= 0 || tv.y2 >= WINH)
+        return true;
     return false;
 }
 
