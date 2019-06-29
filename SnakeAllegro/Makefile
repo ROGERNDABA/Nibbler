@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/06/26 20:45:58 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/06/29 10:17:29 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ allegro_primitives-5 allegro_audio-5 allegro_font-5 allegro_memfile-5 allegro_tt
 all: $(NAME)
 
 $(NAME): fclean
-	$(CC) $(SRC) -o $(NAME) -I ../ $(FLAGS)
+	@$(CC) $(SRC) -o $(NAME) -I ../ $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)

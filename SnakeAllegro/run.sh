@@ -2,4 +2,4 @@
 
 export DYLD_LIBRARY_PATH=$PWD/allegro/lib
 make UBUNTU='"ubuntu"'
-echo $DYLD_LIBRARY_PATH
+# echo $DYLD_LIBRARY_PATH

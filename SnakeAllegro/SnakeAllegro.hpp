@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/27 17:13:42 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/29 10:32:36 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ class SnakeAllegro {
     void drawRect(TVertex &, ALLEGRO_COLOR);
     bool checkFood();
     void randFood();
+    bool moveHead(int);
 };
 
 #endif  //SNAKEALLEGRO_HPP
