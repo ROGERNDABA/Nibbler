@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 23:09:54 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/29 23:30:00 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void SnakeSDL::init() {
             // break;
         } else if (_event.type == SDL_KEYDOWN) {
             if (_event.key.keysym.sym == SDLK_ESCAPE)
-                break;
+                _doExit = true;
         }
         // SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
         // SDL_RenderFillRect(renderer, &rect);
