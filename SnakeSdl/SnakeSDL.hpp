@@ -6,13 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 13:23:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/29 13:44:49 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SNAKESDL_HPP
 #define SNAKESDL_HPP
 
+#include <SDL2/SDL.h>
 #include <Snake.hpp>
 
 enum E_KEYS {
@@ -32,7 +33,7 @@ typedef struct SVertex {
 class SnakeSDL {
    private:
     std::vector<TVertex> *_vertex;
-    // ALLEGRO_DISPLAY *_display;
+    SDL_Window *_display;
     // ALLEGRO_TIMER *_timer;
     // ALLEGRO_EVENT_QUEUE *_eQueue;
     TVertex _food;
