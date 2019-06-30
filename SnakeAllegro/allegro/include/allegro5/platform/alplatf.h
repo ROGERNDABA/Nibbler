@@ -1,15 +1,15 @@
 /* alplatf.h is generated from alplatf.h.cmake */
 /* #undef ALLEGRO_MINGW32 */
-/* #undef ALLEGRO_UNIX */
+#define ALLEGRO_UNIX
 /* #undef ALLEGRO_MSVC */
-#define ALLEGRO_MACOSX
+/* #undef ALLEGRO_MACOSX */
 /* #undef ALLEGRO_BCC32 */
 /* #undef ALLEGRO_IPHONE */
 /* #undef ALLEGRO_ANDROID */
 /* #undef ALLEGRO_RASPBERRYPI */
 /* #undef ALLEGRO_CFG_NO_FPU */
 /* #undef ALLEGRO_CFG_DLL_TLS */
-#define ALLEGRO_CFG_PTHREADS_TLS
+/* #undef ALLEGRO_CFG_PTHREADS_TLS */
 #define ALLEGRO_CFG_RELEASE_LOGGING
 
 /* #undef ALLEGRO_CFG_D3D */
@@ -34,22 +34,22 @@
 #define ALLEGRO_HAVE_DIRENT_H
 #define ALLEGRO_HAVE_INTTYPES_H
 /* #undef ALLEGRO_HAVE_LINUX_AWE_VOICE_H */
-/* #undef ALLEGRO_HAVE_LINUX_INPUT_H */
-/* #undef ALLEGRO_HAVE_LINUX_SOUNDCARD_H */
+#define ALLEGRO_HAVE_LINUX_INPUT_H
+#define ALLEGRO_HAVE_LINUX_SOUNDCARD_H
 /* #undef ALLEGRO_HAVE_MACHINE_SOUNDCARD_H */
 /* #undef ALLEGRO_HAVE_SOUNDCARD_H */
 #define ALLEGRO_HAVE_STDBOOL_H
 #define ALLEGRO_HAVE_STDINT_H
 /* #undef ALLEGRO_HAVE_SV_PROCFS_H */
-/* #undef ALLEGRO_HAVE_SYS_IO_H */
-/* #undef ALLEGRO_HAVE_SYS_SOUNDCARD_H */
+#define ALLEGRO_HAVE_SYS_IO_H
+#define ALLEGRO_HAVE_SYS_SOUNDCARD_H
 #define ALLEGRO_HAVE_SYS_STAT_H
 #define ALLEGRO_HAVE_SYS_TIME_H
 #define ALLEGRO_HAVE_TIME_H
 #define ALLEGRO_HAVE_SYS_UTSNAME_H
 #define ALLEGRO_HAVE_SYS_TYPES_H
-#define ALLEGRO_HAVE_OSATOMIC_H
-/* #undef ALLEGRO_HAVE_SYS_INOTIFY_H */
+/* #undef ALLEGRO_HAVE_OSATOMIC_H */
+#define ALLEGRO_HAVE_SYS_INOTIFY_H
 /* #undef ALLEGRO_HAVE_SAL_H */
 
 /* Define to 1 if the corresponding functions are available. */
@@ -86,28 +86,28 @@
 /*---------------------------------------------------------------------------*/
 
 /* Define if you need support for X-Windows. */
-/* #undef ALLEGRO_WITH_XWINDOWS */
+#define ALLEGRO_WITH_XWINDOWS
 
 /* Define if XCursor ARGB extension is available. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XCURSOR */
+#define ALLEGRO_XWINDOWS_WITH_XCURSOR
 
 /* Define if XF86VidMode extension is supported. */
 /* #undef ALLEGRO_XWINDOWS_WITH_XF86VIDMODE */
 
 /* Define if Xinerama extension is supported. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XINERAMA */
+#define ALLEGRO_XWINDOWS_WITH_XINERAMA
 
 /* Define if XRandR extension is supported. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XRANDR */
+#define ALLEGRO_XWINDOWS_WITH_XRANDR
 
 /* Define if XIM extension is supported. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XIM */
+#define ALLEGRO_XWINDOWS_WITH_XIM
 
 /* Define if XInput 2.2 X11 extension is supported. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XINPUT2 */
+#define ALLEGRO_XWINDOWS_WITH_XINPUT2
 
 /* Define if Xpm is found. Useful on Ubuntu Unity to set icon. */
-/* #undef ALLEGRO_XWINDOWS_WITH_XPM */
+#define ALLEGRO_XWINDOWS_WITH_XPM
 
 /*---------------------------------------------------------------------------*/
 

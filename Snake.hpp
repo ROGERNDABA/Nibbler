@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Snake.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/26 08:52:16 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 21:35:26 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,22 @@
 
 // #define WINW 900
 // #define WINH 600
+enum E_KEYS {
+    KEY_UP,
+    KEY_DOWN,
+    KEY_LEFT,
+    KEY_RIGHT
+};
+
+typedef struct SVertex {
+    float x1;
+    float y1;
+    float x2;
+    float y2;
+} TVertex;
 
 class Snake {
+   public:
 };
 
 #endif  //SNAKE_HPP

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 13:18:42 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 21:37:48 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,10 @@ bool SnakeAllegro::checkCollusion(TVertex& tv) {
     return false;
 }
 
-// void SnakeAllegro::drawRect(TVertex& tv, ALLEGRO_COLOR alC) {
-//     al_draw_filled_rectangle(tv.x1, tv.y1, tv.x2, tv.y2, alC);
-// }
+SnakeAllegro* createSnakeAllegro(int w, int h) {
+    return new SnakeAllegro(w, h);
+}
+
+void deleteSnakeAllegro(SnakeAllegro* sa) {
+    delete sa;
+}

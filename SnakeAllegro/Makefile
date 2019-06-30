@@ -6,26 +6,21 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/06/29 10:17:29 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/06/30 22:08:50 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = snake
 
-SRC = main.cpp SnakeAllegro.cpp
-
+SRC = SnakeAllegro.cpp
 CC = g++ -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  $$(pkg-config --cflags --libs allegro-5 allegro_color-5 allegro_image-5 \
-allegro_physfs-5 allegro_video-5 allegro_acodec-5 allegro_dialog-5 allegro_main-5 \
-allegro_primitives-5 allegro_audio-5 allegro_font-5 allegro_memfile-5 allegro_ttf-5)
-
-# FLAGS =  -L allegro/lib -lallegro.5.2.5  -lallegro_audio  -lallegro_font.5.2  -lallegro_memfile.5.2.5  -lallegro_primitives  -lallegro.5.2  -lallegro_color.5.2.5  -lallegro_font  -lallegro_memfile.5.2  -lallegro_ttf.5.2.5  -lallegro  -lallegro_color.5.2  -lallegro_image.5.2.5  -lallegro_memfile  -lallegro_ttf.5.2  -lallegro_acodec.5.2.5  -lallegro_color  -lallegro_image.5.2  -lallegro_physfs.5.2.5  -lallegro_ttf -lallegro_acodec.5.2  -lallegro_dialog.5.2.5  -lallegro_image  -lallegro_physfs.5.2  -lallegro_video.5.2.5  -lallegro_acodec  -lallegro_dialog.5.2  -lallegro_main.5.2.5  -lallegro_physfs  -lallegro_video.5.2  -lallegro_audio.5.2.5  -lallegro_dialog  -lallegro_main.5.2  -lallegro_primitives.5.2.5  -lallegro_video  -lallegro_audio.5.2  -lallegro_font.5.2.5  -lallegro_main  -lallegro_primitives.5.2
+FLAGS =  -L allegro/lib  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
 
 all: $(NAME)
 
 $(NAME): fclean
-	@$(CC) $(SRC) -o $(NAME) -I ../ $(FLAGS)
+	@$(CC) -shared -fPIC -o SnakeAllegro.so $(SRC) -I ../ -I allegro/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)

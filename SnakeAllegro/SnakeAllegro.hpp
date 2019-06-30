@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 13:03:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 21:37:53 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <Snake.hpp>
 
-enum E_KEYS {
-    KEY_UP,
-    KEY_DOWN,
-    KEY_LEFT,
-    KEY_RIGHT
-};
-
-typedef struct SVertex {
-    float x1;
-    float y1;
-    float x2;
-    float y2;
-} TVertex;
-
-class SnakeAllegro {
+class SnakeAllegro : public Snake {
    private:
     std::vector<TVertex> *_vertex;
     ALLEGRO_DISPLAY *_display;
@@ -73,5 +59,10 @@ class SnakeAllegro {
     bool moveHead(int);
     bool checkCollusion(TVertex &);
 };
+
+extern "C" {
+SnakeAllegro *createSnakeAllegro(int, int);
+void deleteSnakeAllegro(SnakeAllegro *);
+}
 
 #endif  //SNAKEALLEGRO_HPP
