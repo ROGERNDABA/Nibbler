@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   SnakeSDL.hpp                                       :+:      :+:    :+:   */
+/*   SnakeSFML.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 18:19:20 by Roger Ndaba      ###   ########.fr       */
+/*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
+/*   Updated: 2019/06/30 18:29:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SNAKESDL_HPP
-#define SNAKESDL_HPP
+#ifndef SNAKESFML_HPP
+#define SNAKESFML_HPP
 
-#include <SDL.h>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <Snake.hpp>
 
 enum E_KEYS {
@@ -30,14 +31,15 @@ typedef struct SVertex {
     float y2;
 } TVertex;
 
-class SnakeSDL {
+class SnakeSFML {
    private:
     std::vector<TVertex> *_vertex;
-    SDL_Window *_display;
-    SDL_Renderer *_renderer;
+    sf::RenderWindow _display;
+    // SDL_Renderer *_renderer;
     // SDL_Event _event;
-    Uint32 _start;
-    Uint32 _now;
+    sf::Clock _clock;
+    float _start;
+    float _now;
     TVertex _food;
     int WINW;
     int WINH;
@@ -48,22 +50,23 @@ class SnakeSDL {
     float _speed;
 
    public:
-    class SnakeSDLException : std::exception {
+    class SnakeSFMLException : std::exception {
        private:
         std::string _exc;
 
        public:
-        SnakeSDLException(std::string);
-        SnakeSDLException(SnakeSDLException const &);
-        SnakeSDLException &operator=(SnakeSDLException const &);
+        SnakeSFMLException(std::string);
+        SnakeSFMLException(SnakeSFMLException const &);
+        SnakeSFMLException &operator=(SnakeSFMLException const &);
         virtual const char *what() const throw();
     };
 
-    SnakeSDL(const int, const int);
-    SnakeSDL(std::vector<TVertex> &);
-    SnakeSDL(SnakeSDL const &);
-    SnakeSDL &operator=(SnakeSDL const &);
-    ~SnakeSDL();
+    SnakeSFML(int, int);
+    SnakeSFML(std::vector<TVertex> &);
+
+    SnakeSFML(SnakeSFML const &);
+    SnakeSFML &operator=(SnakeSFML const &);
+    ~SnakeSFML();
 
     void init();
     // void drawRect(TVertex &, ALLEGRO_COLOR);
@@ -73,4 +76,4 @@ class SnakeSDL {
     bool checkCollusion(TVertex &);
 };
 
-#endif  //SNAKESDL_HPP
+#endif  //SNAKESFML_HPP

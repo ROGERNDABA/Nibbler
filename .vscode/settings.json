@@ -59,6 +59,7 @@
 		"unordered_map": "cpp",
 		"optional": "cpp",
 		"sstream": "cpp",
-		"cinttypes": "cpp"
+		"cinttypes": "cpp",
+		"deque": "cpp"
 	}
 }
