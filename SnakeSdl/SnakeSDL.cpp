@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 09:48:27 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 10:06:30 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _start(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2) - 10;
@@ -67,13 +67,6 @@ SnakeSDL& SnakeSDL::operator=(SnakeSDL const& rhs) {
 }
 
 void SnakeSDL::init() {
-    TVertex tmp = (*_vertex)[0];
-    SDL_Rect rect;
-    rect.x = tmp.x1;
-    rect.y = tmp.y1;
-    rect.w = 15;
-    rect.h = 15;
-
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SnakeSDLException("SDL could not initialize!");
     }
@@ -97,10 +90,32 @@ void SnakeSDL::init() {
             SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
             SDL_RenderClear(_renderer);
 
+            if (_key[KEY_UP]) {
+                _doExit = moveHead(KEY_UP);
+            } else if (_key[KEY_DOWN]) {
+                _doExit = moveHead(KEY_DOWN);
+            } else if (_key[KEY_LEFT]) {
+                _doExit = moveHead(KEY_LEFT);
+            } else if (_key[KEY_RIGHT]) {
+                _doExit = moveHead(KEY_RIGHT);
+            } else {
+                _doExit = moveHead(-1);
+            }
             // logic goes here
-
             SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-            SDL_RenderFillRect(_renderer, &rect);
+            SDL_Rect r;
+            r.w = 20;
+            r.h = 20;
+            for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
+                r.x = it->x1;
+                r.y = it->y1;
+                // if (it == _vertex->begin()) {
+                //     drawRect(*it, al_map_rgb(255, 0, 0));
+                // } else {
+                //     drawRect(*it, al_map_rgb(255, 255, 255));
+                // }
+                SDL_RenderFillRect(_renderer, &r);
+            }
 
             _start = _now;
             prevEvent = ev;
@@ -145,11 +160,55 @@ void SnakeSDL::init() {
                     break;
             }
             prevEvent = ev;
-            // if (_event.key.keysym.sym == SDLK_ESCAPE)
-            //     _doExit = true;
         }
-        // SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-        // SDL_RenderFillRect(_renderer, &rect);
-        // SDL_RenderPresent(_renderer);
     }
+}
+
+bool SnakeSDL::moveHead(int key) {
+    TVertex head = *_vertex->begin();
+    TVertex tail = head;
+    switch (key) {
+        case 0: {
+            _vertex->pop_back();
+            tail.y1 = head.y1 - 20;
+            tail.y2 = head.y2 - 20;
+            _vertex->insert(_vertex->begin(), tail);
+        } break;
+        case 1: {
+            _vertex->pop_back();
+            tail.y1 = head.y1 + 20;
+            tail.y2 = head.y2 + 20;
+            _vertex->insert(_vertex->begin(), tail);
+        } break;
+        case 2: {
+            _vertex->pop_back();
+            tail.x1 = head.x1 - 20;
+            tail.x2 = head.x2 - 20;
+            _vertex->insert(_vertex->begin(), tail);
+        } break;
+        case 3: {
+            _vertex->pop_back();
+            tail.x1 = head.x1 + 20;
+            tail.x2 = head.x2 + 20;
+            _vertex->insert(_vertex->begin(), tail);
+        } break;
+        default: {
+            _vertex->pop_back();
+            tail.x1 = head.x1 + 20;
+            tail.x2 = head.x2 + 20;
+            _vertex->insert(_vertex->begin(), tail);
+        } break;
+    }
+    return (checkCollusion(tail)) ? true : false;
+}
+
+bool SnakeSDL::checkCollusion(TVertex& tv) {
+    for (std::vector<TVertex>::iterator it = _vertex->begin() + 1; it != _vertex->end(); ++it) {
+        if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
+            return true;
+        }
+    }
+    if (tv.x1 <= 0 || tv.x2 >= WINW || tv.y1 <= 0 || tv.y2 >= WINH)
+        return true;
+    return false;
 }

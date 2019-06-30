@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 09:42:47 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 09:59:35 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ class SnakeSDL {
     // void drawRect(TVertex &, ALLEGRO_COLOR);
     // bool checkFood();
     // void randFood();
-    // bool moveHead(int);
-    // bool checkCollusion(TVertex &);
+    bool moveHead(int);
+    bool checkCollusion(TVertex &);
 };
 
 #endif  //SNAKESDL_HPP
