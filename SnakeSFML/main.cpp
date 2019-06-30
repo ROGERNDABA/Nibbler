@@ -6,13 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 15:34:54 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 18:33:00 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 19:37:53 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSFML.hpp"
 
 int main(int ac, char* av[]) {
+    srand(time(NULL));
     if (ac == 3) {
         if (ac == 3) {
             try {
