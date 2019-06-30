@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 23:30:00 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 09:48:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 }
 
 SnakeSDL::~SnakeSDL() {
+    delete _vertex;
     SDL_DestroyWindow(_display);
     SDL_Quit();
 }
@@ -66,6 +67,13 @@ SnakeSDL& SnakeSDL::operator=(SnakeSDL const& rhs) {
 }
 
 void SnakeSDL::init() {
+    TVertex tmp = (*_vertex)[0];
+    SDL_Rect rect;
+    rect.x = tmp.x1;
+    rect.y = tmp.y1;
+    rect.w = 15;
+    rect.h = 15;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SnakeSDLException("SDL could not initialize!");
     }
@@ -80,21 +88,68 @@ void SnakeSDL::init() {
     SDL_RenderClear(_renderer);
 
     while (!_doExit) {
-        SDL_PollEvent(&_event);
-
-        SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-        SDL_RenderClear(_renderer);
+        SDL_Event ev;
+        SDL_Event prevEvent;
+        SDL_PollEvent(&ev);
 
         _now = SDL_GetTicks();
         if (_now >= _start + (1000 * (1.0 / _speed))) {
+            SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+            SDL_RenderClear(_renderer);
+
+            // logic goes here
+
+            SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+            SDL_RenderFillRect(_renderer, &rect);
+
             _start = _now;
-            // break;
-        } else if (_event.type == SDL_KEYDOWN) {
-            if (_event.key.keysym.sym == SDLK_ESCAPE)
-                _doExit = true;
+            prevEvent = ev;
+            SDL_RenderPresent(_renderer);
+        } else if (ev.type == SDL_KEYDOWN) {
+            int tmp;
+            for (int i = 0; i < 4; i++) {
+                if (_key[i])
+                    tmp = i;
+            }
+            switch (ev.key.keysym.sym) {
+                case SDLK_UP: {
+                    if (tmp != KEY_DOWN && tmp != KEY_UP) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_UP] = true;
+                    }
+                } break;
+                case SDLK_DOWN: {
+                    if (tmp != KEY_UP && tmp != KEY_DOWN) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_DOWN] = true;
+                    }
+                } break;
+                case SDLK_LEFT: {
+                    if (tmp != KEY_RIGHT && tmp != KEY_LEFT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_LEFT] = true;
+                    }
+                } break;
+                case SDLK_RIGHT: {
+                    if (tmp != KEY_LEFT && tmp != KEY_RIGHT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_RIGHT] = true;
+                    }
+                } break;
+                case SDLK_ESCAPE:
+                    _doExit = true;
+                    break;
+            }
+            prevEvent = ev;
+            // if (_event.key.keysym.sym == SDLK_ESCAPE)
+            //     _doExit = true;
         }
         // SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
-        // SDL_RenderFillRect(renderer, &rect);
-        // SDL_RenderPresent(renderer);
+        // SDL_RenderFillRect(_renderer, &rect);
+        // SDL_RenderPresent(_renderer);
     }
 }

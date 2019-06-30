@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/29 23:00:16 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 09:42:47 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class SnakeSDL {
     std::vector<TVertex> *_vertex;
     SDL_Window *_display;
     SDL_Renderer *_renderer;
-    SDL_Event _event;
+    // SDL_Event _event;
     Uint32 _start;
     Uint32 _now;
     TVertex _food;
@@ -67,10 +67,10 @@ class SnakeSDL {
 
     void init();
     // void drawRect(TVertex &, ALLEGRO_COLOR);
-    bool checkFood();
-    void randFood();
-    bool moveHead(int);
-    bool checkCollusion(TVertex &);
+    // bool checkFood();
+    // void randFood();
+    // bool moveHead(int);
+    // bool checkCollusion(TVertex &);
 };
 
 #endif  //SNAKESDL_HPP
