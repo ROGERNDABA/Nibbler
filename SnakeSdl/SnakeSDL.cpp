@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 10:06:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/06/30 15:28:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ SnakeSDL::SnakeSDL(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _start(0) {
     TVertex tv;
 
-    tv.x1 = (WINW / 2) - 10;
-    tv.y1 = (WINH / 2) - 10;
+    tv.x1 = (WINW / 2);
+    tv.y1 = (WINH / 2);
     tv.x2 = tv.x1 + 20;
     tv.y2 = tv.y1 + 20;
     std::vector<TVertex>* tvt = new std::vector<TVertex>;
@@ -26,7 +26,7 @@ SnakeSDL::SnakeSDL(int w, int h)
     std::fill(_key, _key + 4, false);
     _key[3] = true;
     this->_vertex = tvt;
-    // this->randFood();
+    this->randFood();
     this->init();
 }
 
@@ -89,6 +89,11 @@ void SnakeSDL::init() {
         if (_now >= _start + (1000 * (1.0 / _speed))) {
             SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
             SDL_RenderClear(_renderer);
+            if (checkFood()) {
+                randFood();
+                // _speed += 0.5;
+                // al_set_timer_speed(_timer, 1.0 / _speed);
+            }
 
             if (_key[KEY_UP]) {
                 _doExit = moveHead(KEY_UP);
@@ -102,21 +107,22 @@ void SnakeSDL::init() {
                 _doExit = moveHead(-1);
             }
             // logic goes here
-            SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
             SDL_Rect r;
             r.w = 20;
             r.h = 20;
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
                 r.x = it->x1;
                 r.y = it->y1;
-                // if (it == _vertex->begin()) {
-                //     drawRect(*it, al_map_rgb(255, 0, 0));
-                // } else {
-                //     drawRect(*it, al_map_rgb(255, 255, 255));
-                // }
+                if (it == _vertex->begin())
+                    SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 255);
+                else
+                    SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
                 SDL_RenderFillRect(_renderer, &r);
             }
 
+            r.x = _food.x1, r.y = _food.y1, r.w = 10, r.h = 10;
+            SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255);
+            SDL_RenderFillRect(_renderer, &r);
             _start = _now;
             prevEvent = ev;
             SDL_RenderPresent(_renderer);
@@ -162,6 +168,32 @@ void SnakeSDL::init() {
             prevEvent = ev;
         }
     }
+}
+
+bool SnakeSDL::checkFood() {
+    TVertex tmp = (*_vertex)[0];
+    if (_key[KEY_UP]) {
+        if (tmp.y1 <= _food.y2 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_DOWN]) {
+        if (tmp.y2 >= _food.y1 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_LEFT]) {
+        if (tmp.x1 <= _food.x2 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
+            _vertex->push_back(tmp);
+            return true;
+        }
+    } else if (_key[KEY_RIGHT]) {
+        if (tmp.x2 >= _food.x1 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
+            _vertex->push_back(tmp);
+            return true;
+        }
+    }
+    return false;
 }
 
 bool SnakeSDL::moveHead(int key) {
@@ -211,4 +243,11 @@ bool SnakeSDL::checkCollusion(TVertex& tv) {
     if (tv.x1 <= 0 || tv.x2 >= WINW || tv.y1 <= 0 || tv.y2 >= WINH)
         return true;
     return false;
+}
+
+void SnakeSDL::randFood() {
+    _food.x1 = ((std::rand() % (WINW - 30) + 1));
+    _food.x2 = _food.x1 + 5;
+    _food.y1 = ((std::rand() % (WINH - 30) + 1));
+    _food.y2 = _food.y1 + 5;
 }
