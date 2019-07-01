@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:37:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:47:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void SnakeSDL::init() {
     if (_display == NULL) {
         throw SnakeSDLException("Window could not be created!");
     }
+
     _renderer = SDL_CreateRenderer(_display, -1, SDL_RENDERER_ACCELERATED);
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
