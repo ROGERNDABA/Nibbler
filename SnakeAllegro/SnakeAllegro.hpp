@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:29:20 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:36:13 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ class SnakeAllegro : public Snake {
 extern "C" {
 SnakeAllegro *createSnakeAllegro(int, int);
 void deleteSnakeAllegro(SnakeAllegro *);
-// SnakeT getSnake(void);
 }
 
 #endif  //SNAKEALLEGRO_HPP
