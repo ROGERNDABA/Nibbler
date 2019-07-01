@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 12:16:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 20:41:57 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class SnakeSFML {
     int _prevKey;
     bool _doExit;
     float _speed;
+    int _score;
 
    public:
     class SnakeSFMLException : std::exception {

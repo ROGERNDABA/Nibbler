@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 20:16:12 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 21:43:47 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void SnakeSDL::init() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
+    int prevEvent = 0;
     while (!_doExit) {
         SDL_Event ev;
-        SDL_Event prevEvent;
         SDL_PollEvent(&ev);
 
         _now = SDL_GetTicks();
@@ -156,9 +156,10 @@ void SnakeSDL::init() {
             SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;
-            prevEvent = ev;
+            prevEvent = 0;
+            ev.type = SDL_TEXTINPUT;
             SDL_RenderPresent(_renderer);
-        } else if (ev.type == SDL_KEYDOWN) {
+        } else if (ev.type == SDL_KEYDOWN && prevEvent == 0) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -197,7 +198,7 @@ void SnakeSDL::init() {
                     _doExit = true;
                     break;
             }
-            prevEvent = ev;
+            prevEvent = 1;
         }
     }
     TTF_CloseFont(font);

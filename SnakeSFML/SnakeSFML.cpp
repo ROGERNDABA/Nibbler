@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 12:22:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 21:37:56 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSFML.hpp"
 
 SnakeSFML::SnakeSFML(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _start(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -65,12 +65,18 @@ SnakeSFML& SnakeSFML::operator=(SnakeSFML const& rhs) {
 }
 
 void SnakeSFML::init() {
-    _display.create(sf::VideoMode(WINW, WINH), "My window");
+    _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
+    sf::Text text;
 
+    sf::Font font;
+    if (!font.loadFromFile("../fonts/big_noodle_titling.ttf")) {
+        throw SnakeSFMLException("No font");
+    }
+
+    int prevEvent = 0;
     while (!_doExit) {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event ev;
-        sf::Event prevEvent;
         _display.pollEvent(ev);
 
         _now = _clock.getElapsedTime().asMilliseconds();
@@ -80,6 +86,7 @@ void SnakeSFML::init() {
             if (checkFood()) {
                 randFood();
                 // _speed += 0.5;
+                _score += _speed;
                 // al_set_timer_speed(_timer, 1.0 / _speed);
             }
 
@@ -95,6 +102,29 @@ void SnakeSFML::init() {
                 _doExit = moveHead(-1);
             }
             sf::RectangleShape r;
+            r.setSize(sf::Vector2f(WINW, WINH + 60));
+            r.setPosition(0, 0);
+            r.setFillColor(sf::Color(245, 255, 153));
+            _display.draw(r);
+            r.setSize(sf::Vector2f(WINW - 4, WINH - 2));
+            r.setPosition(2, 60);
+            r.setFillColor(sf::Color(0, 0, 0));
+            _display.draw(r);
+
+            text.setFillColor(sf::Color(0, 0, 0));
+            text.setFont(font);
+            std::stringstream ss;
+            ss << _score;
+            std::string s = "Score : " + ss.str();
+            text.setString(s.c_str());
+            text.setPosition(20, 35);
+            text.setCharacterSize(18);
+            _display.draw(text);
+            text.setString("Snake SFML");
+            text.setPosition((WINW / 2) - 30, 5);
+            text.setCharacterSize(24);
+            _display.draw(text);
+
             r.setSize(sf::Vector2f(14, 14));
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
                 r.setPosition(it->x1, it->y1);
@@ -109,7 +139,9 @@ void SnakeSFML::init() {
             _display.draw(r);
             _display.display();
             _start = _now;
-        } else if (ev.type == sf::Event::KeyPressed) {
+            ev.type = sf::Event::LostFocus;
+            prevEvent = 0;
+        } else if (ev.type == sf::Event::KeyPressed && prevEvent == 0) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -148,7 +180,7 @@ void SnakeSFML::init() {
                     _doExit = true;
                     break;
             }
-            prevEvent = ev;
+            prevEvent = 1;
         } else if (ev.type == sf::Event::Closed)
             _doExit = true;
     }
@@ -210,7 +242,7 @@ bool SnakeSFML::checkCollusion(TVertex& tv) {
             return true;
         }
     }
-    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 0 || tv.y2 > WINH)
+    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
 }
@@ -223,6 +255,6 @@ void SnakeSFML::randFood() {
     int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
-    _food.y1 = rany * 15;
+    _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
 }
