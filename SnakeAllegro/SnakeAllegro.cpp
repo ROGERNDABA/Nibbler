@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:19:58 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:29:16 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,3 +300,7 @@ SnakeAllegro* createSnakeAllegro(int w, int h) {
 void deleteSnakeAllegro(SnakeAllegro* sa) {
     delete sa;
 }
+
+// SnakeT getSnake() {
+//     return Snak
+// }
