@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:49:45 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 12:24:23 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,10 +134,10 @@ void SnakeAllegro::init() {
                 if (it == _vertex->begin()) {
                     drawRect(*it, al_map_rgb(255, 0, 0));
                 } else {
-                    drawRect(*it, al_map_rgb(255, 255, 255));
+                    drawRect(*it, al_map_rgb(209, 102, 255));
                 }
             }
-            drawRect(_food, al_map_rgb(255, 0, 255));
+            drawRect(_food, al_map_rgb(255, 255, 255));
             al_flip_display();
             prevEvent = ev;
         } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && prevEvent.type == ALLEGRO_EVENT_TIMER) {

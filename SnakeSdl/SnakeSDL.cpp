@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 12:13:58 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 12:31:46 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,12 @@ void SnakeSDL::init() {
                 if (it == _vertex->begin())
                     SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 255);
                 else
-                    SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+                    SDL_SetRenderDrawColor(_renderer, 102, 240, 255, 255);
                 SDL_RenderFillRect(_renderer, &r);
             }
 
             r.x = _food.x1, r.y = _food.y1;
-            SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255);
+            SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;
             prevEvent = ev;
