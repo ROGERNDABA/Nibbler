@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 15:09:12 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 20:16:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -53,6 +53,7 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 SnakeSDL::~SnakeSDL() {
     delete _vertex;
     SDL_DestroyWindow(_display);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -67,11 +68,12 @@ SnakeSDL& SnakeSDL::operator=(SnakeSDL const& rhs) {
 }
 
 void SnakeSDL::init() {
-    SDL_Texture* texture = NULL;
-    SDL_Surface* surface = NULL;
-    TTF_Font* font = NULL;
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SnakeSDLException("SDL could not initialize!");
+    }
+
+    if (TTF_Init() == -1) {
+        throw SnakeSDLException("SDL could not initialize ttf!");
     }
 
     _display = SDL_CreateWindow("NIBBLER SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINW, WINH + 60, SDL_WINDOW_SHOWN);
@@ -80,6 +82,14 @@ void SnakeSDL::init() {
     }
 
     _renderer = SDL_CreateRenderer(_display, -1, SDL_RENDERER_ACCELERATED);
+
+    TTF_Font* font = TTF_OpenFont("../fonts/big_noodle_titling.ttf", 18);
+    TTF_Font* fontHA = TTF_OpenFont("../fonts/big_noodle_titling.ttf", 24);
+    SDL_Surface* surface;
+    SDL_Texture* texture;
+    SDL_Rect v1, v2;
+    v1.x = 20, v1.y = 35, v1.w = 60, v1.h = 20;
+    v2.x = (WINW / 2) - 30, v2.y = 5, v2.w = 60, v2.h = 35;
 
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
@@ -96,6 +106,7 @@ void SnakeSDL::init() {
             if (checkFood()) {
                 randFood();
                 // _speed += 0.5;
+                _score += _speed;
                 // al_set_timer_speed(_timer, 1.0 / _speed);
             }
 
@@ -110,7 +121,6 @@ void SnakeSDL::init() {
             } else {
                 _doExit = moveHead(-1);
             }
-            // logic goes here
             SDL_Rect r;
             r.x = 0, r.y = 0, r.w = WINW, r.h = WINH + 60;
             SDL_SetRenderDrawColor(_renderer, 196, 249, 255, 255);
@@ -118,6 +128,17 @@ void SnakeSDL::init() {
             r.x = 2, r.y = 60, r.w = WINW - 4, r.h = WINH - 2;
             SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
             SDL_RenderFillRect(_renderer, &r);
+
+            std::stringstream ss;  //from <sstream>
+            ss << _score;
+            std::string s = "Score : " + ss.str();
+            surface = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
+            texture = SDL_CreateTextureFromSurface(_renderer, surface);
+            SDL_RenderCopy(_renderer, texture, NULL, &v1);
+            s = "SNAKE SDL";
+            surface = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
+            texture = SDL_CreateTextureFromSurface(_renderer, surface);
+            SDL_RenderCopy(_renderer, texture, NULL, &v2);
 
             r.w = 14;
             r.h = 14;
@@ -179,6 +200,12 @@ void SnakeSDL::init() {
             prevEvent = ev;
         }
     }
+    TTF_CloseFont(font);
+    TTF_CloseFont(fontHA);
+    SDL_DestroyTexture(texture);
+    // SDL_DestroyTexture(texture2);
+    SDL_FreeSurface(surface);
+    // SDL_FreeSurface(surface2);
 }
 
 bool SnakeSDL::checkFood() {

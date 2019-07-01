@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 14:14:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 18:03:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void SnakeAllegro::init() {
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
     }
 
-    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
-    fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
+    font = al_load_ttf_font("../fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    fontH = al_load_ttf_font("../fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
 
     if (!font) {
         throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
