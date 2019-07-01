@@ -6,20 +6,20 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 18:18:49 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:24:44 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _start(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
     tv.y1 = (WINH / 2);
-    tv.x2 = tv.x1 + 20;
-    tv.y2 = tv.y1 + 20;
+    tv.x2 = tv.x1 + 15;
+    tv.y2 = tv.y1 + 15;
     std::vector<TVertex>* tvt = new std::vector<TVertex>;
     tvt->push_back(tv);
     this->_key = new bool[4];
@@ -108,8 +108,8 @@ void SnakeSDL::init() {
             }
             // logic goes here
             SDL_Rect r;
-            r.w = 20;
-            r.h = 20;
+            r.w = 15;
+            r.h = 15;
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
                 r.x = it->x1;
                 r.y = it->y1;
@@ -120,7 +120,7 @@ void SnakeSDL::init() {
                 SDL_RenderFillRect(_renderer, &r);
             }
 
-            r.x = _food.x1, r.y = _food.y1, r.w = 10, r.h = 10;
+            r.x = _food.x1, r.y = _food.y1, r.w = 15, r.h = 15;
             SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;
@@ -172,26 +172,12 @@ void SnakeSDL::init() {
 
 bool SnakeSDL::checkFood() {
     TVertex tmp = (*_vertex)[0];
-    if (_key[KEY_UP]) {
-        if (tmp.y1 <= _food.y2 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
-            _vertex->push_back(tmp);
-            return true;
-        }
-    } else if (_key[KEY_DOWN]) {
-        if (tmp.y2 >= _food.y1 && (_food.x1 >= tmp.x1 && _food.x2 <= tmp.x2)) {
-            _vertex->push_back(tmp);
-            return true;
-        }
-    } else if (_key[KEY_LEFT]) {
-        if (tmp.x1 <= _food.x2 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
-            _vertex->push_back(tmp);
-            return true;
-        }
-    } else if (_key[KEY_RIGHT]) {
-        if (tmp.x2 >= _food.x1 && (_food.y1 >= tmp.y1 && _food.y2 <= tmp.y2)) {
-            _vertex->push_back(tmp);
-            return true;
-        }
+    if (tmp.y1 == _food.y1 &&
+        tmp.x1 == _food.x1 &&
+        tmp.x2 == _food.x2 &&
+        tmp.y2 == _food.y2) {
+        _vertex->push_back(tmp);
+        return true;
     }
     return false;
 }
@@ -202,32 +188,32 @@ bool SnakeSDL::moveHead(int key) {
     switch (key) {
         case 0: {
             _vertex->pop_back();
-            tail.y1 = head.y1 - 20;
-            tail.y2 = head.y2 - 20;
+            tail.y1 = head.y1 - 15;
+            tail.y2 = head.y2 - 15;
             _vertex->insert(_vertex->begin(), tail);
         } break;
         case 1: {
             _vertex->pop_back();
-            tail.y1 = head.y1 + 20;
-            tail.y2 = head.y2 + 20;
+            tail.y1 = head.y1 + 15;
+            tail.y2 = head.y2 + 15;
             _vertex->insert(_vertex->begin(), tail);
         } break;
         case 2: {
             _vertex->pop_back();
-            tail.x1 = head.x1 - 20;
-            tail.x2 = head.x2 - 20;
+            tail.x1 = head.x1 - 15;
+            tail.x2 = head.x2 - 15;
             _vertex->insert(_vertex->begin(), tail);
         } break;
         case 3: {
             _vertex->pop_back();
-            tail.x1 = head.x1 + 20;
-            tail.x2 = head.x2 + 20;
+            tail.x1 = head.x1 + 15;
+            tail.x2 = head.x2 + 15;
             _vertex->insert(_vertex->begin(), tail);
         } break;
         default: {
             _vertex->pop_back();
-            tail.x1 = head.x1 + 20;
-            tail.x2 = head.x2 + 20;
+            tail.x1 = head.x1 + 15;
+            tail.x2 = head.x2 + 15;
             _vertex->insert(_vertex->begin(), tail);
         } break;
     }
@@ -240,14 +226,19 @@ bool SnakeSDL::checkCollusion(TVertex& tv) {
             return true;
         }
     }
-    if (tv.x1 <= 0 || tv.x2 >= WINW || tv.y1 <= 0 || tv.y2 >= WINH)
+    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 0 || tv.y2 > WINH)
         return true;
     return false;
 }
 
 void SnakeSDL::randFood() {
-    _food.x1 = ((std::rand() % (WINW - 30) + 1));
-    _food.x2 = _food.x1 + 5;
-    _food.y1 = ((std::rand() % (WINH - 30) + 1));
-    _food.y2 = _food.y1 + 5;
+    int tmpx = WINW / 15;
+    int tmpy = WINH / 15;
+
+    int ranx = 1 + (std::rand() % (tmpx - 1)) - 1;
+    int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
+    _food.x1 = ranx * 15;
+    _food.x2 = _food.x1 + 15;
+    _food.y1 = rany * 15;
+    _food.y2 = _food.y1 + 15;
 }

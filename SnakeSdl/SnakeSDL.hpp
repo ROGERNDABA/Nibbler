@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 18:19:20 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:23:46 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 
 #include <SDL.h>
 #include <Snake.hpp>
-
-enum E_KEYS {
-    KEY_UP,
-    KEY_DOWN,
-    KEY_LEFT,
-    KEY_RIGHT
-};
-
-typedef struct SVertex {
-    float x1;
-    float y1;
-    float x2;
-    float y2;
-} TVertex;
 
 class SnakeSDL {
    private:
