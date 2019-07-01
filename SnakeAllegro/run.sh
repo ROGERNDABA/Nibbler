@@ -2,4 +2,4 @@
 
 export LD_LIBRARY_PATH=$PWD/allegro/lib
 make
-# echo $DYLD_LIBRARY_PATH
+unset LD_LIBRARY_PATH

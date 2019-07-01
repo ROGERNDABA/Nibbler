@@ -60,6 +60,7 @@
 		"optional": "cpp",
 		"sstream": "cpp",
 		"cinttypes": "cpp",
-		"deque": "cpp"
+		"deque": "cpp",
+		"iomanip": "cpp"
 	}
 }

@@ -6,13 +6,14 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/06/30 22:08:50 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/01 09:49:23 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = snake
 
 SRC = SnakeAllegro.cpp
+SRC2 = SnakeAllegro.cpp main.cpp
 CC = g++ -Wall -Wextra -Werror -std=c++11
 
 FLAGS =  -L allegro/lib  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
@@ -20,7 +21,8 @@ FLAGS =  -L allegro/lib  -lallegro_acodec -lallegro_audio -lallegro_color -lalle
 all: $(NAME)
 
 $(NAME): fclean
-	@$(CC) -shared -fPIC -o SnakeAllegro.so $(SRC) -I ../ -I allegro/include $(FLAGS)
+	@$(CC) -o $(NAME) $(SRC2) -I ../ -I allegro/include $(FLAGS)
+	@ # $(CC) -shared -fPIC -o SnakeAllegro.so $(SRC) -I ../ -I allegro/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)
