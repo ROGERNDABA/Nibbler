@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 21:54:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:22:13 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ SnakeSDL::SnakeSDL(int w, int h)
     this->init();
 }
 
-SnakeSDL::SnakeSDL(std::vector<TVertex>& vertex) : _vertex(&vertex) {}
+SnakeSDL::SnakeSDL(SnakeT Snake) {
+    _vertex = Snake.vertex;
+    _food = Snake.food;
+    _key = Snake.key;
+    _prevKey = Snake.prevKey;
+    _doExit = Snake.doExit;
+    _speed = Snake.speed;
+    _score = Snake.score;
+}
 
 SnakeSDL::SnakeSDLException::SnakeSDLException(std::string exc) {
     _exc = "\033[31m" + exc + "\033[0m";

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 20:16:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:20:39 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ class SnakeSDL {
     };
 
     SnakeSDL(const int, const int);
-    SnakeSDL(std::vector<TVertex> &);
+    SnakeSDL(SnakeT);
     SnakeSDL(SnakeSDL const &);
     SnakeSDL &operator=(SnakeSDL const &);
     ~SnakeSDL();

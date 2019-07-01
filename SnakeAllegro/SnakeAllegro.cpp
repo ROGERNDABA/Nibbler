@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 18:03:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:19:58 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->init();
 }
 
-SnakeAllegro::SnakeAllegro(std::vector<TVertex>& vertex) : _vertex(&vertex) {}
+SnakeAllegro::SnakeAllegro(SnakeT Snake) {
+    _vertex = Snake.vertex;
+    _food = Snake.food;
+    _key = Snake.key;
+    _prevKey = Snake.prevKey;
+    _doExit = Snake.doExit;
+    _speed = Snake.speed;
+    _score = Snake.score;
+}
 
 SnakeAllegro::SnakeAllegroException::SnakeAllegroException(std::string exc) {
     this->_exc = "\033[31m" + exc + "\033[0m";
@@ -153,7 +161,7 @@ void SnakeAllegro::init() {
                 }
             }
             al_draw_filled_rectangle(0, 0, WINW, 60, al_map_rgb(245, 222, 255));
-            al_draw_rectangle(0, 60, WINW, WINH + 60, al_map_rgb(245, 222, 255), 2);
+            al_draw_rectangle(0, 60, WINW, WINH + 60, al_map_rgb(245, 222, 255), 3);
             al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
             al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
 

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 20:41:57 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:23:37 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class SnakeSFML {
     };
 
     SnakeSFML(int, int);
-    SnakeSFML(std::vector<TVertex> &);
+    SnakeSFML(SnakeT);
 
     SnakeSFML(SnakeSFML const &);
     SnakeSFML &operator=(SnakeSFML const &);

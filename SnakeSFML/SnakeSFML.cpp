@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 21:56:41 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 22:24:03 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->init();
 }
 
-SnakeSFML::SnakeSFML(std::vector<TVertex>& vertex) : _vertex(&vertex) {}
+SnakeSFML::SnakeSFML(SnakeT Snake) {
+    _vertex = Snake.vertex;
+    _food = Snake.food;
+    _key = Snake.key;
+    _prevKey = Snake.prevKey;
+    _doExit = Snake.doExit;
+    _speed = Snake.speed;
+    _score = Snake.score;
+}
 
 SnakeSFML::SnakeSFMLException::SnakeSFMLException(std::string exc) {
     this->_exc = "\033[31m" + exc + "\033[0m";
