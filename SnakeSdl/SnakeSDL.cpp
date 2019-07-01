@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:24:44 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:37:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void SnakeSDL::init() {
             }
             // logic goes here
             SDL_Rect r;
-            r.w = 15;
-            r.h = 15;
+            r.w = 14;
+            r.h = 14;
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
                 r.x = it->x1;
                 r.y = it->y1;
@@ -120,7 +120,7 @@ void SnakeSDL::init() {
                 SDL_RenderFillRect(_renderer, &r);
             }
 
-            r.x = _food.x1, r.y = _food.y1, r.w = 15, r.h = 15;
+            r.x = _food.x1, r.y = _food.y1, r.w = 14, r.h = 14;
             SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;

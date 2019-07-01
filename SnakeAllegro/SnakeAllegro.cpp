@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:11:00 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:38:36 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ bool SnakeAllegro::checkFood() {
 }
 
 void SnakeAllegro::drawRect(TVertex& tv, ALLEGRO_COLOR alC) {
-    al_draw_filled_rounded_rectangle(tv.x1, tv.y1, tv.x2, tv.y2, 2, 2, alC);
+    al_draw_filled_rounded_rectangle(tv.x1, tv.y1, tv.x2 - 1, tv.y2 - 1, 2, 2, alC);
 }
 
 bool SnakeAllegro::moveHead(int key) {
