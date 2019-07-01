@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 12:24:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 14:14:43 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
 SnakeAllegro::SnakeAllegro(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -33,7 +33,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
 SnakeAllegro::SnakeAllegro(std::vector<TVertex>& vertex) : _vertex(&vertex) {}
 
 SnakeAllegro::SnakeAllegroException::SnakeAllegroException(std::string exc) {
-    this->_exc = "\033[31m" + exc + "\0330m";
+    this->_exc = "\033[31m" + exc + "\033[0m";
 }
 
 SnakeAllegro::SnakeAllegroException::SnakeAllegroException(SnakeAllegro::SnakeAllegroException const& copy) {
@@ -69,12 +69,26 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
 }
 
 void SnakeAllegro::init() {
+    ALLEGRO_FONT* font = NULL;
+    ALLEGRO_FONT* fontH = NULL;
+
     if (!al_init()) {
         throw SnakeAllegroException("Couldn't create window");
     }
 
     if (!al_init_primitives_addon()) {
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
+    }
+
+    if (!al_init_ttf_addon()) {
+        throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
+    }
+
+    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
+
+    if (!font) {
+        throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
     }
 
     _timer = al_create_timer(1.0 / _speed);
@@ -87,7 +101,7 @@ void SnakeAllegro::init() {
         al_destroy_timer(_timer);
         throw SnakeAllegroException("failed to initialize the keyboard!");
     }
-    _display = al_create_display(WINW, WINH);
+    _display = al_create_display(WINW, WINH + 60);
     if (!_display) {
         al_destroy_timer(_timer);
         throw SnakeAllegroException("Couldn't init display");
@@ -116,6 +130,7 @@ void SnakeAllegro::init() {
             if (checkFood()) {
                 randFood();
                 // _speed += 0.5;
+                _score += _speed;
                 // al_set_timer_speed(_timer, 1.0 / _speed);
             }
             al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -137,6 +152,11 @@ void SnakeAllegro::init() {
                     drawRect(*it, al_map_rgb(209, 102, 255));
                 }
             }
+            al_draw_filled_rectangle(0, 0, WINW, 60, al_map_rgb(245, 222, 255));
+            al_draw_rectangle(0, 60, WINW, WINH + 60, al_map_rgb(245, 222, 255), 2);
+            al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
+            al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
+
             drawRect(_food, al_map_rgb(255, 255, 255));
             al_flip_display();
             prevEvent = ev;
@@ -184,6 +204,8 @@ void SnakeAllegro::init() {
             break;
         }
     }
+    al_destroy_font(font);
+    al_destroy_font(fontH);
 }
 
 void SnakeAllegro::randFood() {
@@ -194,7 +216,7 @@ void SnakeAllegro::randFood() {
     int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
-    _food.y1 = rany * 15;
+    _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
 }
 
@@ -258,7 +280,7 @@ bool SnakeAllegro::checkCollusion(TVertex& tv) {
             return true;
         }
     }
-    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 0 || tv.y2 > WINH)
+    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
 }

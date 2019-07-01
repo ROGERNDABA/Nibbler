@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 21:37:53 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 13:59:39 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_color.h>
+#include <allegro5/allegro_font.h>
 #include <allegro5/allegro_opengl.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
 #include <Snake.hpp>
 
 class SnakeAllegro : public Snake {
@@ -33,6 +35,7 @@ class SnakeAllegro : public Snake {
     int _prevKey;
     bool _doExit;
     float _speed;
+    int _score;
 
    public:
     class SnakeAllegroException : std::exception {
