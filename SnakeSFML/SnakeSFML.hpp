@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 18:29:28 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 12:16:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Snake.hpp>
-
-enum E_KEYS {
-    KEY_UP,
-    KEY_DOWN,
-    KEY_LEFT,
-    KEY_RIGHT
-};
-
-typedef struct SVertex {
-    float x1;
-    float y1;
-    float x2;
-    float y2;
-} TVertex;
 
 class SnakeSFML {
    private:

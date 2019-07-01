@@ -6,11 +6,11 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/01 09:49:23 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/01 12:07:25 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = snake
+NAME = SnakeAllegro.so
 
 SRC = SnakeAllegro.cpp
 SRC2 = SnakeAllegro.cpp main.cpp
@@ -21,8 +21,8 @@ FLAGS =  -L allegro/lib  -lallegro_acodec -lallegro_audio -lallegro_color -lalle
 all: $(NAME)
 
 $(NAME): fclean
-	@$(CC) -o $(NAME) $(SRC2) -I ../ -I allegro/include $(FLAGS)
-	@ # $(CC) -shared -fPIC -o SnakeAllegro.so $(SRC) -I ../ -I allegro/include $(FLAGS)
+	@ #$(CC) -o $(NAME) $(SRC2) -I ../ -I allegro/include $(FLAGS)
+	@$(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I allegro/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)

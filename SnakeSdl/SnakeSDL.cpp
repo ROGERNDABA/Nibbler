@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:47:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 12:13:58 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void SnakeSDL::init() {
                 SDL_RenderFillRect(_renderer, &r);
             }
 
-            r.x = _food.x1, r.y = _food.y1, r.w = 14, r.h = 14;
+            r.x = _food.x1, r.y = _food.y1;
             SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;

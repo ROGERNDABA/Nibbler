@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 11:48:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 11:49:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ void SnakeAllegro::init() {
                     drawRect(*it, al_map_rgb(255, 255, 255));
                 }
             }
-            // al_draw_filled_circle(_food.x2, _food.y2, (_food.x2 - _food.x1) / 2, al_map_rgb(255, 0, 255));
             drawRect(_food, al_map_rgb(255, 0, 255));
             al_flip_display();
             prevEvent = ev;
