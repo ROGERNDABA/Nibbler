@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 12:31:46 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 15:09:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,14 @@ SnakeSDL& SnakeSDL::operator=(SnakeSDL const& rhs) {
 }
 
 void SnakeSDL::init() {
+    SDL_Texture* texture = NULL;
+    SDL_Surface* surface = NULL;
+    TTF_Font* font = NULL;
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw SnakeSDLException("SDL could not initialize!");
     }
 
-    _display = SDL_CreateWindow("NIBBLER SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINW, WINH, SDL_WINDOW_SHOWN);
+    _display = SDL_CreateWindow("NIBBLER SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINW, WINH + 60, SDL_WINDOW_SHOWN);
     if (_display == NULL) {
         throw SnakeSDLException("Window could not be created!");
     }
@@ -109,6 +112,13 @@ void SnakeSDL::init() {
             }
             // logic goes here
             SDL_Rect r;
+            r.x = 0, r.y = 0, r.w = WINW, r.h = WINH + 60;
+            SDL_SetRenderDrawColor(_renderer, 196, 249, 255, 255);
+            SDL_RenderFillRect(_renderer, &r);
+            r.x = 2, r.y = 60, r.w = WINW - 4, r.h = WINH - 2;
+            SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+            SDL_RenderFillRect(_renderer, &r);
+
             r.w = 14;
             r.h = 14;
             for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
@@ -227,7 +237,7 @@ bool SnakeSDL::checkCollusion(TVertex& tv) {
             return true;
         }
     }
-    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 0 || tv.y2 > WINH)
+    if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
 }
@@ -240,6 +250,6 @@ void SnakeSDL::randFood() {
     int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
-    _food.y1 = rany * 15;
+    _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
 }
