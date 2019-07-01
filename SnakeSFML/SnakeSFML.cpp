@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 21:37:56 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 21:56:41 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ void SnakeSFML::init() {
             _start = _now;
             ev.type = sf::Event::LostFocus;
             prevEvent = 0;
-        } else if (ev.type == sf::Event::KeyPressed && prevEvent == 0) {
+        }
+        if (ev.type == sf::Event::KeyPressed && prevEvent == 0) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])

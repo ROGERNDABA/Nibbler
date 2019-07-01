@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 21:43:47 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/01 21:54:26 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,7 @@ void SnakeSDL::init() {
             SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
             SDL_RenderFillRect(_renderer, &r);
 
-            std::stringstream ss;  //from <sstream>
-            ss << _score;
+            std::stringstream ss;
             std::string s = "Score : " + ss.str();
             surface = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
             texture = SDL_CreateTextureFromSurface(_renderer, surface);
@@ -159,7 +158,8 @@ void SnakeSDL::init() {
             prevEvent = 0;
             ev.type = SDL_TEXTINPUT;
             SDL_RenderPresent(_renderer);
-        } else if (ev.type == SDL_KEYDOWN && prevEvent == 0) {
+        }
+        if (ev.type == SDL_KEYDOWN && prevEvent == 0) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
