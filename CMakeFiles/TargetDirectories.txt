@@ -1,3 +1,0 @@
-/home/sassyrog/Desktop/Nibbler/CMakeFiles/rebuild_cache.dir
-/home/sassyrog/Desktop/Nibbler/CMakeFiles/nibbler.dir
-/home/sassyrog/Desktop/Nibbler/CMakeFiles/edit_cache.dir
