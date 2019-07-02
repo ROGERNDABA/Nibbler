@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/02 12:26:29 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/02 19:16:56 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef Snake *(*SNAKEALLEGRO)(int, int);
 typedef void (*DELETESNAKEALLEGRO)(Snake *);
 
 int main(int ac, char *av[]) {
+    (void)av;
+    (void)ac;
     void *dl_handle;
 
     dl_handle = dlopen("SnakeAllegro/libSnakeAllegro.so", RTLD_LAZY | RTLD_LOCAL);
