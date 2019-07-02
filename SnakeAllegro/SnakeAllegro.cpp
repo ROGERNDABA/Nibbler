@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/02 14:36:38 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/02 15:20:25 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
 }
 
 void SnakeAllegro::init() {
-    ALLEGRO_FONT* font = NULL;
-    ALLEGRO_FONT* fontH = NULL;
-
     if (!al_init()) {
         // throw SnakeAllegroException("Couldn't create window");
         std::cout << "al_init" << std::endl;
@@ -96,14 +93,6 @@ void SnakeAllegro::init() {
         std::cout << "al_ttf" << std::endl;
         throw std::exception();
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
-    }
-
-    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
-    fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
-
-    if (!font) {
-        std::cout << "al_font" << std::endl;
-        throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
     }
 
     _timer = al_create_timer(1.0 / _speed);
@@ -137,6 +126,15 @@ void SnakeAllegro::init() {
     al_flip_display();
     al_start_timer(_timer);
 
+    ALLEGRO_FONT* font = NULL;
+    ALLEGRO_FONT* fontH = NULL;
+    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
+
+    if (!font || !fontH) {
+        std::cout << "al_font" << std::endl;
+        throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
+    }
     while (!_doExit) {
         ALLEGRO_EVENT ev;
         ALLEGRO_EVENT prevEvent;
