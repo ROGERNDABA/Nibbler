@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:36:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/02 14:36:38 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,28 @@ void SnakeAllegro::init() {
     ALLEGRO_FONT* fontH = NULL;
 
     if (!al_init()) {
-        throw SnakeAllegroException("Couldn't create window");
+        // throw SnakeAllegroException("Couldn't create window");
+        std::cout << "al_init" << std::endl;
+        throw std::exception();
     }
 
     if (!al_init_primitives_addon()) {
+        std::cout << "al_primitives" << std::endl;
+        throw std::exception();
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
     }
 
     if (!al_init_ttf_addon()) {
+        std::cout << "al_ttf" << std::endl;
+        throw std::exception();
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
     }
 
-    font = al_load_ttf_font("../fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
-    fontH = al_load_ttf_font("../fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
+    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
 
     if (!font) {
+        std::cout << "al_font" << std::endl;
         throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
     }
 
@@ -291,6 +298,10 @@ bool SnakeAllegro::checkCollusion(TVertex& tv) {
     if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
+}
+
+SnakeT SnakeAllegro::getSnake() const {
+    return this->SNAKE;
 }
 
 SnakeAllegro* createSnakeAllegro(int w, int h) {

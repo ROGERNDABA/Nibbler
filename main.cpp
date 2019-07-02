@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/06/30 22:11:09 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/02 12:26:29 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ typedef void (*DELETESNAKEALLEGRO)(Snake *);
 int main(int ac, char *av[]) {
     void *dl_handle;
 
-    dl_handle = dlopen("SnakeAllegro/SnakeAllegro.so", RTLD_LAZY | RTLD_LOCAL);
+    dl_handle = dlopen("SnakeAllegro/libSnakeAllegro.so", RTLD_LAZY | RTLD_LOCAL);
     if (!dl_handle) {
         dl_error();
+        exit(EXIT_FAILURE);
     }
 
     SNAKEALLEGRO sa = reinterpret_cast<SNAKEALLEGRO>(dlsym(dl_handle, "createSnakeAllegro"));
@@ -33,7 +34,11 @@ int main(int ac, char *av[]) {
     if (!sa) {
         std::cerr << "Done!" << std::endl;
     } else {
-        ssa = sa(900, 600);
+        try {
+            ssa = sa(900, 600);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << '\n';
+        }
     }
     DELETESNAKEALLEGRO dsa = reinterpret_cast<DELETESNAKEALLEGRO>(dlsym(dl_handle, "deleteSnakeAllegro"));
 
