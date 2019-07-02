@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:22:13 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/02 20:53:53 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0), _score(0) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -91,10 +91,11 @@ void SnakeSDL::init() {
 
     _renderer = SDL_CreateRenderer(_display, -1, SDL_RENDERER_ACCELERATED);
 
-    TTF_Font* font = TTF_OpenFont("../fonts/big_noodle_titling.ttf", 18);
-    TTF_Font* fontHA = TTF_OpenFont("../fonts/big_noodle_titling.ttf", 24);
+    TTF_Font* font = TTF_OpenFont("fonts/big_noodle_titling.ttf", 18);
+    TTF_Font* fontHA = TTF_OpenFont("fonts/big_noodle_titling.ttf", 24);
     SDL_Surface* surface;
     SDL_Texture* texture;
+    SDL_Color sdlc = {0, 0, 0, 255};
     SDL_Rect v1, v2;
     v1.x = 20, v1.y = 35, v1.w = 60, v1.h = 20;
     v2.x = (WINW / 2) - 30, v2.y = 5, v2.w = 60, v2.h = 35;
@@ -139,11 +140,11 @@ void SnakeSDL::init() {
 
             std::stringstream ss;
             std::string s = "Score : " + ss.str();
-            surface = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
+            surface = TTF_RenderText_Solid(font, s.c_str(), sdlc);
             texture = SDL_CreateTextureFromSurface(_renderer, surface);
             SDL_RenderCopy(_renderer, texture, NULL, &v1);
             s = "SNAKE SDL";
-            surface = TTF_RenderText_Solid(font, s.c_str(), {0, 0, 0});
+            surface = TTF_RenderText_Solid(font, s.c_str(), sdlc);
             texture = SDL_CreateTextureFromSurface(_renderer, surface);
             SDL_RenderCopy(_renderer, texture, NULL, &v2);
 

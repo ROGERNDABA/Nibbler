@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sassyrog/Desktop/Nibbler/Snake.hpp
+cmath
+-
+cstdlib
+-
+fstream
+-
+iostream
+-
+sstream
+-
+string
+-
+vector
+-
+
+/home/sassyrog/Desktop/Nibbler/main.cpp
+dlfcn.h
+-
+Snake.hpp
+/home/sassyrog/Desktop/Nibbler/Snake.hpp
+
