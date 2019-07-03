@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 14:47:59 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 14:52:48 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->init();
 }
 
-SnakeAllegro::SnakeAllegro(SnakeT Snake, int w, int h) {
-    WINW = w;
-    WINH = h;
-    _body = Snake.vertex;
+SnakeAllegro::SnakeAllegro(SnakeT Snake) {
+    WINW = Snake.WINW;
+    WINH = Snake.WINH;
+    _body = Snake.body;
+    _obstacles = Snake.obstacles;
     _food = Snake.food;
     _key = Snake.key;
     _prevKey = Snake.prevKey;

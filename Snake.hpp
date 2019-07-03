@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/02 15:15:03 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 14:51:43 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ typedef struct SVertex {
 } TVertex;
 
 typedef struct SnakeS {
-    std::vector<TVertex> *vertex;
+    std::vector<TVertex> *body;
+    std::vector<TVertex> *obstacles;
+    int WINW;
+    int WINH;
     TVertex food;
     bool *key;
     int prevKey;

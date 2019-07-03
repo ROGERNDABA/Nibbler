@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 14:12:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 14:52:09 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ class SnakeAllegro : public Snake {
     };
 
     SnakeAllegro(const int, const int);
-    SnakeAllegro(SnakeT, int, int);
+    SnakeAllegro(SnakeT);
     SnakeAllegro(SnakeAllegro const &);
     SnakeAllegro &operator=(SnakeAllegro const &);
     ~SnakeAllegro();
