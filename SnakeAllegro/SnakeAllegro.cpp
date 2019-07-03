@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:29:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 14:47:59 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
 SnakeAllegro::SnakeAllegro(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -26,11 +26,15 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     std::fill(_key, _key + 4, false);
     _key[3] = true;
     this->_body = tvt;
+    this->_obstacles = new std::vector<TVertex>;
     this->randFood();
+    this->initObstacles();
     this->init();
 }
 
-SnakeAllegro::SnakeAllegro(SnakeT Snake) {
+SnakeAllegro::SnakeAllegro(SnakeT Snake, int w, int h) {
+    WINW = w;
+    WINH = h;
     _body = Snake.vertex;
     _food = Snake.food;
     _key = Snake.key;
@@ -60,6 +64,7 @@ SnakeAllegro::SnakeAllegroException& SnakeAllegro::SnakeAllegroException::operat
 
 SnakeAllegro::~SnakeAllegro() {
     delete _body;
+    delete _obstacles;
     al_destroy_timer(_timer);
     al_destroy_display(_display);
     al_destroy_event_queue(_eQueue);
@@ -158,6 +163,9 @@ void SnakeAllegro::init() {
             } else {
                 _doExit = moveHead(-1);
             }
+            for (std::vector<TVertex>::iterator it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+                drawRect(*it, al_map_rgb(236, 194, 255));
+            }
             for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
                 if (it == _body->begin()) {
                     drawRect(*it, al_map_rgb(255, 0, 0));
@@ -165,12 +173,12 @@ void SnakeAllegro::init() {
                     drawRect(*it, al_map_rgb(209, 102, 255));
                 }
             }
-            al_draw_filled_rectangle(0, 0, WINW, 60, al_map_rgb(245, 222, 255));
-            al_draw_rectangle(0, 60, WINW, WINH + 60, al_map_rgb(245, 222, 255), 3);
+            al_draw_filled_rectangle(0, 0, WINW, 60, al_map_rgb(236, 194, 255));
+            al_draw_rectangle(0, 60, WINW, WINH + 60, al_map_rgb(236, 194, 255), 3);
             al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
             al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
 
-            drawRect(_food, al_map_rgb(255, 255, 255));
+            drawRect(_food, al_map_rgb(0, 255, 0));
             al_flip_display();
             prevEvent = ev;
         } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && prevEvent.type == ALLEGRO_EVENT_TIMER) {
@@ -231,6 +239,13 @@ void SnakeAllegro::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+    std::vector<TVertex>::iterator it;
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+        if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
+            SnakeAllegro::randFood();
+            std::cout << "yip" << std::endl;
+        }
+    }
 }
 
 bool SnakeAllegro::checkFood() {
@@ -288,7 +303,13 @@ bool SnakeAllegro::moveHead(int key) {
 }
 
 bool SnakeAllegro::checkCollusion(TVertex& tv) {
-    for (std::vector<TVertex>::iterator it = _body->begin() + 1; it != _body->end(); ++it) {
+    std::vector<TVertex>::iterator it;
+    for (it = _body->begin() + 1; it != _body->end(); ++it) {
+        if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
+            return true;
+        }
+    }
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
             return true;
         }
@@ -296,6 +317,37 @@ bool SnakeAllegro::checkCollusion(TVertex& tv) {
     if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
+}
+
+void SnakeAllegro::initObstacles() {
+    TVertex tv;
+    TVertex tv2;
+    for (int i = 0; i < 10; i++) {
+        int rx = 2 + (std::rand() % ((WINW / 15) - 2));
+        int ry = 2 + (std::rand() % ((WINH / 15) - 2));
+
+        tv.x1 = rx * 15, tv.y1 = (ry * 15) + 60, tv.x2 = tv.x1 + 15, tv.y2 = tv.y1 + 15;
+
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x1, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1, tv2.y1 = tv.y2, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        _obstacles->push_back(tv);
+    }
 }
 
 SnakeT SnakeAllegro::getSnake() const {

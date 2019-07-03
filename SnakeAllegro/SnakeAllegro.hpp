@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:29:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 14:12:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 class SnakeAllegro : public Snake {
    private:
     std::vector<TVertex> *_body;
+    std::vector<TVertex> *_obstacles;
     ALLEGRO_DISPLAY *_display;
     ALLEGRO_TIMER *_timer;
     ALLEGRO_EVENT_QUEUE *_eQueue;
@@ -51,7 +52,7 @@ class SnakeAllegro : public Snake {
     };
 
     SnakeAllegro(const int, const int);
-    SnakeAllegro(SnakeT);
+    SnakeAllegro(SnakeT, int, int);
     SnakeAllegro(SnakeAllegro const &);
     SnakeAllegro &operator=(SnakeAllegro const &);
     ~SnakeAllegro();
@@ -59,6 +60,7 @@ class SnakeAllegro : public Snake {
     SnakeT getSnake(void) const;
 
     void init();
+    void initObstacles();
     void drawRect(TVertex &, ALLEGRO_COLOR);
     bool checkFood();
     void randFood();
