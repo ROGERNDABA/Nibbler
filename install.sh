@@ -18,6 +18,9 @@ mkdir lib
 echo -e "\e[33m---Making libSnakeAllegro.so---"
 make -C SnakeAllegro >/dev/null 2>&1 && \
 cp -fr SnakeAllegro/libSnakeAllegro.so lib >/dev/null 2>&1
+echo -e "\e[33m---Making libSnakeSDL.so---"
+make -C SnakeSDL >/dev/null 2>&1 && \
+cp -fr SnakeSDL/libSnakeSDL.so lib >/dev/null 2>&1
 echo -e "\e[32m---Running CMake---"
 cmake .
 echo -e "\e[32m---Making nibbler---\e[0m"

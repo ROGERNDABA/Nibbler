@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/02 20:53:53 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 11:00:17 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,4 +289,12 @@ void SnakeSDL::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+}
+
+SnakeSDL* createSnakeAllegro(int w, int h) {
+    return new SnakeSDL(w, h);
+}
+
+void deleteSnakeAllegro(SnakeSDL* sa) {
+    delete sa;
 }
