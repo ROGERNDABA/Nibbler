@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 15:05:29 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 16:01:16 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,6 @@ void SnakeSDL::randFood() {
     for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
             SnakeSDL::randFood();
-            std::cout << "yip" << std::endl;
         }
     }
 }
