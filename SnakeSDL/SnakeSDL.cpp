@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:07:17 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 13:35:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ SnakeSDL::SnakeSDL(int w, int h)
     this->_key = new bool[4];
     std::fill(_key, _key + 4, false);
     _key[3] = true;
-    this->_vertex = tvt;
+    this->_body = tvt;
     this->randFood();
     this->init();
 }
 
 SnakeSDL::SnakeSDL(SnakeT Snake) {
-    _vertex = Snake.vertex;
+    _body = Snake.vertex;
     _food = Snake.food;
     _key = Snake.key;
     _prevKey = Snake.prevKey;
@@ -59,7 +59,7 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 }
 
 SnakeSDL::~SnakeSDL() {
-    delete _vertex;
+    delete _body;
     SDL_DestroyWindow(_display);
     TTF_Quit();
     SDL_Quit();
@@ -150,10 +150,10 @@ void SnakeSDL::init() {
 
             r.w = 14;
             r.h = 14;
-            for (std::vector<TVertex>::iterator it = _vertex->begin(); it != _vertex->end(); ++it) {
+            for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
                 r.x = it->x1;
                 r.y = it->y1;
-                if (it == _vertex->begin())
+                if (it == _body->begin())
                     SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 255);
                 else
                     SDL_SetRenderDrawColor(_renderer, 102, 240, 255, 255);
@@ -219,57 +219,57 @@ void SnakeSDL::init() {
 }
 
 bool SnakeSDL::checkFood() {
-    TVertex tmp = (*_vertex)[0];
+    TVertex tmp = (*_body)[0];
     if (tmp.y1 == _food.y1 &&
         tmp.x1 == _food.x1 &&
         tmp.x2 == _food.x2 &&
         tmp.y2 == _food.y2) {
-        _vertex->push_back(tmp);
+        _body->push_back(tmp);
         return true;
     }
     return false;
 }
 
 bool SnakeSDL::moveHead(int key) {
-    TVertex head = *_vertex->begin();
+    TVertex head = *_body->begin();
     TVertex tail = head;
     switch (key) {
         case 0: {
-            _vertex->pop_back();
+            _body->pop_back();
             tail.y1 = head.y1 - 15;
             tail.y2 = head.y2 - 15;
-            _vertex->insert(_vertex->begin(), tail);
+            _body->insert(_body->begin(), tail);
         } break;
         case 1: {
-            _vertex->pop_back();
+            _body->pop_back();
             tail.y1 = head.y1 + 15;
             tail.y2 = head.y2 + 15;
-            _vertex->insert(_vertex->begin(), tail);
+            _body->insert(_body->begin(), tail);
         } break;
         case 2: {
-            _vertex->pop_back();
+            _body->pop_back();
             tail.x1 = head.x1 - 15;
             tail.x2 = head.x2 - 15;
-            _vertex->insert(_vertex->begin(), tail);
+            _body->insert(_body->begin(), tail);
         } break;
         case 3: {
-            _vertex->pop_back();
+            _body->pop_back();
             tail.x1 = head.x1 + 15;
             tail.x2 = head.x2 + 15;
-            _vertex->insert(_vertex->begin(), tail);
+            _body->insert(_body->begin(), tail);
         } break;
         default: {
-            _vertex->pop_back();
+            _body->pop_back();
             tail.x1 = head.x1 + 15;
             tail.x2 = head.x2 + 15;
-            _vertex->insert(_vertex->begin(), tail);
+            _body->insert(_body->begin(), tail);
         } break;
     }
     return (checkCollusion(tail)) ? true : false;
 }
 
 bool SnakeSDL::checkCollusion(TVertex& tv) {
-    for (std::vector<TVertex>::iterator it = _vertex->begin() + 1; it != _vertex->end(); ++it) {
+    for (std::vector<TVertex>::iterator it = _body->begin() + 1; it != _body->end(); ++it) {
         if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
             return true;
         }

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:06:57 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 13:35:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 class SnakeSDL {
    private:
-    std::vector<TVertex> *_vertex;
+    std::vector<TVertex> *_body;
     SDL_Window *_display;
     SDL_Renderer *_renderer;
     // SDL_Event _event;
