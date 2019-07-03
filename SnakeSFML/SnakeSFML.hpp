@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:35:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 15:45:43 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 class SnakeSFML {
    private:
     std::vector<TVertex> *_body;
+    std::vector<TVertex> *_obstacles;
     sf::RenderWindow _display;
     // SDL_Renderer *_renderer;
     // SDL_Event _event;
@@ -56,6 +57,7 @@ class SnakeSFML {
     ~SnakeSFML();
 
     void init();
+    void initObstacles();
     // void drawRect(TVertex &, ALLEGRO_COLOR);
     bool checkFood();
     void randFood();

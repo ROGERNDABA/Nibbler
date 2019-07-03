@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:35:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 15:54:31 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ SnakeSFML::SnakeSFML(int w, int h)
     std::fill(_key, _key + 4, false);
     _key[3] = true;
     this->_body = tvt;
+    this->_obstacles = new std::vector<TVertex>;
+    this->initObstacles();
     this->randFood();
     this->init();
 }
 
 SnakeSFML::SnakeSFML(SnakeT Snake) {
-    _body = Snake.vertex;
+    WINW = Snake.WINW;
+    WINH = Snake.WINH;
+    _body = Snake.body;
+    _obstacles = Snake.obstacles;
     _food = Snake.food;
     _key = Snake.key;
     _prevKey = Snake.prevKey;
@@ -83,7 +88,6 @@ void SnakeSFML::init() {
 
     int prevEvent = 0;
     while (!_doExit) {
-        // check all the window's events that were triggered since the last iteration of the loop
         sf::Event ev;
         _display.pollEvent(ev);
 
@@ -134,6 +138,12 @@ void SnakeSFML::init() {
             _display.draw(text);
 
             r.setSize(sf::Vector2f(14, 14));
+
+            for (std::vector<TVertex>::iterator it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+                r.setPosition(it->x1, it->y1);
+                r.setFillColor(sf::Color(245, 255, 153));
+                _display.draw(r);
+            }
             for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
                 r.setPosition(it->x1, it->y1);
                 if (it == _body->begin())
@@ -246,9 +256,14 @@ bool SnakeSFML::moveHead(int key) {
     }
     return (checkCollusion(tail)) ? true : false;
 }
-
 bool SnakeSFML::checkCollusion(TVertex& tv) {
-    for (std::vector<TVertex>::iterator it = _body->begin() + 1; it != _body->end(); ++it) {
+    std::vector<TVertex>::iterator it;
+    for (it = _body->begin() + 1; it != _body->end(); ++it) {
+        if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
+            return true;
+        }
+    }
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
             return true;
         }
@@ -256,6 +271,37 @@ bool SnakeSFML::checkCollusion(TVertex& tv) {
     if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
+}
+
+void SnakeSFML::initObstacles() {
+    TVertex tv;
+    TVertex tv2;
+    for (int i = 0; i < 10; i++) {
+        int rx = 2 + (std::rand() % ((WINW / 15) - 2));
+        int ry = 2 + (std::rand() % ((WINH / 15) - 2));
+
+        tv.x1 = rx * 15, tv.y1 = (ry * 15) + 60, tv.x2 = tv.x1 + 15, tv.y2 = tv.y1 + 15;
+
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x1, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1, tv2.y1 = tv.y2, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        _obstacles->push_back(tv);
+    }
 }
 
 void SnakeSFML::randFood() {
@@ -268,6 +314,13 @@ void SnakeSFML::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+    std::vector<TVertex>::iterator it;
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+        if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
+            SnakeSFML::randFood();
+            std::cout << "yip" << std::endl;
+        }
+    }
 }
 
 SnakeSFML* createSnake(int w, int h) {
