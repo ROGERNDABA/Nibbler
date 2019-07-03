@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 11:51:14 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 12:34:49 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void SnakeSFML::init() {
     sf::Text text;
 
     sf::Font font;
-    if (!font.loadFromFile("../fonts/big_noodle_titling.ttf")) {
+    if (!font.loadFromFile("fonts/big_noodle_titling.ttf")) {
         throw SnakeSFMLException("No font");
     }
 
@@ -268,4 +268,12 @@ void SnakeSFML::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+}
+
+SnakeSFML* createSnakeAllegro(int w, int h) {
+    return new SnakeSFML(w, h);
+}
+
+void deleteSnakeAllegro(SnakeSFML* sa) {
+    delete sa;
 }

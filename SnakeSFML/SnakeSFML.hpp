@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:23:37 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 12:33:31 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,10 @@ class SnakeSFML {
     bool moveHead(int);
     bool checkCollusion(TVertex &);
 };
+
+extern "C" {
+SnakeSFML *createSnakeAllegro(int, int);
+void deleteSnakeAllegro(SnakeSFML *);
+}
 
 #endif  //SNAKESFML_HPP
