@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 16:00:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 22:10:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
 SnakeAllegro::SnakeAllegro(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _start(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -141,15 +141,18 @@ void SnakeAllegro::init() {
         std::cout << "al_font" << std::endl;
         throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
     }
+    int prevEvent;
     while (!_doExit) {
         ALLEGRO_EVENT ev;
-        ALLEGRO_EVENT prevEvent;
-        al_wait_for_event(_eQueue, &ev);
-        if (ev.type == ALLEGRO_EVENT_TIMER) {
+        al_get_next_event(_eQueue, &ev);
+        _now = al_get_time();
+        if (_now >= _start + (1.0 / _speed)) {
             if (checkFood()) {
+                // _trackFood++;
                 randFood();
-                // _speed += 0.5;
+                _speed += 0.5;
                 _score += _speed;
+
                 // al_set_timer_speed(_timer, 1.0 / _speed);
             }
             al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -164,7 +167,8 @@ void SnakeAllegro::init() {
             } else {
                 _doExit = moveHead(-1);
             }
-            for (std::vector<TVertex>::iterator it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+            for (std::vector<TVertex>::iterator it = _obstacles->begin();
+                 it != _obstacles->end(); ++it) {
                 drawRect(*it, al_map_rgb(236, 194, 255));
             }
             for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
@@ -180,9 +184,15 @@ void SnakeAllegro::init() {
             al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
 
             drawRect(_food, al_map_rgb(0, 255, 0));
+            // if (_trackFood >= 5) {
+            //     al_draw_filled_circle(_bonus.x1 + 7,
+            //                           _bonus.y1 + 7, 7, al_map_rgb(0, 255, 0));
+            // }
             al_flip_display();
-            prevEvent = ev;
-        } else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && prevEvent.type == ALLEGRO_EVENT_TIMER) {
+            _start = _now;
+            prevEvent = 0;
+        }
+        if (ev.type == ALLEGRO_EVENT_KEY_DOWN && prevEvent == 0) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -221,7 +231,7 @@ void SnakeAllegro::init() {
                     _doExit = true;
                     break;
             }
-            prevEvent = ev;
+            prevEvent = 1;
         } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
@@ -231,21 +241,30 @@ void SnakeAllegro::init() {
 }
 
 void SnakeAllegro::randFood() {
-    int tmpx = WINW / 15;
-    int tmpy = WINH / 15;
-
-    int ranx = 1 + (std::rand() % (tmpx - 1)) - 1;
-    int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
+    int ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+    int rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+    // ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+    // rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
+    // _bonus.x1 = ranx * 15;
+    // _bonus.x2 = _bonus.x1 + 15;
+    // _bonus.y1 = (rany * 15) + 60;
+    // _bonus.y2 = _bonus.y1 + 15;
     std::vector<TVertex>::iterator it;
     for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
             SnakeAllegro::randFood();
+            return;
         }
+        // else if (_bonus.x1 == it->x1 && _bonus.x2 == it->x2 && _bonus.y1 == it->y1 && _bonus.y2 == it->y2) {
+        //     SnakeAllegro::randFood();
+        //     return;
+        // }
     }
+    _trackFood++;
 }
 
 bool SnakeAllegro::checkFood() {
@@ -255,8 +274,17 @@ bool SnakeAllegro::checkFood() {
         tmp.x2 == _food.x2 &&
         tmp.y2 == _food.y2) {
         _body->push_back(tmp);
+        _trackFood++;
         return true;
     }
+    //  else if (tmp.y1 == _bonus.y1 &&
+    //            tmp.x1 == _bonus.x1 &&
+    //            tmp.x2 == _bonus.x2 &&
+    //            tmp.y2 == _bonus.y2) {
+    //     _body->push_back(tmp);
+    //     _trackFood = 0;
+    //     return true;
+    // }
     return false;
 }
 
