@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/01 22:24:03 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 11:51:14 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSFML.hpp"
 
 SnakeSFML::SnakeSFML(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _start(0), _score(0) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -187,6 +187,8 @@ void SnakeSFML::init() {
                 } break;
                 case sf::Keyboard::Escape:
                     _doExit = true;
+                    break;
+                default:
                     break;
             }
             prevEvent = 1;

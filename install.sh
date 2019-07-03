@@ -2,6 +2,8 @@
 
 dir="lib"
 
+sh clean.sh
+
 if [[ $(which cmake) ]]; then
     rm -fr CMakeFiles $dir cmake_install.cmake CMakeCache.txt
 else
@@ -21,6 +23,9 @@ cp -fr SnakeAllegro/libSnakeAllegro.so lib >/dev/null 2>&1
 echo -e "\e[33m---Making libSnakeSDL.so---"
 make -C SnakeSDL >/dev/null 2>&1 && \
 cp -fr SnakeSDL/libSnakeSDL.so lib >/dev/null 2>&1
+echo -e "\e[33m---Making libSnakeSFML.so---"
+make -C SnakeSFML >/dev/null 2>&1 && \
+cp -fr SnakeSFML/libSnakeSFML.so lib >/dev/null 2>&1
 echo -e "\e[32m---Running CMake---"
 cmake .
 echo -e "\e[32m---Making nibbler---\e[0m"
