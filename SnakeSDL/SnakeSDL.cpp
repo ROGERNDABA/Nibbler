@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 13:35:28 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 15:05:29 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ SnakeSDL::SnakeSDL(int w, int h)
     std::fill(_key, _key + 4, false);
     _key[3] = true;
     this->_body = tvt;
+    this->_obstacles = new std::vector<TVertex>;
+    initObstacles();
     this->randFood();
     this->init();
 }
 
 SnakeSDL::SnakeSDL(SnakeT Snake) {
-    _body = Snake.vertex;
+    WINW = Snake.WINW;
+    WINH = Snake.WINH;
+    _body = Snake.body;
+    _obstacles = Snake.obstacles;
     _food = Snake.food;
     _key = Snake.key;
     _prevKey = Snake.prevKey;
@@ -60,6 +65,7 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 
 SnakeSDL::~SnakeSDL() {
     delete _body;
+    delete _obstacles;
     SDL_DestroyWindow(_display);
     TTF_Quit();
     SDL_Quit();
@@ -150,6 +156,13 @@ void SnakeSDL::init() {
 
             r.w = 14;
             r.h = 14;
+
+            for (std::vector<TVertex>::iterator it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+                r.x = it->x1;
+                r.y = it->y1;
+                SDL_SetRenderDrawColor(_renderer, 196, 249, 255, 255);
+                SDL_RenderFillRect(_renderer, &r);
+            }
             for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
                 r.x = it->x1;
                 r.y = it->y1;
@@ -161,7 +174,7 @@ void SnakeSDL::init() {
             }
 
             r.x = _food.x1, r.y = _food.y1;
-            SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+            SDL_SetRenderDrawColor(_renderer, 0, 255, 0, 255);
             SDL_RenderFillRect(_renderer, &r);
             _start = _now;
             prevEvent = 0;
@@ -269,7 +282,13 @@ bool SnakeSDL::moveHead(int key) {
 }
 
 bool SnakeSDL::checkCollusion(TVertex& tv) {
-    for (std::vector<TVertex>::iterator it = _body->begin() + 1; it != _body->end(); ++it) {
+    std::vector<TVertex>::iterator it;
+    for (it = _body->begin() + 1; it != _body->end(); ++it) {
+        if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
+            return true;
+        }
+    }
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (tv.x1 == it->x1 && tv.x2 == it->x2 && tv.y1 == it->y1 && tv.y2 == it->y2) {
             return true;
         }
@@ -277,6 +296,37 @@ bool SnakeSDL::checkCollusion(TVertex& tv) {
     if (tv.x1 < 0 || tv.x2 > WINW || tv.y1 < 60 || tv.y2 > WINH + 60)
         return true;
     return false;
+}
+
+void SnakeSDL::initObstacles() {
+    TVertex tv;
+    TVertex tv2;
+    for (int i = 0; i < 10; i++) {
+        int rx = 2 + (std::rand() % ((WINW / 15) - 2));
+        int ry = 2 + (std::rand() % ((WINH / 15) - 2));
+
+        tv.x1 = rx * 15, tv.y1 = (ry * 15) + 60, tv.x2 = tv.x1 + 15, tv.y2 = tv.y1 + 15;
+
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1 - 15, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x2, tv2.y1 = tv.y1 + 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+
+        tv2.x1 = tv.x1, tv2.y1 = tv.y1 - 15, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        tv2.x1 = tv.x1, tv2.y1 = tv.y2, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
+        _obstacles->push_back(tv2);
+        _obstacles->push_back(tv);
+    }
 }
 
 void SnakeSDL::randFood() {
@@ -289,6 +339,13 @@ void SnakeSDL::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+    std::vector<TVertex>::iterator it;
+    for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
+        if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
+            SnakeSDL::randFood();
+            std::cout << "yip" << std::endl;
+        }
+    }
 }
 
 SnakeSDL* createSnake(int w, int h) {
