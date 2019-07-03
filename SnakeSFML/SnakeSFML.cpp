@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 12:34:49 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 13:07:46 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,10 +270,10 @@ void SnakeSFML::randFood() {
     _food.y2 = _food.y1 + 15;
 }
 
-SnakeSFML* createSnakeAllegro(int w, int h) {
+SnakeSFML* createSnake(int w, int h) {
     return new SnakeSFML(w, h);
 }
 
-void deleteSnakeAllegro(SnakeSFML* sa) {
+void deleteSnake(SnakeSFML* sa) {
     delete sa;
 }

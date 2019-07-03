@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 10:59:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 13:06:57 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ class SnakeSDL {
 };
 
 extern "C" {
-SnakeSDL *createSnakeAllegro(int, int);
-void deleteSnakeAllegro(SnakeSDL *);
+SnakeSDL *createSnake(int, int);
+void deleteSnake(SnakeSDL *);
 }
 
 #endif  //SNAKESDL_HPP

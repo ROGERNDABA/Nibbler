@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/02 15:20:25 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/03 13:06:18 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,10 +302,10 @@ SnakeT SnakeAllegro::getSnake() const {
     return this->SNAKE;
 }
 
-SnakeAllegro* createSnakeAllegro(int w, int h) {
+SnakeAllegro* createSnake(int w, int h) {
     return new SnakeAllegro(w, h);
 }
 
-void deleteSnakeAllegro(SnakeAllegro* sa) {
+void deleteSnake(SnakeAllegro* sa) {
     delete sa;
 }
