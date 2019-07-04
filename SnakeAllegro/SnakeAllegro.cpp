@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 12:14:01 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 16:05:02 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->init();
 }
 
-SnakeAllegro::SnakeAllegro(SnakeT Snake) {
+void SnakeAllegro::updateSnake(SnakeT Snake) {
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -92,13 +92,13 @@ void SnakeAllegro::init() {
     if (!al_init_primitives_addon()) {
         std::cout << "al_primitives" << std::endl;
         throw std::exception();
-        throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
+        // throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
     }
 
     if (!al_init_ttf_addon()) {
         std::cout << "al_ttf" << std::endl;
         throw std::exception();
-        throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
+        // throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
     }
 
     _timer = al_create_timer(1.0 / _speed);
@@ -386,7 +386,7 @@ SnakeT SnakeAllegro::getSnake() const {
     return this->SNAKE;
 }
 
-SnakeAllegro* createSnake(int w, int h) {
+SnakeAllegro* createSnake(const int w, const int h) {
     return new SnakeAllegro(w, h);
 }
 

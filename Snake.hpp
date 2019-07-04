@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 14:51:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 13:29:23 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,9 @@ typedef struct SnakeS {
 
 class Snake {
    public:
-    class SnakeException : std::exception {
-       private:
-        std::string _exc;
-
-       public:
-        SnakeException(std::string);
-        SnakeException(SnakeException const &);
-        SnakeException &operator=(SnakeException const &);
-        virtual const char *what() const throw();
-    };
     virtual void init() = 0;
     virtual SnakeT getSnake(void) const = 0;
+    virtual void updateSnake(SnakeT) = 0;
     virtual ~Snake(){};
 };
 

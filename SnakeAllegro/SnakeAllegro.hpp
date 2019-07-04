@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 11:50:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 16:12:23 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <allegro5/allegro_opengl.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include <NibblerException.hpp>
 #include <Snake.hpp>
 
 class SnakeAllegro : public Snake {
@@ -46,7 +47,7 @@ class SnakeAllegro : public Snake {
     double _now;
 
    public:
-    class SnakeAllegroException : std::exception {
+    class SnakeAllegroException : public NibblerException {
        private:
         std::string _exc;
 
@@ -58,12 +59,12 @@ class SnakeAllegro : public Snake {
     };
 
     SnakeAllegro(const int, const int);
-    SnakeAllegro(SnakeT);
     SnakeAllegro(SnakeAllegro const &);
     SnakeAllegro &operator=(SnakeAllegro const &);
     ~SnakeAllegro();
 
     SnakeT getSnake(void) const;
+    void updateSnake(SnakeT);
 
     void init();
     void initObstacles();
