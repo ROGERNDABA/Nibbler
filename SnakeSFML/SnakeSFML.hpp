@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:45:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:23:25 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <SFML/Window.hpp>
 #include <Snake.hpp>
 
-class SnakeSFML {
+class SnakeSFML : public Snake {
    private:
     std::vector<TVertex> *_body;
     std::vector<TVertex> *_obstacles;
@@ -58,7 +58,7 @@ class SnakeSFML {
     SnakeSFML &operator=(SnakeSFML const &);
     ~SnakeSFML();
 
-    SnakeT getSnake();
+    SnakeT getSnake() const;
     void updateSnake(SnakeT);
 
     void init();
@@ -71,7 +71,7 @@ class SnakeSFML {
 
 extern "C" {
 SnakeSFML *createSnake(int, int);
-void deleteSnakeAllegro(SnakeSFML *);
+void deleteSnake(SnakeSFML *);
 }
 
 #endif  //SNAKESFML_HPP

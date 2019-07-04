@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:51:00 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:23:47 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->initObstacles();
     this->randFood();
-    this->init();
+    std::cout << "oooooooooooooooooooooooooooooo" << std::endl;
+    // this->init();
 }
 
 void SnakeSFML::updateSnake(SnakeT Snake) {
@@ -64,7 +65,10 @@ SnakeSFML::SnakeSFMLException& SnakeSFML::SnakeSFMLException::operator=(SnakeSFM
 }
 
 SnakeSFML::~SnakeSFML() {
-    // _display.close();
+    delete _obstacles;
+    delete _body;
+    if (_display.isOpen())
+        _display.close();
 }
 
 SnakeSFML::SnakeSFML(SnakeSFML const& copy) {
@@ -355,7 +359,7 @@ void SnakeSFML::randFood() {
     }
 }
 
-SnakeT SnakeSFML::getSnake() {
+SnakeT SnakeSFML::getSnake() const {
     return this->SNAKE;
 }
 
