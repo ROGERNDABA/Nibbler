@@ -146,7 +146,7 @@ void SnakeAllegro::init() {
     }
 
     int prevEvent;
-    while (!_softExit || !_doExit) {
+    while (!_softExit && !_doExit) {
         ALLEGRO_EVENT ev;
         al_get_next_event(_eQueue, &ev);
         _now = al_get_time();
