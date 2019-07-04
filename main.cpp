@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:11:10 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:48:14 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int ac, char *av[]) {
     (void)ac;
     void *dl_handle;
 
-    dl_handle = dlopen("lib/libSnakeSDL.so", RTLD_LAZY | RTLD_LOCAL);
+    dl_handle = dlopen("lib/libSnakeSFML.so", RTLD_LAZY | RTLD_LOCAL);
     if (!dl_handle) {
         dl_error();
         exit(EXIT_FAILURE);
@@ -40,6 +40,7 @@ int main(int ac, char *av[]) {
         try {
             ssa = sa(900, 600);
             ssa->init();
+
         } catch (const NibblerException &e) {
             std::cerr << e.what() << '\n';
         }

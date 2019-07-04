@@ -6,13 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 12:53:54 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:45:07 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SNAKESFML_HPP
 #define SNAKESFML_HPP
 
+#include <NibblerException.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Snake.hpp>
@@ -27,6 +28,7 @@ class SnakeSFML {
     float _now;
     TVertex _food;
     TVertex _bonus;
+    SnakeT SNAKE;
     int WINW;
     int WINH;
 
@@ -39,7 +41,7 @@ class SnakeSFML {
     bool _valBonus;
 
    public:
-    class SnakeSFMLException : std::exception {
+    class SnakeSFMLException : public NibblerException {
        private:
         std::string _exc;
 
@@ -51,15 +53,16 @@ class SnakeSFML {
     };
 
     SnakeSFML(int, int);
-    SnakeSFML(SnakeT);
 
     SnakeSFML(SnakeSFML const &);
     SnakeSFML &operator=(SnakeSFML const &);
     ~SnakeSFML();
 
+    SnakeT getSnake();
+    void updateSnake(SnakeT);
+
     void init();
     void initObstacles();
-    // void drawRect(TVertex &, ALLEGRO_COLOR);
     bool checkFood();
     void randFood();
     bool moveHead(int);

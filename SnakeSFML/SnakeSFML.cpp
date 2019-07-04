@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 13:10:21 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:51:00 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->init();
 }
 
-SnakeSFML::SnakeSFML(SnakeT Snake) {
+void SnakeSFML::updateSnake(SnakeT Snake) {
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -64,7 +64,7 @@ SnakeSFML::SnakeSFMLException& SnakeSFML::SnakeSFMLException::operator=(SnakeSFM
 }
 
 SnakeSFML::~SnakeSFML() {
-    _display.close();
+    // _display.close();
 }
 
 SnakeSFML::SnakeSFML(SnakeSFML const& copy) {
@@ -78,6 +78,8 @@ SnakeSFML& SnakeSFML::operator=(SnakeSFML const& rhs) {
 }
 
 void SnakeSFML::init() {
+    std::cout << "-----------------" << std::endl;
+
     _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
     sf::Text text;
 
@@ -351,6 +353,10 @@ void SnakeSFML::randFood() {
             return;
         }
     }
+}
+
+SnakeT SnakeSFML::getSnake() {
+    return this->SNAKE;
 }
 
 SnakeSFML* createSnake(int w, int h) {
