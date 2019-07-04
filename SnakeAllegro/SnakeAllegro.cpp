@@ -6,14 +6,15 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 18:34:44 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:58:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
 SnakeAllegro::SnakeAllegro(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _start(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
+    _display = NULL, _eQueue = NULL, _timer = NULL;
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -29,6 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
+    init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -144,7 +146,7 @@ void SnakeAllegro::init() {
     }
 
     int prevEvent;
-    while (!_doExit) {
+    while (!_softExit || !_doExit) {
         ALLEGRO_EVENT ev;
         al_get_next_event(_eQueue, &ev);
         _now = al_get_time();
@@ -224,6 +226,15 @@ void SnakeAllegro::init() {
                         std::fill(_key, _key + 4, false);
                         _key[KEY_RIGHT] = true;
                     }
+                } break;
+                case ALLEGRO_KEY_1:
+                case ALLEGRO_KEY_PAD_1:
+                case ALLEGRO_KEY_2:
+                case ALLEGRO_KEY_PAD_2:
+                case ALLEGRO_KEY_3:
+                case ALLEGRO_KEY_PAD_3: {
+                    _doExit = true;
+                    _softExit = true;
                 } break;
                 case ALLEGRO_KEY_ESCAPE:
                     _doExit = true;
