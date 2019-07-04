@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 15:45:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 12:53:54 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ class SnakeSFML {
     std::vector<TVertex> *_body;
     std::vector<TVertex> *_obstacles;
     sf::RenderWindow _display;
-    // SDL_Renderer *_renderer;
-    // SDL_Event _event;
     sf::Clock _clock;
     float _start;
     float _now;
     TVertex _food;
+    TVertex _bonus;
     int WINW;
     int WINH;
 
@@ -36,6 +35,8 @@ class SnakeSFML {
     bool _doExit;
     float _speed;
     int _score;
+    int _trackFood;
+    bool _valBonus;
 
    public:
     class SnakeSFMLException : std::exception {

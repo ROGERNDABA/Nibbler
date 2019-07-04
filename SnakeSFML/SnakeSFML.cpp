@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 16:00:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 13:10:21 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSFML.hpp"
 
 SnakeSFML::SnakeSFML(int w, int h)
-    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -97,9 +97,7 @@ void SnakeSFML::init() {
 
             if (checkFood()) {
                 randFood();
-                // _speed += 0.5;
                 _score += _speed;
-                // al_set_timer_speed(_timer, 1.0 / _speed);
             }
 
             if (_key[KEY_UP]) {
@@ -153,8 +151,15 @@ void SnakeSFML::init() {
                 _display.draw(r);
             }
             r.setPosition(_food.x1, _food.y1);
-            r.setFillColor(sf::Color::White);
+            r.setFillColor(sf::Color(0, 255, 0));
             _display.draw(r);
+            if (_valBonus) {
+                sf::CircleShape cir;
+                cir.setPosition(_bonus.x1 - 2, _bonus.y1 - 2);
+                cir.setFillColor(sf::Color(0, 100, 255));
+                cir.setRadius(10);
+                _display.draw(cir);
+            }
             _display.display();
             _start = _now;
             ev.type = sf::Event::LostFocus;
@@ -214,7 +219,23 @@ bool SnakeSFML::checkFood() {
         tmp.x2 == _food.x2 &&
         tmp.y2 == _food.y2) {
         _body->push_back(tmp);
+        _trackFood++;
+        if (_trackFood % 5 == 0) {
+            _valBonus = true;
+            _speed += 0.2;
+        } else {
+            _valBonus = false;
+        }
         return true;
+    } else if (tmp.y1 == _bonus.y1 &&
+               tmp.x1 == _bonus.x1 &&
+               tmp.x2 == _bonus.x2 &&
+               tmp.y2 == _bonus.y2) {
+        _body->push_back(tmp);
+        _speed += 0.2;
+        _score += 20;
+        _trackFood = 0;
+        _valBonus = false;
     }
     return false;
 }
@@ -305,19 +326,29 @@ void SnakeSFML::initObstacles() {
 }
 
 void SnakeSFML::randFood() {
-    int tmpx = WINW / 15;
-    int tmpy = WINH / 15;
-
-    int ranx = 1 + (std::rand() % (tmpx - 1)) - 1;
-    int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
+    int ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+    int rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+
+    if (_valBonus && _trackFood % 5 == 0) {
+        ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+        rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
+        _bonus.x1 = ranx * 15;
+        _bonus.x2 = _bonus.x1 + 15;
+        _bonus.y1 = (rany * 15) + 60;
+        _bonus.y2 = _bonus.y1 + 15;
+    }
     std::vector<TVertex>::iterator it;
     for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
             SnakeSFML::randFood();
+            return;
+        } else if (_bonus.x1 == it->x1 && _bonus.x2 == it->x2 && _bonus.y1 == it->y1 && _bonus.y2 == it->y2) {
+            SnakeSFML::randFood();
+            return;
         }
     }
 }
