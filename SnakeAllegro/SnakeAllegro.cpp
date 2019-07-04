@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 22:10:12 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 12:10:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeAllegro.hpp"
 
 SnakeAllegro::SnakeAllegro(int w, int h)
-    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _start(0) {
+    : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _start(0) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -150,7 +150,15 @@ void SnakeAllegro::init() {
             if (checkFood()) {
                 // _trackFood++;
                 randFood();
-                _speed += 0.5;
+                // _speed += 0.5;
+                // if (_valBonus && _trackFood % 5 == 0) {
+                //     randBonus();
+                //     std::cout << "---------------------------------" << std::endl;
+                //     std::cout << "bonus x1" << _bonus.x1 << std::endl;
+                //     std::cout << "bonus x2" << _bonus.x2 << std::endl;
+                //     std::cout << "bonus y1" << _bonus.y1 << std::endl;
+                //     std::cout << "bonus y2" << _bonus.y2 << std::endl;
+                // }
                 _score += _speed;
 
                 // al_set_timer_speed(_timer, 1.0 / _speed);
@@ -184,10 +192,10 @@ void SnakeAllegro::init() {
             al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
 
             drawRect(_food, al_map_rgb(0, 255, 0));
-            // if (_trackFood >= 5) {
-            //     al_draw_filled_circle(_bonus.x1 + 7,
-            //                           _bonus.y1 + 7, 7, al_map_rgb(0, 255, 0));
-            // }
+            if (_valBonus) {
+                al_draw_filled_circle(_bonus.x1 + 7,
+                                      _bonus.y1 + 7, 10, al_map_rgb(0, 100, 255));
+            }
             al_flip_display();
             _start = _now;
             prevEvent = 0;
@@ -247,24 +255,25 @@ void SnakeAllegro::randFood() {
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
-    // ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
-    // rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
-    // _bonus.x1 = ranx * 15;
-    // _bonus.x2 = _bonus.x1 + 15;
-    // _bonus.y1 = (rany * 15) + 60;
-    // _bonus.y2 = _bonus.y1 + 15;
+
+    if (_valBonus && _trackFood % 5 == 0) {
+        ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+        rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
+        _bonus.x1 = ranx * 15;
+        _bonus.x2 = _bonus.x1 + 15;
+        _bonus.y1 = (rany * 15) + 60;
+        _bonus.y2 = _bonus.y1 + 15;
+    }
     std::vector<TVertex>::iterator it;
     for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
             SnakeAllegro::randFood();
             return;
+        } else if (_bonus.x1 == it->x1 && _bonus.x2 == it->x2 && _bonus.y1 == it->y1 && _bonus.y2 == it->y2) {
+            SnakeAllegro::randFood();
+            return;
         }
-        // else if (_bonus.x1 == it->x1 && _bonus.x2 == it->x2 && _bonus.y1 == it->y1 && _bonus.y2 == it->y2) {
-        //     SnakeAllegro::randFood();
-        //     return;
-        // }
     }
-    _trackFood++;
 }
 
 bool SnakeAllegro::checkFood() {
@@ -275,16 +284,24 @@ bool SnakeAllegro::checkFood() {
         tmp.y2 == _food.y2) {
         _body->push_back(tmp);
         _trackFood++;
+        if (_trackFood % 5 == 0) {
+            _valBonus = true;
+            _speed += 0.2;
+        } else {
+            _valBonus = false;
+        }
         return true;
+    } else if (tmp.y1 == _bonus.y1 &&
+               tmp.x1 == _bonus.x1 &&
+               tmp.x2 == _bonus.x2 &&
+               tmp.y2 == _bonus.y2) {
+        _body->push_back(tmp);
+        _speed += 0.2;
+        _score += 20;
+        _trackFood = 0;
+        _valBonus = false;
+        // return true;
     }
-    //  else if (tmp.y1 == _bonus.y1 &&
-    //            tmp.x1 == _bonus.x1 &&
-    //            tmp.x2 == _bonus.x2 &&
-    //            tmp.y2 == _bonus.y2) {
-    //     _body->push_back(tmp);
-    //     _trackFood = 0;
-    //     return true;
-    // }
     return false;
 }
 

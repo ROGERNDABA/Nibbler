@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 21:57:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 11:50:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class SnakeAllegro : public Snake {
     float _speed;
     int _score;
     int _trackFood;
+    bool _valBonus;
 
     double _start;
     double _now;
