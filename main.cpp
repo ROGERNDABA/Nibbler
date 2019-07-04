@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 16:16:29 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:02:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,22 @@ int main(int ac, char *av[]) {
     }
 
     SNAKEALLEGRO sa = reinterpret_cast<SNAKEALLEGRO>(dlsym(dl_handle, "createSnake"));
-    Snake *ssa;
+    Snake *ssa = NULL;
     if (!sa) {
         std::cerr << "Done!" << std::endl;
     } else {
         try {
             ssa = sa(900, 600);
-        } catch (const std::exception &e) {
+            ssa->init();
+        } catch (const NibblerException &e) {
             std::cerr << e.what() << '\n';
         }
     }
-    DELETESNAKEALLEGRO dsa = reinterpret_cast<DELETESNAKEALLEGRO>(dlsym(dl_handle, "deleteSnake"));
+    if (ssa) {
+        DELETESNAKEALLEGRO dsa = reinterpret_cast<DELETESNAKEALLEGRO>(dlsym(dl_handle, "deleteSnake"));
+        dsa(ssa);
+    }
 
-    dsa(ssa);
     dlclose(dl_handle);
     return 0;
 }

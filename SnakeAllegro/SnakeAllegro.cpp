@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 16:36:27 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:04:22 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -66,10 +65,12 @@ SnakeAllegro::SnakeAllegroException& SnakeAllegro::SnakeAllegroException::operat
 SnakeAllegro::~SnakeAllegro() {
     delete _body;
     delete _obstacles;
-    al_destroy_timer(_timer);
-    al_destroy_display(_display);
-    al_destroy_event_queue(_eQueue);
-    std::cout << "\033[31mGame Over\033[m" << std::endl;
+    if (_timer)
+        al_destroy_timer(_timer);
+    if (_display)
+        al_destroy_display(_display);
+    if (_eQueue)
+        al_destroy_event_queue(_eQueue);
 }
 
 SnakeAllegro::SnakeAllegro(SnakeAllegro const& copy) {
@@ -83,17 +84,14 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
 }
 
 void SnakeAllegro::init() {
-    if (!al_init()) {
+    if (!al_init())
         throw SnakeAllegroException("Couldn't create window");
-    }
 
-    if (!al_init_primitives_addon()) {
+    if (!al_init_primitives_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
-    }
 
-    if (!al_init_ttf_addon()) {
+    if (!al_init_ttf_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
-    }
 
     _timer = al_create_timer(1.0 / _speed);
     if (!_timer) {
@@ -128,12 +126,19 @@ void SnakeAllegro::init() {
 
     ALLEGRO_FONT* font = NULL;
     ALLEGRO_FONT* fontH = NULL;
-    font = al_load_ttf_font("fontjs/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
     fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
 
-    if (!font || !fontH) {
-        throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
+    if (!font) {
+        throw SnakeAllegroException("Can't load fonts : font");
+        al_destroy_font(fontH);
     }
+
+    if (!fontH) {
+        throw SnakeAllegroException("Can't load fonts : fontH");
+        al_destroy_font(font);
+    }
+
     int prevEvent;
     while (!_doExit) {
         ALLEGRO_EVENT ev;
