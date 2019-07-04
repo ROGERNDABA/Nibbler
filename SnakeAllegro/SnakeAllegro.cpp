@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:06:51 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:25:49 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,17 @@ void SnakeAllegro::init() {
 
     ALLEGRO_FONT* font = NULL;
     ALLEGRO_FONT* fontH = NULL;
-    font = al_load_ttf_font("fontds/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
     fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
 
     if (!font) {
-        throw SnakeAllegroException("Can't load fonts : font");
         al_destroy_font(fontH);
+        throw SnakeAllegroException("Can't load fonts : font");
     }
 
     if (!fontH) {
-        throw SnakeAllegroException("Can't load fonts : fontH");
         al_destroy_font(font);
+        throw SnakeAllegroException("Can't load fonts : fontH");
     }
 
     int prevEvent;

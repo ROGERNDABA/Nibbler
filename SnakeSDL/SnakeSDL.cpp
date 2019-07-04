@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 12:52:40 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:33:35 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ SnakeSDL::SnakeSDL(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     initObstacles();
     this->randFood();
-    this->init();
 }
 
-SnakeSDL::SnakeSDL(SnakeT Snake) {
+void SnakeSDL::updateSnake(SnakeT Snake) {
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -64,9 +63,10 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 }
 
 SnakeSDL::~SnakeSDL() {
-    delete _body;
     delete _obstacles;
-    SDL_DestroyWindow(_display);
+    delete _body;
+    if (_display)
+        SDL_DestroyWindow(_display);
     TTF_Quit();
     SDL_Quit();
 }
@@ -98,7 +98,16 @@ void SnakeSDL::init() {
     _renderer = SDL_CreateRenderer(_display, -1, SDL_RENDERER_ACCELERATED);
 
     TTF_Font* font = TTF_OpenFont("fonts/big_noodle_titling.ttf", 18);
-    TTF_Font* fontHA = TTF_OpenFont("fonts/big_noodle_titling.ttf", 24);
+    TTF_Font* fontH = TTF_OpenFont("fonts/big_noodle_titling.ttf", 24);
+    if (!font) {
+        TTF_CloseFont(fontH);
+        throw SnakeSDLException("Couldn't open fonts");
+    }
+    if (!fontH) {
+        TTF_CloseFont(font);
+        throw SnakeSDLException("Couldn't open fonts");
+    }
+
     SDL_Surface* surface;
     SDL_Texture* texture;
     SDL_Color sdlc = {0, 0, 0, 255};
@@ -229,7 +238,7 @@ void SnakeSDL::init() {
         }
     }
     TTF_CloseFont(font);
-    TTF_CloseFont(fontHA);
+    TTF_CloseFont(fontH);
     SDL_DestroyTexture(texture);
     SDL_FreeSurface(surface);
 }
@@ -374,6 +383,10 @@ void SnakeSDL::randFood() {
             return;
         }
     }
+}
+
+SnakeT SnakeSDL::getSnake() const {
+    return this->SNAKE;
 }
 
 SnakeSDL* createSnake(int w, int h) {

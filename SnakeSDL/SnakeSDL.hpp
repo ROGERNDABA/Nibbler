@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 12:17:45 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 17:20:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <NibblerException.hpp>
 #include <Snake.hpp>
 
-class SnakeSDL {
+class SnakeSDL : public Snake {
    private:
     std::vector<TVertex> *_body;
     std::vector<TVertex> *_obstacles;
@@ -41,7 +42,7 @@ class SnakeSDL {
     bool _valBonus;
 
    public:
-    class SnakeSDLException : std::exception {
+    class SnakeSDLException : public NibblerException {
        private:
         std::string _exc;
 
@@ -53,14 +54,15 @@ class SnakeSDL {
     };
 
     SnakeSDL(const int, const int);
-    SnakeSDL(SnakeT);
     SnakeSDL(SnakeSDL const &);
     SnakeSDL &operator=(SnakeSDL const &);
     ~SnakeSDL();
 
+    SnakeT getSnake() const;
+    void updateSnake(SnakeT);
+
     void init();
     void initObstacles();
-    // void drawRect(TVertex &, ALLEGRO_COLOR);
     bool checkFood();
     void randFood();
     bool moveHead(int);
