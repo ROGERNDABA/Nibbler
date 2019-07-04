@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 12:10:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 12:14:01 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,20 +148,8 @@ void SnakeAllegro::init() {
         _now = al_get_time();
         if (_now >= _start + (1.0 / _speed)) {
             if (checkFood()) {
-                // _trackFood++;
                 randFood();
-                // _speed += 0.5;
-                // if (_valBonus && _trackFood % 5 == 0) {
-                //     randBonus();
-                //     std::cout << "---------------------------------" << std::endl;
-                //     std::cout << "bonus x1" << _bonus.x1 << std::endl;
-                //     std::cout << "bonus x2" << _bonus.x2 << std::endl;
-                //     std::cout << "bonus y1" << _bonus.y1 << std::endl;
-                //     std::cout << "bonus y2" << _bonus.y2 << std::endl;
-                // }
                 _score += _speed;
-
-                // al_set_timer_speed(_timer, 1.0 / _speed);
             }
             al_clear_to_color(al_map_rgb(0, 0, 0));
             if (_key[KEY_UP]) {
@@ -300,7 +288,6 @@ bool SnakeAllegro::checkFood() {
         _score += 20;
         _trackFood = 0;
         _valBonus = false;
-        // return true;
     }
     return false;
 }

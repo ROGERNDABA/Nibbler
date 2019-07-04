@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 14:56:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 12:17:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class SnakeSDL {
     Uint32 _start;
     Uint32 _now;
     TVertex _food;
+    TVertex _bonus;
     SnakeT SNAKE;
     int WINW;
     int WINH;
@@ -36,6 +37,8 @@ class SnakeSDL {
     bool _doExit;
     float _speed;
     int _score;
+    int _trackFood;
+    bool _valBonus;
 
    public:
     class SnakeSDLException : std::exception {

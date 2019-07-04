@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/03 16:01:16 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 12:52:40 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(10), _score(0) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -120,9 +120,7 @@ void SnakeSDL::init() {
             SDL_RenderClear(_renderer);
             if (checkFood()) {
                 randFood();
-                // _speed += 0.5;
                 _score += _speed;
-                // al_set_timer_speed(_timer, 1.0 / _speed);
             }
 
             if (_key[KEY_UP]) {
@@ -145,6 +143,7 @@ void SnakeSDL::init() {
             SDL_RenderFillRect(_renderer, &r);
 
             std::stringstream ss;
+            ss << _score;
             std::string s = "Score : " + ss.str();
             surface = TTF_RenderText_Solid(font, s.c_str(), sdlc);
             texture = SDL_CreateTextureFromSurface(_renderer, surface);
@@ -176,6 +175,12 @@ void SnakeSDL::init() {
             r.x = _food.x1, r.y = _food.y1;
             SDL_SetRenderDrawColor(_renderer, 0, 255, 0, 255);
             SDL_RenderFillRect(_renderer, &r);
+
+            if (_valBonus) {
+                r.x = _bonus.x1, r.y = _bonus.y1, r.w = 20, r.h = 20;
+                SDL_SetRenderDrawColor(_renderer, 0, 100, 255, 255);
+                SDL_RenderFillRect(_renderer, &r);
+            }
             _start = _now;
             prevEvent = 0;
             ev.type = SDL_TEXTINPUT;
@@ -226,9 +231,7 @@ void SnakeSDL::init() {
     TTF_CloseFont(font);
     TTF_CloseFont(fontHA);
     SDL_DestroyTexture(texture);
-    // SDL_DestroyTexture(texture2);
     SDL_FreeSurface(surface);
-    // SDL_FreeSurface(surface2);
 }
 
 bool SnakeSDL::checkFood() {
@@ -238,7 +241,23 @@ bool SnakeSDL::checkFood() {
         tmp.x2 == _food.x2 &&
         tmp.y2 == _food.y2) {
         _body->push_back(tmp);
+        _trackFood++;
+        if (_trackFood % 5 == 0) {
+            _valBonus = true;
+            _speed += 0.2;
+        } else {
+            _valBonus = false;
+        }
         return true;
+    } else if (tmp.y1 == _bonus.y1 &&
+               tmp.x1 == _bonus.x1 &&
+               tmp.x2 == _bonus.x2 &&
+               tmp.y2 == _bonus.y2) {
+        _body->push_back(tmp);
+        _speed += 0.2;
+        _score += 20;
+        _trackFood = 0;
+        _valBonus = false;
     }
     return false;
 }
@@ -330,19 +349,29 @@ void SnakeSDL::initObstacles() {
 }
 
 void SnakeSDL::randFood() {
-    int tmpx = WINW / 15;
-    int tmpy = WINH / 15;
-
-    int ranx = 1 + (std::rand() % (tmpx - 1)) - 1;
-    int rany = 1 + (std::rand() % (tmpy - 1)) - 1;
+    int ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+    int rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
     _food.x1 = ranx * 15;
     _food.x2 = _food.x1 + 15;
     _food.y1 = (rany * 15) + 60;
     _food.y2 = _food.y1 + 15;
+
+    if (_valBonus && _trackFood % 5 == 0) {
+        ranx = 1 + (std::rand() % ((WINW / 15) - 1)) - 1;
+        rany = 1 + (std::rand() % ((WINH / 15) - 1)) - 1;
+        _bonus.x1 = ranx * 15;
+        _bonus.x2 = _bonus.x1 + 15;
+        _bonus.y1 = (rany * 15) + 60;
+        _bonus.y2 = _bonus.y1 + 15;
+    }
     std::vector<TVertex>::iterator it;
     for (it = _obstacles->begin(); it != _obstacles->end(); ++it) {
         if (_food.x1 == it->x1 && _food.x2 == it->x2 && _food.y1 == it->y1 && _food.y2 == it->y2) {
             SnakeSDL::randFood();
+            return;
+        } else if (_bonus.x1 == it->x1 && _bonus.x2 == it->x2 && _bonus.y1 == it->y1 && _bonus.y2 == it->y2) {
+            SnakeSDL::randFood();
+            return;
         }
     }
 }
