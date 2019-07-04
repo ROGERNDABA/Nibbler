@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 18:58:27 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 19:22:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ void SnakeAllegro::init() {
                 case ALLEGRO_KEY_PAD_2:
                 case ALLEGRO_KEY_3:
                 case ALLEGRO_KEY_PAD_3: {
-                    _doExit = true;
                     _softExit = true;
                 } break;
                 case ALLEGRO_KEY_ESCAPE:
