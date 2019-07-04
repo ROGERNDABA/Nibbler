@@ -5,13 +5,7 @@
 #include <iostream>
 
 class NibblerException : std::exception {
-   private:
-    std::string _exc;
-
    public:
-    NibblerException(std::string);
-    NibblerException(NibblerException const &);
-    NibblerException &operator=(NibblerException const &);
-    virtual const char *what() const throw();
+    virtual const char *what() const throw() = 0;
 };
 #endif  //NIBBLEREXCEPTION_HPP

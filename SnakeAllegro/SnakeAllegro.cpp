@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 16:05:02 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 16:36:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,15 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
 
 void SnakeAllegro::init() {
     if (!al_init()) {
-        // throw SnakeAllegroException("Couldn't create window");
-        std::cout << "al_init" << std::endl;
-        throw std::exception();
+        throw SnakeAllegroException("Couldn't create window");
     }
 
     if (!al_init_primitives_addon()) {
-        std::cout << "al_primitives" << std::endl;
-        throw std::exception();
-        // throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
+        throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
     }
 
     if (!al_init_ttf_addon()) {
-        std::cout << "al_ttf" << std::endl;
-        throw std::exception();
-        // throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
+        throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
     }
 
     _timer = al_create_timer(1.0 / _speed);
@@ -134,11 +128,10 @@ void SnakeAllegro::init() {
 
     ALLEGRO_FONT* font = NULL;
     ALLEGRO_FONT* fontH = NULL;
-    font = al_load_ttf_font("fonts/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
+    font = al_load_ttf_font("fontjs/big_noodle_titling.ttf", 18, ALLEGRO_TTF_MONOCHROME);
     fontH = al_load_ttf_font("fonts/big_noodle_titling.ttf", 24, ALLEGRO_TTF_MONOCHROME);
 
     if (!font || !fontH) {
-        std::cout << "al_font" << std::endl;
         throw SnakeAllegro::SnakeAllegroException("Can't load fonts");
     }
     int prevEvent;
