@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 18:02:03 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:25:52 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int ac, char *av[]) {
     } else {
         try {
             ssa = sa(900, 600);
-            // ssa->init();
+            ssa->init();
 
         } catch (const NibblerException &e) {
             std::cerr << e.what() << '\n';
