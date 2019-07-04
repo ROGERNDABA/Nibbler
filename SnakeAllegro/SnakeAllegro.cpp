@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:25:49 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:34:44 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
+    _start = 0;
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -42,6 +43,9 @@ void SnakeAllegro::updateSnake(SnakeT Snake) {
     _doExit = Snake.doExit;
     _speed = Snake.speed;
     _score = Snake.score;
+    _bonus = Snake.bonus;
+    _trackFood = Snake.trackFood;
+    _valBonus = Snake.valBonus;
 }
 
 SnakeAllegro::SnakeAllegroException::SnakeAllegroException(std::string exc) {

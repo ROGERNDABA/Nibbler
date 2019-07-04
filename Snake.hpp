@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 13:29:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/04 18:33:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ typedef struct SnakeS {
     int WINW;
     int WINH;
     TVertex food;
+    TVertex bonus;
     bool *key;
     int prevKey;
     bool doExit;
     float speed;
     int score;
+    int trackFood;
+    bool valBonus;
 } SnakeT;
 
 class Snake {
