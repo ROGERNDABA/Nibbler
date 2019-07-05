@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:13 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:32:38 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:52:38 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "Snake.hpp"
 
 typedef Snake *(*SNAKE)(int, int);
+typedef Snake *(*UPDATESNAKE)(SnakeT);
 typedef void (*DELETESNAKE)(Snake *);
 
 class Nibbler {
@@ -26,6 +27,8 @@ class Nibbler {
     int _lib;
     int _softExit;
     void *_dl;
+    SNAKE _snake;
+    Snake *_gameSnake;
     // bool _started;
     std::map<int, std::string> _libs;
 
@@ -48,6 +51,7 @@ class Nibbler {
     ~Nibbler();
 
     void setup(std::string);
+    void play(int);
 };
 
 #endif  //NIBBLER_HPP
