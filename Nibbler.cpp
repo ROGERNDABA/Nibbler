@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:07:09 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:34:21 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ Nibbler::Nibbler(std::string w, std::string h, std::string lib) : _dl(NULL), _ga
         if ((_w == 600 && _h == 510) || (_w == 900 && _h == 600)) {  // || (_w == 6 && _h == 510))
             for (auto& c : lib) c = toupper(c);
             this->setup(lib);
-            std::cout << "yeah" << std::endl;
         } else {
             throw NibblerExceptionE("Invalid dimensions\nChoose between 600 x 510, 900 x 600 and ");
         }
@@ -67,9 +66,9 @@ Nibbler& Nibbler::operator=(Nibbler const& rhs) {
 }
 
 void Nibbler::setup(std::string lib) {
-    _libs[0] = "lib/libSnakeAllegro.so";
-    _libs[1] = "lib/libSnakeSDL.so";
-    _libs[2] = "lib/libSnakeSFML.so";
+    _libs[1] = "lib/libSnakeAllegro.so";
+    _libs[2] = "lib/libSnakeSDL.so";
+    _libs[3] = "lib/libSnakeSFML.so";
 
     if (lib == "ALLEGRO") {
         _softExit = 1;
@@ -83,48 +82,59 @@ void Nibbler::setup(std::string lib) {
 }
 
 void Nibbler::play(int softExit) {
-    if (softExit != 1 && softExit != 2 && softExit != 3) {
-        _dl = dlopen(_libs[_softExit].c_str(), RTLD_LAZY | RTLD_LOCAL);
-        if (!_dl) {
-            throw NibblerExceptionE("dl_error : could not open library");
-        }
-        SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
-        if (!_snake)
-            throw NibblerExceptionE("Some snake Error");
-        else {
-            try {
-                _gameSnake = _snake(_w, _h);
-                _gameSnake->init();
-                _softExit = _gameSnake->getEvent();
-                if (_softExit) {
-                    Nibbler::play(_softExit);
+    try {
+        if (softExit != 1 && softExit != 2 && softExit != 3) {
+            std::cout << "I'm HERE" << std::endl;
+            // std::cout << "---> lib = " << _libs[_softExit] << std::endl;
+            _dl = dlopen(_libs[_softExit].c_str(), RTLD_LAZY | RTLD_LOCAL);
+            if (!_dl) {
+                throw NibblerExceptionE("dl_error : could not open library");
+            }
+            SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
+            if (!_snake)
+                throw NibblerExceptionE("Some snake Error");
+            else {
+                try {
+                    _gameSnake = _snake(_w, _h);
+                    _gameSnake->init();
+                    _softExit = _gameSnake->getEvent();
+                    std::cout << "++++ " << _softExit << " ++++" << std::endl;
+                    if (_softExit) {
+                        Nibbler::play(_softExit);
+                    }
+                } catch (const NibblerException& e) {
+                    std::cerr << e.what() << '\n';
                 }
-            } catch (const NibblerException& e) {
-                std::cerr << e.what() << '\n';
+            }
+        } else {
+            // std::cout << "---> lib = " << _libs[_softExit] << std::endl;
+
+            _dl = dlopen(_libs[_softExit].c_str(), RTLD_LAZY | RTLD_LOCAL);
+            if (!_dl) {
+                throw NibblerExceptionE("dl_error : could not open library");
+            }
+            SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
+            if (!_snake)
+                throw NibblerExceptionE("Some snake Error");
+            else {
+                try {
+                    SnakeT tmp = _gameSnake->getSnake();
+                    _gameSnake = _snake(_w, _h);
+                    _gameSnake->updateSnake(tmp);
+                    _gameSnake->init();
+                    _softExit = _gameSnake->getEvent();
+                    if (_softExit) {
+                        Nibbler::play(_softExit);
+                    }
+                } catch (const NibblerException& e) {
+                    std::cerr << e.what() << '\n';
+                }
             }
         }
-    } else {
-        _dl = dlopen(_libs[_softExit].c_str(), RTLD_LAZY | RTLD_LOCAL);
-        if (!_dl) {
-            throw NibblerExceptionE("dl_error : could not open library");
-        }
-        SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
-        if (!_snake)
-            throw NibblerExceptionE("Some snake Error");
-        else {
-            try {
-                SnakeT tmp = _gameSnake->getSnake();
-                _gameSnake = _snake(_w, _h);
-                _gameSnake->updateSnake(tmp);
-                _gameSnake->init();
-                _softExit = _gameSnake->getEvent();
-                if (_softExit) {
-                    Nibbler::play(_softExit);
-                }
-            } catch (const NibblerException& e) {
-                std::cerr << e.what() << '\n';
-            }
-        }
+    } catch (const NibblerExceptionE& e) {
+        std::cerr << e.what() << '\n';
     }
-    DELETESNAKE _deleteSnake = reinterpret_cast<DELETESNAKE>(dlsym(_dl, "deleteSnake"));
+    _deleteSnake = reinterpret_cast<DELETESNAKE>(dlsym(_dl, "deleteSnake"));
+    if (_gameSnake)
+        _deleteSnake(_gameSnake);
 }

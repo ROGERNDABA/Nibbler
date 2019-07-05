@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:59:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:13:51 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->initObstacles();
     this->randFood();
-    // this->init();
 }
 
 void SnakeSFML::updateSnake(SnakeT Snake) {
