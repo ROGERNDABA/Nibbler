@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 18:51:26 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 19:36:16 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    this->init();
+    // this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {

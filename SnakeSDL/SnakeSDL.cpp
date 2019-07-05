@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 19:14:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 19:35:54 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ SnakeSDL::SnakeSDL(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     initObstacles();
     this->randFood();
-    this->init();
+    // this->init();
 }
 
 void SnakeSDL::updateSnake(SnakeT Snake) {

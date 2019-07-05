@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 16:21:29 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 19:35:41 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->initObstacles();
     this->randFood();
+    // this->init();
 }
 
 void SnakeSFML::updateSnake(SnakeT Snake) {
@@ -216,9 +217,10 @@ void SnakeSFML::init() {
                 case sf::Keyboard::Numpad3:
                     _softExit = 3;
                     break;
-                case sf::Keyboard::Escape:
+                case sf::Keyboard::Escape: {
+                    this->gameOver();
                     _doExit = true;
-                    break;
+                } break;
                 default:
                     break;
             }
@@ -305,7 +307,12 @@ bool SnakeSFML::moveHead(int key) {
             _body->insert(_body->begin(), tail);
         } break;
     }
-    return (checkCollusion(tail)) ? true : false;
+    if (checkCollusion(tail)) {
+        this->gameOver();
+        return true;
+    } else {
+        return false;
+    }
 }
 bool SnakeSFML::checkCollusion(TVertex& tv) {
     std::vector<TVertex>::iterator it;
@@ -383,6 +390,36 @@ void SnakeSFML::randFood() {
             SnakeSFML::randFood();
             return;
         }
+    }
+}
+
+void SnakeSFML::gameOver() {
+    sf::Text text;
+    sf::Font font;
+    if (!font.loadFromFile("fonts/XO.TTF")) {
+        return;
+    }
+    double start = _clock.getElapsedTime().asSeconds();
+    double now = _clock.getElapsedTime().asSeconds();
+    while ((now - start) <= 5) {
+        _display.clear(sf::Color::Black);
+
+        text.setFillColor(sf::Color(255, 255, 255));
+        text.setFont(font);
+        std::stringstream ss;
+        ss << _score;
+        std::string s = "Score " + ss.str();
+        text.setString(s.c_str());
+        text.setPosition((WINW / 2) - 60, (WINH / 2));
+        text.setCharacterSize(24);
+        _display.draw(text);
+        text.setFillColor(sf::Color(255, 0, 0));
+        text.setString("GAME OVER");
+        text.setPosition((WINW / 2) - 100, (WINH / 2) - 90);
+        text.setCharacterSize(60);
+        _display.draw(text);
+        _display.display();
+        now = _clock.getElapsedTime().asSeconds();
     }
 }
 

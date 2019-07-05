@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/05 11:35:30 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/05 19:29:00 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ FLAGS =  -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) -I ../ -I SFML/include $(FLAGS)
-	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I SFML/include $(FLAGS)
+	@  $(CC) -o snake $(SRC2) -I ../ -I SFML/include $(FLAGS)
+	@ # $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I SFML/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)
