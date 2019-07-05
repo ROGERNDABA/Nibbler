@@ -6,23 +6,23 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/05 19:38:53 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/05 19:38:24 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libSnakeSFML.so
+NAME = libSnakeAllegro.so
 
-SRC = SnakeSFML.cpp
-SRC2 = SnakeSFML.cpp main.cpp
-CC = LD_LIBRARY_PATH=$$PWD/SFML/lib g++ -Wall -Wextra -Werror -std=c++11
+SRC = SnakeAllegro.cpp
+SRC2 = SnakeAllegro.cpp main.cpp
+CC = LD_LIBRARY_PATH=$$PWD/allegro/lib g++ -g -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
+FLAGS =  -L allegro/lib  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
 
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) -I ../ -I SFML/include $(FLAGS)
-	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I SFML/include $(FLAGS)
+	@ # $(CC) -o snake $(SRC2) -I ../ -I allegro/include $(FLAGS)
+	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I allegro/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)
