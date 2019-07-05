@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:52:13 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:54:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void Nibbler::play(int softExit) {
             throw NibblerExceptionE("Some snake Error");
         else {
             try {
-                _gameSnake = _snake(_gameSnake->getSnake());
+                SnakeT tmp = _gameSnake->getSnake();
+                _gameSnake->updateSnake(tmp);
                 _gameSnake->init();
                 _softExit = _gameSnake->getEvent();
                 if (_softExit) {

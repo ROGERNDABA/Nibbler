@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 11:28:55 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:58:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,19 @@ void SnakeAllegro::init() {
             break;
         }
     }
-    std::cout << "----> " << _softExit << std::endl;
+    SNAKE.WINW = WINW;
+    SNAKE.WINH = WINH;
+    SNAKE.body = _body;
+    SNAKE.obstacles = _obstacles;
+    SNAKE.food = _food;
+    SNAKE.key = _key;
+    SNAKE.prevKey = _prevKey;
+    SNAKE.doExit = _doExit;
+    SNAKE.speed = _speed;
+    SNAKE.score = _score;
+    SNAKE.bonus = _bonus;
+    SNAKE.trackFood = _trackFood;
+    SNAKE.valBonus = _valBonus;
     al_destroy_font(font);
     al_destroy_font(fontH);
 }

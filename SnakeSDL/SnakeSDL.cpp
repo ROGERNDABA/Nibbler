@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 11:36:28 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:58:54 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,20 @@ void SnakeSDL::init() {
             prevEvent = 1;
         }
     }
+
+    SNAKE.WINW = WINW;
+    SNAKE.WINH = WINH;
+    SNAKE.body = _body;
+    SNAKE.obstacles = _obstacles;
+    SNAKE.food = _food;
+    SNAKE.key = _key;
+    SNAKE.prevKey = _prevKey;
+    SNAKE.doExit = _doExit;
+    SNAKE.speed = _speed;
+    SNAKE.score = _score;
+    SNAKE.bonus = _bonus;
+    SNAKE.trackFood = _trackFood;
+    SNAKE.valBonus = _valBonus;
     TTF_CloseFont(font);
     TTF_CloseFont(fontH);
     SDL_DestroyTexture(texture);

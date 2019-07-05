@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:13 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:52:38 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:53:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "Snake.hpp"
 
 typedef Snake *(*SNAKE)(int, int);
-typedef Snake *(*UPDATESNAKE)(SnakeT);
+// typedef Snake *(*UPDATESNAKE)(SnakeT);
 typedef void (*DELETESNAKE)(Snake *);
 
 class Nibbler {
