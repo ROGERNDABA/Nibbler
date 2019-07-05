@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:36:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:45:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,14 @@ SnakeSFML& SnakeSFML::operator=(SnakeSFML const& rhs) {
 }
 
 void SnakeSFML::init() {
-    std::cout << "-----------------" << std::endl;
-
     _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
     _display.setPosition(sf::Vector2<int>(0, 0));
-    sf::Text text;
 
+    sf::Text text;
     sf::Font font;
     if (!font.loadFromFile("fonts/big_noodle_titling.ttf")) {
         throw SnakeSFMLException("No font");
     }
-
     int prevEvent = 0;
     while (!_doExit && !_softExit) {
         sf::Event ev;
