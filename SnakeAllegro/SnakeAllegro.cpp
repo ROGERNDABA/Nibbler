@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 16:11:28 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 16:21:43 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    this->init();
+    // this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -423,6 +423,9 @@ void SnakeAllegro::initObstacles() {
     TVertex tv2;
     for (int i = 0; i < 10; i++) {
         int rx = 2 + (std::rand() % ((WINW / 15) - 2));
+        while (rx >= (((WINW / 15) / 2) - 6) && rx <= (((WINW / 15) / 2) + 6)) {
+            rx = 2 + (std::rand() % ((WINW / 15) - 2));
+        }
         int ry = 2 + (std::rand() % ((WINH / 15) - 2));
 
         tv.x1 = rx * 15, tv.y1 = (ry * 15) + 60, tv.x2 = tv.x1 + 15, tv.y2 = tv.y1 + 15;
