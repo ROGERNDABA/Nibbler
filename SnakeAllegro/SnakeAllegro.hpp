@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 16:03:52 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 18:24:09 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ class SnakeAllegro : public Snake {
     void randFood();
     bool moveHead(int);
     bool checkCollusion(TVertex &);
+    void gameOver();
 };
 
 extern "C" {

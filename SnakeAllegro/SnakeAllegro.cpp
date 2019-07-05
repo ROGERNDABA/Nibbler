@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 16:21:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 18:51:26 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    // this->init();
+    this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -272,9 +272,10 @@ void SnakeAllegro::init() {
                 case ALLEGRO_KEY_PAD_3:
                     _softExit = 3;
                     break;
-                case ALLEGRO_KEY_ESCAPE:
+                case ALLEGRO_KEY_ESCAPE: {
+                    this->gameOver();
                     _doExit = true;
-                    break;
+                } break;
             }
             prevEvent = 1;
         } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -395,6 +396,7 @@ bool SnakeAllegro::moveHead(int key) {
     }
     if (checkCollusion(tail)) {
         al_play_sample(_sample2, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+        this->gameOver();
         return true;
     } else {
         return false;
@@ -450,6 +452,28 @@ void SnakeAllegro::initObstacles() {
         _obstacles->push_back(tv2);
         _obstacles->push_back(tv);
     }
+}
+
+void SnakeAllegro::gameOver() {
+    ALLEGRO_FONT* font = NULL;
+    ALLEGRO_FONT* fontH = NULL;
+    fontH = al_load_ttf_font("fonts/XO.TTF", 60, ALLEGRO_TTF_MONOCHROME);
+    if (!fontH)
+        return;
+    font = al_load_ttf_font("fonts/XO.TTF", 24, ALLEGRO_TTF_MONOCHROME);
+    if (!font)
+        return;
+    double start = al_get_time();
+    double now = al_get_time();
+    while ((now - start) <= 5) {
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+        al_draw_textf(fontH, al_map_rgb(255, 0, 0), WINW / 2, (WINH / 2) - 120, ALLEGRO_ALIGN_CENTER, "GAME OVER");
+        al_draw_textf(font, al_map_rgb(255, 255, 255), WINW / 2, (WINH / 2) + 30, ALLEGRO_ALIGN_CENTER, "SCORE %d", _score);
+        now = al_get_time();
+        al_flip_display();
+    }
+    al_destroy_font(font);
+    al_destroy_font(fontH);
 }
 
 SnakeT SnakeAllegro::getSnake() const {
