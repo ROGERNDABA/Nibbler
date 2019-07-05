@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 10:59:50 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:28:55 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
     _start = 0;
+    _softExit = 0;
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;

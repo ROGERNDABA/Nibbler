@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 11:06:16 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:23:31 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void dl_error(void) {
     std::cerr << "Error : " << dlerror() << std::endl;
 }
 
-typedef Snake *(*SNAKEALLEGRO)(int, int);
-typedef void (*DELETESNAKEALLEGRO)(Snake *);
+typedef Snake *(*SNAKE)(int, int);
+typedef void (*DELETESNAKE)(Snake *);
 
 int main(int ac, char *av[]) {
     (void)av;
     (void)ac;
     void *dl_handle;
 
-    dl_handle = dlopen("lib/libSnakeAllegro.so", RTLD_LAZY | RTLD_LOCAL);
+    dl_handle = dlopen("lib/libSNAKE.so", RTLD_LAZY | RTLD_LOCAL);
     if (!dl_handle) {
         dl_error();
         exit(EXIT_FAILURE);
     }
 
-    SNAKEALLEGRO sa = reinterpret_cast<SNAKEALLEGRO>(dlsym(dl_handle, "createSnake"));
+    SNAKE sa = reinterpret_cast<SNAKE>(dlsym(dl_handle, "createSnake"));
     Snake *ssa = NULL;
     if (!sa) {
         std::cerr << "Done!" << std::endl;
@@ -46,7 +46,7 @@ int main(int ac, char *av[]) {
             std::cerr << e.what() << '\n';
         }
     }
-    DELETESNAKEALLEGRO dsa = reinterpret_cast<DELETESNAKEALLEGRO>(dlsym(dl_handle, "deleteSnake"));
+    DELETESNAKE dsa = reinterpret_cast<DELETESNAKE>(dlsym(dl_handle, "deleteSnake"));
 
     dsa(ssa);
     dlclose(dl_handle);

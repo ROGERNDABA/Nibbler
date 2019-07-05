@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 18:25:37 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:33:55 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSFML.hpp"
 
 SnakeSFML::SnakeSFML(int w, int h)
-    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -33,6 +33,8 @@ SnakeSFML::SnakeSFML(int w, int h)
 }
 
 void SnakeSFML::updateSnake(SnakeT Snake) {
+    _start = 0;
+    _softExit = 0;
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -92,7 +94,7 @@ void SnakeSFML::init() {
     }
 
     int prevEvent = 0;
-    while (!_doExit) {
+    while (!_doExit && !_softExit) {
         sf::Event ev;
         _display.pollEvent(ev);
 
@@ -205,6 +207,18 @@ void SnakeSFML::init() {
                         _key[KEY_RIGHT] = true;
                     }
                 } break;
+                case sf::Keyboard::Num1:
+                case sf::Keyboard::Numpad1:
+                    _softExit = 1;
+                    break;
+                case sf::Keyboard::Num2:
+                case sf::Keyboard::Numpad2:
+                    _softExit = 2;
+                    break;
+                case sf::Keyboard::Num3:
+                case sf::Keyboard::Numpad3:
+                    _softExit = 3;
+                    break;
                 case sf::Keyboard::Escape:
                     _doExit = true;
                     break;
@@ -360,6 +374,10 @@ void SnakeSFML::randFood() {
 
 SnakeT SnakeSFML::getSnake() const {
     return this->SNAKE;
+}
+
+int SnakeSFML::getEvent() const {
+    return this->_softExit;
 }
 
 SnakeSFML* createSnake(int w, int h) {

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:20:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:27:29 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class SnakeSDL : public Snake {
     int _score;
     int _trackFood;
     bool _valBonus;
+    int _softExit;
 
    public:
     class SnakeSDLException : public NibblerException {
@@ -59,6 +60,7 @@ class SnakeSDL : public Snake {
     ~SnakeSDL();
 
     SnakeT getSnake() const;
+    int getEvent() const;
     void updateSnake(SnakeT);
 
     void init();

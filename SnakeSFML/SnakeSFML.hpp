@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 18:23:25 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:30:30 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ class SnakeSFML : public Snake {
     int _score;
     int _trackFood;
     bool _valBonus;
+    int _softExit;
 
    public:
     class SnakeSFMLException : public NibblerException {
@@ -59,6 +60,7 @@ class SnakeSFML : public Snake {
     ~SnakeSFML();
 
     SnakeT getSnake() const;
+    int getEvent() const;
     void updateSnake(SnakeT);
 
     void init();

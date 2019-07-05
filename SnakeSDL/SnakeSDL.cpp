@@ -6,14 +6,14 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 17:33:35 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 11:29:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeSDL.hpp"
 
 SnakeSDL::SnakeSDL(int w, int h)
-    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false) {
+    : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false) {
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -32,6 +32,8 @@ SnakeSDL::SnakeSDL(int w, int h)
 }
 
 void SnakeSDL::updateSnake(SnakeT Snake) {
+    _start = 0;
+    _softExit = 0;
     WINW = Snake.WINW;
     WINH = Snake.WINH;
     _body = Snake.body;
@@ -119,7 +121,7 @@ void SnakeSDL::init() {
     SDL_RenderClear(_renderer);
 
     int prevEvent = 0;
-    while (!_doExit) {
+    while (!_doExit && !_softExit) {
         SDL_Event ev;
         SDL_PollEvent(&ev);
 
@@ -230,6 +232,18 @@ void SnakeSDL::init() {
                         _key[KEY_RIGHT] = true;
                     }
                 } break;
+                case SDLK_1:
+                case SDLK_KP_1:
+                    _softExit = 1;
+                    break;
+                case SDLK_2:
+                case SDLK_KP_2:
+                    _softExit = 2;
+                    break;
+                case SDLK_3:
+                case SDLK_KP_3:
+                    _softExit = 3;
+                    break;
                 case SDLK_ESCAPE:
                     _doExit = true;
                     break;
@@ -387,6 +401,10 @@ void SnakeSDL::randFood() {
 
 SnakeT SnakeSDL::getSnake() const {
     return this->SNAKE;
+}
+
+int SnakeSDL::getEvent() const {
+    this->_softExit;
 }
 
 SnakeSDL* createSnake(int w, int h) {
