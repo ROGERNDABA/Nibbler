@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:58:54 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:50:42 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,6 +419,13 @@ SnakeT SnakeSDL::getSnake() const {
 
 int SnakeSDL::getEvent() const {
     return this->_softExit;
+}
+
+void SnakeSDL::stop() {
+    if (_display)
+        SDL_DestroyWindow(_display);
+    TTF_Quit();
+    SDL_Quit();
 }
 
 SnakeSDL* createSnake(int w, int h) {

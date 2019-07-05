@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 10:58:04 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:46:18 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ class SnakeAllegro : public Snake {
     SnakeT getSnake(void) const;
     int getEvent(void) const;
     void updateSnake(SnakeT);
+    void stop();
 
     void init();
     void initObstacles();

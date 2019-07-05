@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:31:57 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:45:58 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ class Snake {
     virtual SnakeT getSnake(void) const = 0;
     virtual int getEvent(void) const = 0;
     virtual void updateSnake(SnakeT) = 0;
+    virtual void stop() = 0;
     virtual ~Snake(){};
 };
 

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 11:30:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:46:57 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ class SnakeSFML : public Snake {
     SnakeT getSnake() const;
     int getEvent() const;
     void updateSnake(SnakeT);
+    void stop();
 
     void init();
     void initObstacles();

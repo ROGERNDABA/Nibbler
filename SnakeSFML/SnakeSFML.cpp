@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:13:51 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:51:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,6 +391,11 @@ SnakeT SnakeSFML::getSnake() const {
 
 int SnakeSFML::getEvent() const {
     return this->_softExit;
+}
+
+void SnakeSFML::stop() {
+    if (_display.isOpen())
+        _display.close();
 }
 
 SnakeSFML* createSnake(int w, int h) {
