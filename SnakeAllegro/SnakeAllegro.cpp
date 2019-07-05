@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:21:42 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:42:30 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ SnakeAllegro::~SnakeAllegro() {
         al_destroy_display(_display);
     if (_eQueue)
         al_destroy_event_queue(_eQueue);
-    std::cout << "yeah" << std::endl;
 }
 
 SnakeAllegro::SnakeAllegro(SnakeAllegro const& copy) {
@@ -116,7 +115,7 @@ void SnakeAllegro::init() {
         throw SnakeAllegroException("Couldn't init display");
     }
     al_set_window_title(_display, "Snake Allegro");
-
+    al_set_window_position(_display, 0, 0);
     _eQueue = al_create_event_queue();
     if (!_eQueue) {
         al_destroy_display(_display);
@@ -427,7 +426,7 @@ void SnakeAllegro::stop() {
         al_destroy_display(_display);
     if (_eQueue)
         al_destroy_event_queue(_eQueue);
-    std::cout << "yeah" << std::endl;
+    _timer = NULL, _display = NULL, _eQueue = NULL;
 }
 
 SnakeAllegro* createSnake(const int w, const int h) {

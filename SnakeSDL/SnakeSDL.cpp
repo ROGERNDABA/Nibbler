@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:22:20 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:32:20 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void SnakeSDL::init() {
         throw SnakeSDLException("SDL could not initialize ttf!");
     }
 
-    _display = SDL_CreateWindow("NIBBLER SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINW, WINH + 60, SDL_WINDOW_SHOWN);
+    _display = SDL_CreateWindow("NIBBLER SDL", 0, 0, WINW, WINH + 60, SDL_WINDOW_SHOWN);
     if (_display == NULL) {
         throw SnakeSDLException("Window could not be created!");
     }

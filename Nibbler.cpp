@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:19:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:38:46 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Nibbler::~Nibbler() {
     _deleteSnake = reinterpret_cast<DELETESNAKE>(dlsym(_dl, "deleteSnake"));
     if (_gameSnake)
         _deleteSnake(_gameSnake);
+    dlclose(_dl);
 }
 
 Nibbler::Nibbler(Nibbler const& copy) {
