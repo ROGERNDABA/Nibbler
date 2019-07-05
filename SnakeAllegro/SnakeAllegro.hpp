@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:46:18 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 16:03:52 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define SNAKEALLEGRO_HPP
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_opengl.h>
@@ -29,6 +31,8 @@ class SnakeAllegro : public Snake {
     ALLEGRO_DISPLAY *_display;
     ALLEGRO_TIMER *_timer;
     ALLEGRO_EVENT_QUEUE *_eQueue;
+    ALLEGRO_SAMPLE *_sample;
+    ALLEGRO_SAMPLE *_sample2;
     TVertex _food;
     TVertex _bonus;
     SnakeT SNAKE;

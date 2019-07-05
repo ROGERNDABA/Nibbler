@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:42:30 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 16:11:28 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
+    this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -77,6 +78,10 @@ SnakeAllegro::~SnakeAllegro() {
         al_destroy_display(_display);
     if (_eQueue)
         al_destroy_event_queue(_eQueue);
+    if (_sample)
+        al_destroy_sample(_sample);
+    if (_sample2)
+        al_destroy_sample(_sample2);
 }
 
 SnakeAllegro::SnakeAllegro(SnakeAllegro const& copy) {
@@ -122,6 +127,33 @@ void SnakeAllegro::init() {
         al_destroy_timer(_timer);
         throw SnakeAllegroException("failed to create event_queue!");
     }
+    if (!al_install_audio()) {
+        throw SnakeAllegroException("Allegro : Failed to init audio");
+    }
+
+    if (!al_init_acodec_addon()) {
+        throw SnakeAllegroException("Allegro : Failed to initialize audio codecs!");
+    }
+
+    if (!al_reserve_samples(1)) {
+        fprintf(stderr, "failed to reserve samples!\n");
+    }
+
+    _sample = al_load_sample("audio/beep.wav");
+    if (!_sample) {
+        al_destroy_display(_display);
+        al_destroy_timer(_timer);
+        al_destroy_event_queue(_eQueue);
+        throw SnakeAllegroException("Allegro : Couldn't load audio sample");
+    }
+    _sample2 = al_load_sample("audio/error.wav");
+    if (!_sample2) {
+        al_destroy_display(_display);
+        al_destroy_timer(_timer);
+        al_destroy_event_queue(_eQueue);
+        al_destroy_sample(_sample);
+        throw SnakeAllegroException("Allegro : Couldn't load audio sample");
+    }
     al_register_event_source(_eQueue, al_get_display_event_source(_display));
     al_register_event_source(_eQueue, al_get_keyboard_event_source());
     al_register_event_source(_eQueue, al_get_timer_event_source(_timer));
@@ -153,6 +185,7 @@ void SnakeAllegro::init() {
         if (_now >= _start + (1.0 / _speed)) {
             if (checkFood()) {
                 randFood();
+                // al_play_sample(_sample, 0.05, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 _score += _speed;
             }
             al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -360,7 +393,12 @@ bool SnakeAllegro::moveHead(int key) {
             _body->insert(_body->begin(), tail);
         } break;
     }
-    return (checkCollusion(tail)) ? true : false;
+    if (checkCollusion(tail)) {
+        al_play_sample(_sample2, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool SnakeAllegro::checkCollusion(TVertex& tv) {
@@ -426,7 +464,12 @@ void SnakeAllegro::stop() {
         al_destroy_display(_display);
     if (_eQueue)
         al_destroy_event_queue(_eQueue);
-    _timer = NULL, _display = NULL, _eQueue = NULL;
+    if (_sample)
+        al_destroy_sample(_sample);
+
+    if (_sample2)
+        al_destroy_sample(_sample2);
+    _timer = NULL, _display = NULL, _eQueue = NULL, _sample = NULL, _sample2 = NULL;
 }
 
 SnakeAllegro* createSnake(const int w, const int h) {
