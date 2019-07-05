@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:58:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:06:39 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ SnakeAllegro::~SnakeAllegro() {
         al_destroy_display(_display);
     if (_eQueue)
         al_destroy_event_queue(_eQueue);
+    std::cout << "yeah" << std::endl;
 }
 
 SnakeAllegro::SnakeAllegro(SnakeAllegro const& copy) {

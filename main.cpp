@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 20:51:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:32:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:05:42 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int main(int ac, char *av[]) {
 
     if (ac == 4) {
         Nibbler nibbler(av[1], av[2], av[3]);
+        nibbler.play(-1);
         // int softExit;
         // int w = std::stoi(av[1]);
         // int h = std::stoi(av[2]);

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 12:54:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 13:07:09 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ Nibbler::NibblerExceptionE& Nibbler::NibblerExceptionE::operator=(Nibbler::Nibbl
     return *this;
 }
 
-Nibbler::~Nibbler() {}
+Nibbler::~Nibbler() {
+    if (_gameSnake)
+        _deleteSnake(_gameSnake);
+}
 
 Nibbler::Nibbler(Nibbler const& copy) {
     *this = copy;
@@ -105,12 +108,13 @@ void Nibbler::play(int softExit) {
         if (!_dl) {
             throw NibblerExceptionE("dl_error : could not open library");
         }
-        SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "updateSnake"));
+        SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
         if (!_snake)
             throw NibblerExceptionE("Some snake Error");
         else {
             try {
                 SnakeT tmp = _gameSnake->getSnake();
+                _gameSnake = _snake(_w, _h);
                 _gameSnake->updateSnake(tmp);
                 _gameSnake->init();
                 _softExit = _gameSnake->getEvent();
@@ -122,4 +126,5 @@ void Nibbler::play(int softExit) {
             }
         }
     }
+    DELETESNAKE _deleteSnake = reinterpret_cast<DELETESNAKE>(dlsym(_dl, "deleteSnake"));
 }
