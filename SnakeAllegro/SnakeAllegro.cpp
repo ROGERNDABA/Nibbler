@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/04 19:22:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 10:59:50 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,12 +229,16 @@ void SnakeAllegro::init() {
                 } break;
                 case ALLEGRO_KEY_1:
                 case ALLEGRO_KEY_PAD_1:
+                    _softExit = 1;
+                    break;
                 case ALLEGRO_KEY_2:
                 case ALLEGRO_KEY_PAD_2:
+                    _softExit = 2;
+                    break;
                 case ALLEGRO_KEY_3:
-                case ALLEGRO_KEY_PAD_3: {
-                    _softExit = true;
-                } break;
+                case ALLEGRO_KEY_PAD_3:
+                    _softExit = 3;
+                    break;
                 case ALLEGRO_KEY_ESCAPE:
                     _doExit = true;
                     break;
@@ -244,6 +248,7 @@ void SnakeAllegro::init() {
             break;
         }
     }
+    std::cout << "----> " << _softExit << std::endl;
     al_destroy_font(font);
     al_destroy_font(fontH);
 }
@@ -396,6 +401,10 @@ void SnakeAllegro::initObstacles() {
 
 SnakeT SnakeAllegro::getSnake() const {
     return this->SNAKE;
+}
+
+int SnakeAllegro::getEvent() const {
+    return this->_softExit;
 }
 
 SnakeAllegro* createSnake(const int w, const int h) {
