@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:17:04 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:22:20 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,8 +422,6 @@ int SnakeSDL::getEvent() const {
 }
 
 void SnakeSDL::stop() {
-    delete _obstacles;
-    delete _body;
     if (_display)
         SDL_DestroyWindow(_display);
     TTF_Quit();

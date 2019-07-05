@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:16:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:21:42 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,8 +421,6 @@ int SnakeAllegro::getEvent() const {
 }
 
 void SnakeAllegro::stop() {
-    delete _body;
-    delete _obstacles;
     if (_timer)
         al_destroy_timer(_timer);
     if (_display)
