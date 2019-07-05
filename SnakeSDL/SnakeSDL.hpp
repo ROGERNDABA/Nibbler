@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:46:36 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 18:54:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ class SnakeSDL : public Snake {
     void randFood();
     bool moveHead(int);
     bool checkCollusion(TVertex &);
+    void gameOver();
 };
 
 extern "C" {

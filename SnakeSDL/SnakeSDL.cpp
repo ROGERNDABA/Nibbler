@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 16:21:17 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 19:14:32 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ SnakeSDL::SnakeSDL(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     initObstacles();
     this->randFood();
+    this->init();
 }
 
 void SnakeSDL::updateSnake(SnakeT Snake) {
@@ -244,9 +245,10 @@ void SnakeSDL::init() {
                 case SDLK_KP_3:
                     _softExit = 3;
                     break;
-                case SDLK_ESCAPE:
+                case SDLK_ESCAPE: {
+                    this->gameOver();
                     _doExit = true;
-                    break;
+                } break;
             }
             prevEvent = 1;
         }
@@ -334,7 +336,12 @@ bool SnakeSDL::moveHead(int key) {
             _body->insert(_body->begin(), tail);
         } break;
     }
-    return (checkCollusion(tail)) ? true : false;
+    if (checkCollusion(tail)) {
+        this->gameOver();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool SnakeSDL::checkCollusion(TVertex& tv) {
@@ -414,6 +421,52 @@ void SnakeSDL::randFood() {
             return;
         }
     }
+}
+
+void SnakeSDL::gameOver() {
+    TTF_Font* font = TTF_OpenFont("fonts/XO.TTF", 24);
+    TTF_Font* fontH = TTF_OpenFont("fonts/XO.TTF", 60);
+    if (!font) {
+        TTF_CloseFont(fontH);
+        return;
+    }
+    if (!fontH) {
+        TTF_CloseFont(font);
+        return;
+    }
+
+    SDL_Surface* surface;
+    SDL_Texture* texture;
+    SDL_Rect v1, v2;
+    v1.x = (WINW / 2) - 30, v1.y = (WINH / 2), v1.w = 60, v1.h = 30;
+    v2.x = (WINW / 2) - 100, v2.y = (WINH / 2) - 120, v2.w = 200, v2.h = 90;
+
+    double start = SDL_GetTicks();
+    double now = SDL_GetTicks();
+
+    while ((now - start) <= 5000) {
+        SDL_Color sdlc = {255, 255, 255, 255};
+        SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+        SDL_RenderClear(_renderer);
+
+        std::stringstream ss;
+        ss << _score;
+        std::string s = "Score " + ss.str();
+        surface = TTF_RenderText_Solid(font, s.c_str(), sdlc);
+        texture = SDL_CreateTextureFromSurface(_renderer, surface);
+        SDL_RenderCopy(_renderer, texture, NULL, &v1);
+        s = "GAME OVER";
+        sdlc = {255, 0, 0, 255};
+        surface = TTF_RenderText_Solid(font, s.c_str(), sdlc);
+        texture = SDL_CreateTextureFromSurface(_renderer, surface);
+        SDL_RenderCopy(_renderer, texture, NULL, &v2);
+        SDL_RenderPresent(_renderer);
+        now = SDL_GetTicks();
+    }
+    TTF_CloseFont(font);
+    TTF_CloseFont(fontH);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
 
 SnakeT SnakeSDL::getSnake() const {
