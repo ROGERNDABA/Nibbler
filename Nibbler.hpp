@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:13 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:03:43 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:05:05 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Nibbler {
     SNAKE _snake;
     Snake *_gameSnake;
     DELETESNAKE _deleteSnake;
+    SnakeT _snakeInfo;
     // bool _started;
     std::map<int, std::string> _libs;
 

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 13:51:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 14:17:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,6 +394,8 @@ int SnakeSFML::getEvent() const {
 }
 
 void SnakeSFML::stop() {
+    delete _obstacles;
+    delete _body;
     if (_display.isOpen())
         _display.close();
 }
