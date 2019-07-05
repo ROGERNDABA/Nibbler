@@ -6,17 +6,20 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 10:55:46 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/05 12:31:57 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SNAKE_HPP
 #define SNAKE_HPP
 
+#include <dlfcn.h>
+#include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
