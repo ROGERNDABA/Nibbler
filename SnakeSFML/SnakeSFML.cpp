@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 16:55:52 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 17:13:37 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,20 @@ void SnakeSFML::init() {
     _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
     _display.setPosition(sf::Vector2<int>(0, 0));
 
+    if (!_beep.openFromFile("audio/beep.wav")) {
+        throw SnakeSFMLException("SFML Could not load beep audio!");
+    }
+    _beep.setVolume(2);
+
+    if (!_buzz.openFromFile("audio/error.wav")) {
+        throw SnakeSFMLException("SFML Could not load beep audio!");
+    }
+    _buzz.setVolume(30);
+
     sf::Text text;
     sf::Font font;
     if (!font.loadFromFile("fonts/big_noodle_titling.ttf")) {
-        throw SnakeSFMLException("No font");
+        throw SnakeSFMLException("SFML No font");
     }
     int prevEvent = 0;
     while (!_doExit && !_softExit) {
@@ -102,6 +112,7 @@ void SnakeSFML::init() {
 
             if (checkFood()) {
                 randFood();
+                _beep.play();
                 _score += _speed;
             }
 
@@ -263,6 +274,7 @@ bool SnakeSFML::checkFood() {
                tmp.x1 == _bonus.x1 &&
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
+        _beep.play();
         _body->push_back(tmp);
         _speed += 0.2;
         _score += 20;
@@ -308,6 +320,7 @@ bool SnakeSFML::moveHead(int key) {
         } break;
     }
     if (checkCollusion(tail)) {
+        _buzz.play();
         this->gameOver();
         return true;
     } else {

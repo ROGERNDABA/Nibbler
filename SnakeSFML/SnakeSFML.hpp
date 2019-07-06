@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 19:16:13 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 17:07:48 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define SNAKESFML_HPP
 
 #include <NibblerException.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Snake.hpp>
@@ -24,6 +25,8 @@ class SnakeSFML : public Snake {
     std::vector<TVertex> *_obstacles;
     sf::RenderWindow _display;
     sf::Clock _clock;
+    sf::Music _beep;
+    sf::Music _buzz;
     float _start;
     float _now;
     TVertex _food;

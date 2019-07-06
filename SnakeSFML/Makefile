@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/06 16:53:17 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/06 17:13:46 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = SnakeSFML.cpp
 SRC2 = SnakeSFML.cpp main.cpp
 CC = g++ -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system
+FLAGS =  -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all: $(NAME)
 
