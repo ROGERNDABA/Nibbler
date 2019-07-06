@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 20:41:15 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/05 19:38:44 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/06 15:34:46 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = SnakeSDL.cpp
 SRC2 = SnakeSDL.cpp main.cpp
 CC = LD_LIBRARY_PATH=$$PWD/SDL2/lib g++ -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -L SDL2/lib -lSDL2_ttf -lSDL2 -lSDL2main -lfreetype
+FLAGS =  -L SDL2/lib -lSDL2_ttf -lSDL2 -lSDL2main -lSDL2_mixer -lfreetype
 all: $(NAME)
 
 $(NAME): fclean
