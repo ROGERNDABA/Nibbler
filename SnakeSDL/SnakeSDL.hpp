@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 18:54:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 15:50:33 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define SNAKESDL_HPP
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <NibblerException.hpp>
 #include <Snake.hpp>
@@ -24,7 +25,8 @@ class SnakeSDL : public Snake {
     std::vector<TVertex> *_obstacles;
     SDL_Window *_display;
     SDL_Renderer *_renderer;
-    // SDL_Event _event;
+    Mix_Chunk *_beep;
+    Mix_Chunk *_buzz;
     Uint32 _start;
     Uint32 _now;
     TVertex _food;

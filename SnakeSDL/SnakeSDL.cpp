@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 19:49:25 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 16:14:02 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 SnakeSDL::SnakeSDL(int w, int h)
     : _start(0), WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false) {
+    _renderer = NULL;
+    _display = NULL;
+    _buzz = NULL;
+    _beep = NULL;
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -68,8 +72,15 @@ SnakeSDL::SnakeSDLException& SnakeSDL::SnakeSDLException::operator=(SnakeSDL::Sn
 SnakeSDL::~SnakeSDL() {
     delete _obstacles;
     delete _body;
+    if (_renderer)
+        SDL_DestroyRenderer(_renderer);
     if (_display)
         SDL_DestroyWindow(_display);
+    if (_beep)
+        Mix_FreeChunk(_beep);
+    if (_buzz)
+        Mix_FreeChunk(_buzz);
+    Mix_CloseAudio();
     TTF_Quit();
     SDL_Quit();
 }
@@ -93,12 +104,33 @@ void SnakeSDL::init() {
         throw SnakeSDLException("SDL could not initialize ttf!");
     }
 
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+        throw SnakeSDLException("SDL could not initialize audio!");
+    }
+
     _display = SDL_CreateWindow("NIBBLER SDL", 0, 0, WINW, WINH + 60, SDL_WINDOW_SHOWN);
     if (_display == NULL) {
         throw SnakeSDLException("Window could not be created!");
     }
 
     _renderer = SDL_CreateRenderer(_display, -1, SDL_RENDERER_ACCELERATED);
+
+    _beep = Mix_LoadWAV("audio/beep.wav");
+    if (!_beep) {
+        SDL_DestroyRenderer(_renderer);
+        SDL_DestroyWindow(_display);
+        throw SnakeSDLException("SDL could init music");
+    }
+    _beep->volume = 2;
+
+    _buzz = Mix_LoadWAV("audio/error.wav");
+    if (!_buzz) {
+        Mix_FreeChunk(_beep);
+        SDL_DestroyRenderer(_renderer);
+        SDL_DestroyWindow(_display);
+        throw SnakeSDLException("SDL could init music");
+    }
+    _buzz->volume = 30;
 
     TTF_Font* font = TTF_OpenFont("fonts/big_noodle_titling.ttf", 18);
     TTF_Font* fontH = TTF_OpenFont("fonts/big_noodle_titling.ttf", 24);
@@ -110,9 +142,8 @@ void SnakeSDL::init() {
         TTF_CloseFont(font);
         throw SnakeSDLException("Couldn't open fonts");
     }
-
-    SDL_Surface* surface;
-    SDL_Texture* texture;
+    SDL_Surface* surface = NULL;
+    SDL_Texture* texture = NULL;
     SDL_Color sdlc = {0, 0, 0, 255};
     SDL_Rect v1, v2;
     v1.x = 20, v1.y = 35, v1.w = 60, v1.h = 20;
@@ -132,6 +163,7 @@ void SnakeSDL::init() {
             SDL_RenderClear(_renderer);
             if (checkFood()) {
                 randFood();
+                Mix_PlayChannel(-1, _beep, 0);
                 _score += _speed;
             }
 
@@ -292,6 +324,7 @@ bool SnakeSDL::checkFood() {
                tmp.x1 == _bonus.x1 &&
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
+        Mix_PlayChannel(-1, _beep, 0);
         _body->push_back(tmp);
         _speed += 0.2;
         _score += 20;
@@ -337,6 +370,7 @@ bool SnakeSDL::moveHead(int key) {
         } break;
     }
     if (checkCollusion(tail)) {
+        Mix_PlayChannel(-1, _buzz, 0);
         this->gameOver();
         return true;
     } else {
@@ -463,6 +497,7 @@ void SnakeSDL::gameOver() {
         SDL_RenderPresent(_renderer);
         now = SDL_GetTicks();
     }
+
     TTF_CloseFont(font);
     TTF_CloseFont(fontH);
     SDL_DestroyTexture(texture);
@@ -478,8 +513,15 @@ int SnakeSDL::getEvent() const {
 }
 
 void SnakeSDL::stop() {
+    if (_renderer)
+        SDL_DestroyRenderer(_renderer);
     if (_display)
         SDL_DestroyWindow(_display);
+    if (_beep)
+        Mix_FreeChunk(_beep);
+    if (_buzz)
+        Mix_FreeChunk(_buzz);
+    Mix_CloseAudio();
     TTF_Quit();
     SDL_Quit();
 }
