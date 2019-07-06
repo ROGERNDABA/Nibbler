@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 17:13:37 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 17:28:49 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ void SnakeSFML::init() {
                     _softExit = 3;
                     break;
                 case sf::Keyboard::Escape: {
-                    this->gameOver();
                     _doExit = true;
+                    this->gameOver();
                 } break;
                 default:
                     break;
