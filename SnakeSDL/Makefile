@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 20:41:15 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/06 16:13:55 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/06 16:48:53 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libSnakeSDL.so
 
 SRC = SnakeSDL.cpp 
 SRC2 = SnakeSDL.cpp main.cpp
-CC = LD_LIBRARY_PATH=$$PWD/SDL2/lib g++ -Wall -Wextra -Werror -std=c++11
+CC = g++ -Wall -Wextra -Werror -std=c++11
 
 FLAGS =  -L SDL2/lib -lSDL2_ttf -lSDL2 -lSDL2main -lSDL2_mixer -lfreetype
 all: $(NAME)

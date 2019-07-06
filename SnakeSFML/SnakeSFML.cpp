@@ -29,7 +29,7 @@ SnakeSFML::SnakeSFML(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->initObstacles();
     this->randFood();
-    // this->init();
+    this->init();
 }
 
 void SnakeSFML::updateSnake(SnakeT Snake) {

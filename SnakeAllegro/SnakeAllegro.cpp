@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 19:49:25 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/06 16:47:02 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 SnakeAllegro::SnakeAllegro(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
-    _display = NULL, _eQueue = NULL, _timer = NULL;
+    _display = NULL, _eQueue = NULL, _timer = NULL, _sample = NULL, _sample2 = NULL;
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -30,7 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    // this->init();
+    this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
