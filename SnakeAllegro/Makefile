@@ -26,6 +26,7 @@ $(NAME): fclean
 
 clean:
 	@rm -fr $(NAME)
+	@rm -fr $(NAME).dSYM
 
 fclean : clean
 

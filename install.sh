@@ -9,9 +9,22 @@ make clean -C SnakeSFML >/dev/null 2>&1 &&
 make clean -C SnakeSDL >/dev/null 2>&1
 unset LD_LIBRARY_PATH
 
-if  $(which cmake); then
-    echo "~~~~~here~~~"
-    rm -fr CMakeFiles $dir cmake_install.cmake CMakeCache.txt
+which cmake
+if [ $? -eq 0 ]; then
+    if [ -d "SnakeAllegro/allegro" -a -d "SnakeSDL/SDL2" -a -d "SnakeSFML/SFML" ]; then
+        echo True
+    else
+        git clone https://github.com/ROGERNDABA/Nibblerlibs.git setup-libs
+
+        mkdir SnakeAllegro/allegro
+        cp -fr setup-libs/macos/allegro/* SnakeAllegro/allegro
+
+        mkdir SnakeSDL/SDL2
+        cp -fr setup-libs/macos/SDL2/* SnakeSDL/SDL2
+
+        mkdir SnakeSFML/SFML
+        cp -fr setup-libs/macos/SFML/* SnakeSFML/SFML
+    fi
 else
     echo -e "\e[33mInstalling CMake..."
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
