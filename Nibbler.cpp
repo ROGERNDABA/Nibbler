@@ -90,7 +90,7 @@ void Nibbler::play(int softExit) {
             if (!_dl) {
                 throw NibblerExceptionE("dl_error : " + std::string(dlerror()));
             }
-            SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
+            _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
             if (!_snake)
                 throw NibblerExceptionE("Some snake Error");
             else {
@@ -112,7 +112,7 @@ void Nibbler::play(int softExit) {
             if (!_dl) {
                 throw NibblerExceptionE("dl_error : " + std::string(dlerror()));
             }
-            SNAKE _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
+            _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
             if (!_snake)
                 throw NibblerExceptionE("Some snake Error");
             else {

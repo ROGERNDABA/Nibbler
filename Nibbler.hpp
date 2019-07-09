@@ -24,7 +24,6 @@ class Nibbler {
    private:
     int _w;
     int _h;
-    int _lib;
     int _softExit;
     void *_dl;
     SNAKE _snake;
