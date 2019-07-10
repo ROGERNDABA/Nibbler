@@ -1,12 +1,13 @@
 {
     "configurations": [
         {
-            "name": "Linux",
-            "defines": [],
-            "compilerPath": "/usr/bin/clang-6.0",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/SnakeAllegro/allegro/include",
+                "${workspaceFolder}/SnakeSDL/SDL2/include",
+                "${workspaceFolder}/SnakeSFML/SFML/include"
+            ]
         }
     ],
     "version": 4

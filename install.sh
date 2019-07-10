@@ -26,7 +26,7 @@ if [ $? -eq 0 ]; then
         cp -fr setup-libs/macos/SFML/* SnakeSFML/SFML
     fi
 else
-    echo -e "\e[33mInstalling CMake..."
+    echo -e "\e[33mInstalling CMake...\e[0m"
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         sudo apt-get install cmake -y >/dev/null 2>&1
     elif [[ "$USER" == "rmdaba" ]]; then

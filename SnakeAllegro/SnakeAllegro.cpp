@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeAllegro.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 16:56:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/10 08:46:01 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ SnakeAllegro::SnakeAllegro(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    // this->init();
+    this->init();
 }
 
 void SnakeAllegro::updateSnake(SnakeT Snake) {
@@ -94,15 +94,22 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
     return *this;
 }
 
-void SnakeAllegro::init() {
+int usermain(int argc, char** argv) {
+    (void)argc;
+    (void)argv;
     if (!al_init())
-        throw SnakeAllegroException("Couldn't create window");
+        return -1;
+    return 0;
+}
+
+void SnakeAllegro::init() {
+    // if (!al_init())
+    char** s = NULL;
+    //     throw SnakeAllegroException("Couldn't create window");
+    al_run_main(0, s, usermain);
 
     if (!al_init_primitives_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
-
-    if (!al_init_main_addon())
-        throw SnakeAllegro::SnakeAllegroException("Can't init al_main");
 
     if (!al_init_ttf_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
