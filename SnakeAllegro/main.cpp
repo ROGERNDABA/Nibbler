@@ -13,11 +13,11 @@
 #include <Snake.hpp>
 #include "SnakeAllegro.hpp"
 
-int main(int ac, char* av[]) {
+int main(int argc, char** argv) {
     srand(time(NULL));
-    if (ac == 3) {
+    if (argc == 3) {
         try {
-            SnakeAllegro sa(std::stoi(av[1]), std::stoi(av[2]));
+            SnakeAllegro sa(std::stoi(argv[1]), std::stoi(argv[2]));
         } catch (const NibblerException& e) {
             std::cerr << e.what() << '\n';
             return -1;

@@ -12,6 +12,7 @@
 
 #ifndef SNAKEALLEGRO_HPP
 #define SNAKEALLEGRO_HPP
+#define ALLEGRO_NO_MAGIC_MAIN
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_acodec.h>

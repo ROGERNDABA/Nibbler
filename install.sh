@@ -35,6 +35,7 @@ else
 fi
 
 export LD_LIBRARY_PATH=$PWD/SnakeAllegro/allegro/lib:$PWD/SnakeSDL/SDL/lib:$PWD/SnakeSFML/SFML/lib
+export DYLD_LIBRARY_PATH=$PWD/SnakeAllegro/allegro/lib:$PWD/SnakeSDL/SDL/lib:$PWD/SnakeSFML/SFML/lib
 
 echo -e "\e[33m---Creating lib folder---"
 mkdir lib
