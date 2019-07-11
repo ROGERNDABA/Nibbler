@@ -6,14 +6,14 @@
 #    By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/10 09:38:45 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/10 10:05:45 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libSnakeFLTK.so
 
-SRC = SnakeAllegro.cpp
-SRC2 = main.cpp #SnakeAllegro.cpp
+SRC = SnakeFLTK.cpp
+SRC2 = main.cpp SnakeFLTK.cpp
 CC =  g++ -g -Wall -Wextra -Werror -std=c++11
 
 FLAGS =  -L FLTK/lib -lfltk -lfltk_gl -lfltk_forms -lfltk_images

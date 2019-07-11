@@ -6,7 +6,8 @@
                 "${workspaceFolder}",
                 "${workspaceFolder}/SnakeAllegro/allegro/include",
                 "${workspaceFolder}/SnakeSDL/SDL2/include",
-                "${workspaceFolder}/SnakeSFML/SFML/include"
+                "${workspaceFolder}/SnakeSFML/SFML/include",
+                "${workspaceFolder}/SnakeFLTK/FLTK/include"
             ]
         }
     ],
