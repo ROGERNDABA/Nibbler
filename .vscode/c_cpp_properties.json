@@ -7,6 +7,12 @@
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "clang-x64"
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "~/.brew/Cellar/fltk/1.3.5/include"
+            ]
         }
     ],
     "version": 4
