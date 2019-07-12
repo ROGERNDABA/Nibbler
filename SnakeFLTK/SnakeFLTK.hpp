@@ -2,9 +2,9 @@
 #define SNAKEFLTK_HPP
 
 #include <FL/Fl.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Window.H>
-#include <fstream>
-#include <iostream>
+#include <Snake.hpp>
 
 class SnakeFLTK {
    private:

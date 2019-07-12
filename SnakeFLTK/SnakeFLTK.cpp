@@ -1,4 +1,5 @@
 #include "SnakeFLTK.hpp"
+#include <time.h>
 
 SnakeFLTK::SnakeFLTK(int w, int h) : WINW(w), WINH(h) {
     _display = NULL;
@@ -44,4 +45,22 @@ void SnakeFLTK::init() {
     if (!_display) {
         throw SnakeFLTKException("could not init fltk window");
     }
+    _display->color(FL_BLACK);
+}
+
+void SnakeFLTK::updateDisplay() {
+    time_t rawtime;
+    struct tm* timeinfo;
+    int ev = Fl::event();
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    printf("Current local time and date: %s", asctime(timeinfo));
+    // int x, y, w, h;
+    Fl_Box box(200, 200, 15, 15);
+    box.box(FL_FLAT_BOX);
+    box.color(FL_RED);
+    _display->end();
+    _display->show();
+    Fl::check();
 }

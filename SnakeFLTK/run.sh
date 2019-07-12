@@ -1,0 +1,1 @@
+g++ -std=c++11 main.cpp SnakeFLTK.cpp -I ../ -I ~/.brew/Cellar/fltk/1.3.5/include -L ~/.brew/Cellar/fltk/1.3.5/lib -lfltk
