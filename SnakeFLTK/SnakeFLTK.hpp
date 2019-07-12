@@ -1,7 +1,7 @@
 #ifndef SNAKEFLTK_HPP
 #define SNAKEFLTK_HPP
 
-#include <FL/Fl.h>
+#include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <fstream>
 #include <iostream>
@@ -15,7 +15,8 @@ class SnakeFLTK {
 
    public:
     class SnakeFLTKException : std::exception {
-        privat : std::string _exc;
+       private:
+        std::string _exc;
 
        public:
         SnakeFLTKException(std::string);
@@ -30,6 +31,7 @@ class SnakeFLTK {
     ~SnakeFLTK();
 
     void init();
+    void updateDisplay();
 };
 
 #endif  //SNAKEFLTK_HPP
