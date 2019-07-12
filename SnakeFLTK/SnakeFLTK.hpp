@@ -1,8 +1,12 @@
 #ifndef SNAKEFLTK_HPP
 #define SNAKEFLTK_HPP
 
+// #include <FL/Color.H>
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Box.H>
+#include <FL/Fl_Device.H>
+#include <FL/Fl_Widget.H>
 #include <FL/Fl_Window.H>
 #include <Snake.hpp>
 

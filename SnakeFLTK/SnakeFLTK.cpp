@@ -49,18 +49,8 @@ void SnakeFLTK::init() {
 }
 
 void SnakeFLTK::updateDisplay() {
-    time_t rawtime;
-    struct tm* timeinfo;
     int ev = Fl::event();
-
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    printf("Current local time and date: %s", asctime(timeinfo));
-    // int x, y, w, h;
-    Fl_Box box(200, 200, 15, 15);
-    box.box(FL_FLAT_BOX);
-    box.color(FL_RED);
-    _display->end();
+    fl_rectf(200, 200, 15, 15, 255, 0, 0);
     _display->show();
     Fl::check();
 }
