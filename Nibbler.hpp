@@ -12,7 +12,6 @@
 
 #ifndef NIBBLER_HPP
 #define NIBBLER_HPP
-#define ALLEGRO_NO_MAGIC_MAIN
 
 #include "NibblerException.hpp"
 #include "Snake.hpp"

@@ -94,19 +94,9 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
     return *this;
 }
 
-int usermain(int argc, char** argv) {
-    (void)argc;
-    (void)argv;
-    if (!al_init())
-        return -1;
-    return 0;
-}
-
 void SnakeAllegro::init() {
-    // if (!al_init())
-    char** s = NULL;
-    //     throw SnakeAllegroException("Couldn't create window");
-    al_run_main(0, s, usermain);
+    if (!al_init())
+        throw SnakeAllegroException("Couldn't create window");
 
     if (!al_init_primitives_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
