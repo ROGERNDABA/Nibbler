@@ -8,7 +8,8 @@
                 "~/.brew/opt/sdl2/include",
                 "~/.brew/opt/sfml/include",
                 "~/.brew/opt/sdl2_mixer/include",
-                "~/.brew/opt/sdl2_ttf/include"
+                "~/.brew/opt/sdl2_ttf/include",
+                "~/.brew/opt/fltk/include/**"
             ]
         }
     ],
