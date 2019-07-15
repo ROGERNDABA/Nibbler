@@ -12,19 +12,19 @@
 
 NAME = libSnakeAllegro.so
 
-INCL = $$HOME/.brew/Cellar/allegro/*/include
-LIBS = $$HOME/.brew/Cellar/allegro/*/lib
+INCL = -I ../ -I $$HOME/.brew/opt/allegro/include
+LIBS = -L $$HOME/.brew/opt/allegro/lib
 SRC = SnakeAllegro.cpp
 SRC2 = SnakeAllegro.cpp main.cpp
 CC =  g++ -g -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -L $(LIBS) -lallegro  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
+FLAGS = -lallegro  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
 
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) -I ../ -I $(INCL) $(FLAGS)
-	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I  $(INCL) $(FLAGS)
+	@ # $(CC) -o snake $(SRC2) $(INCL) $(LIBS) $(FLAGS)
+	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) $(INCL) $(LIBS) $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)

@@ -13,16 +13,22 @@
 
 NAME = libSnakeSDL.so
 
+INCL = -I ../ -I $$HOME/.brew/opt/sdl2/include/SDL2 -I \
+		$$HOME/.brew/opt/sdl2_mixer/include/SDL2 -I \
+		$$HOME/.brew/opt/sdl2_ttf/include/SDL2
+LIBS = -L $$HOME/.brew/opt/sdl2/lib -L $$HOME/.brew/opt/sdl2_mixer/lib \
+		-L $$HOME/.brew/opt/sdl2_ttf/lib \
+		-L $$HOME/.brew/opt/freetype/lib
 SRC = SnakeSDL.cpp 
 SRC2 = SnakeSDL.cpp main.cpp
 CC = g++ -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -L SDL2/lib -lSDL2_ttf -lSDL2 -lSDL2main -lSDL2_mixer -lfreetype
+FLAGS = -lSDL2_ttf -lSDL2 -lSDL2main -lSDL2_mixer -lfreetype
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) -I ../ -I SDL2/include $(FLAGS)
-	@  $(CC) -o $(NAME) -shared -fPIC $(SRC) -I ../ -I SDL2/include $(FLAGS) 
+	@ # $(CC) -o snake $(SRC2)  $(INC) $(LIBS) $(FLAGS)
+	@  $(CC) -o $(NAME) -shared -fPIC $(SRC) $(INCL) $(LIBS) $(FLAGS) 
 
 clean:
 	@rm -fr $(NAME)

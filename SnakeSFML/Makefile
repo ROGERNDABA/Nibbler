@@ -12,17 +12,19 @@
 
 NAME = libSnakeSFML.so
 
+INCL = -I ../ -I $$HOME/.brew/opt/sfml/include
+LIBS = -L $$HOME/.brew/opt/sfml/lib
 SRC = SnakeSFML.cpp
 SRC2 = SnakeSFML.cpp main.cpp
 CC = g++ -Wall -Wextra -Werror -std=c++11
 
-FLAGS =  -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+FLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) -I ../ -I SFML/include $(FLAGS)
-	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I SFML/include $(FLAGS)
+	@ # $(CC) -o snake $(SRC2) $(INCL) $(LIBS) $(FLAGS)
+	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) $(INCL) $(LIBS) $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)
