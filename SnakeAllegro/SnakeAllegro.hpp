@@ -12,7 +12,7 @@
 
 #ifndef SNAKEALLEGRO_HPP
 #define SNAKEALLEGRO_HPP
-// #define ALLEGRO_NO_MAGIC_MAIN
+#define ALLEGRO_NO_MAGIC_MAIN
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_acodec.h>
@@ -83,6 +83,7 @@ class SnakeAllegro : public Snake {
     bool checkCollusion(TVertex &);
     void gameOver();
 };
+int user_main(int, char **);
 
 extern "C" {
 SnakeAllegro *createSnake(int, int);

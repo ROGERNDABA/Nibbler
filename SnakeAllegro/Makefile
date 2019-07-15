@@ -18,7 +18,7 @@ SRC = SnakeAllegro.cpp
 SRC2 = SnakeAllegro.cpp main.cpp
 CC =  g++ -g -Wall -Wextra -Werror -std=c++11
 
-FLAGS = -lallegro  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
+FLAGS = -lallegro  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro_ttf -lallegro_video
 
 all: $(NAME)
 

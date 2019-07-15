@@ -3,11 +3,12 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}",
-                "${workspaceFolder}/SnakeAllegro/allegro/include",
-                "${workspaceFolder}/SnakeSDL/SDL2/include",
-                "${workspaceFolder}/SnakeSFML/SFML/include",
-                "${workspaceFolder}/SnakeFLTK/FLTK/include"
+                "${workspaceFolder}/**",
+                "~/.brew/opt/allegro/include",
+                "~/.brew/opt/sdl2/include",
+                "~/.brew/opt/sfml/include",
+                "~/.brew/opt/sdl2_mixer/include",
+                "~/.brew/opt/sdl2_ttf/include"
             ]
         }
     ],

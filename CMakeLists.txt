@@ -4,9 +4,6 @@ project(snake)
 
 include_directories(${PROJECT_SOURCE_DIR})
 add_executable(nibbler Nibbler.cpp main.cpp)
-add_custom_command(OUTPUT ${CMAKE_SOURCE_DIR}/SnakeAllegro/libSnakeAllegro.so
-                   COMMAND make
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/SnakeAllegro
-)
+
 target_compile_options (nibbler PRIVATE -g -Wall -Wextra -Werror -std=c++11)
 target_link_libraries(nibbler -ldl)

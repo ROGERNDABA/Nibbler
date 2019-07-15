@@ -95,12 +95,13 @@ SnakeAllegro& SnakeAllegro::operator=(SnakeAllegro const& rhs) {
 }
 
 void SnakeAllegro::init() {
+    al_run_main(0, NULL, user_main);
     if (!al_init())
         throw SnakeAllegroException("Couldn't create window");
 
-    if (!al_init_primitives_addon())
-        throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
+    if (!al_init_primitives_addon()) throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
 
+    // al_run_detached_thread();
     if (!al_init_ttf_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
 
@@ -505,4 +506,13 @@ SnakeAllegro* createSnake(const int w, const int h) {
 
 void deleteSnake(SnakeAllegro* sa) {
     delete sa;
+}
+
+int user_main(int argc, char** argv) {
+    if (al_init()) {
+        return -1;
+    }
+    (void)argc;
+    (void)argv;
+    return 0;
 }
