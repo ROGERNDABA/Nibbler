@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeAllegro.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:19:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 18:24:09 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/10 09:01:45 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SNAKEALLEGRO_HPP
 #define SNAKEALLEGRO_HPP
-#define ALLEGRO_NO_MAGIC_MAIN
+// #define ALLEGRO_NO_MAGIC_MAIN
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_acodec.h>

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   Nibbler.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:13 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/05 14:05:05 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/10 08:57:30 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NIBBLER_HPP
 #define NIBBLER_HPP
+#define ALLEGRO_NO_MAGIC_MAIN
 
 #include "NibblerException.hpp"
 #include "Snake.hpp"
 
 typedef Snake *(*SNAKE)(int, int);
-// typedef Snake *(*UPDATESNAKE)(SnakeT);
 typedef void (*DELETESNAKE)(Snake *);
 
 class Nibbler {

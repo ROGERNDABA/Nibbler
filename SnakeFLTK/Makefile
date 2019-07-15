@@ -6,25 +6,22 @@
 #    By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 08:25:55 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/10 08:55:34 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/10 10:05:45 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libSnakeAllegro.so
+NAME = libSnakeFLTK.so
 
-INCL = -I ../ -I $$HOME/.brew/opt/allegro/include
-LIBS = -L $$HOME/.brew/opt/allegro/lib
-SRC = SnakeAllegro.cpp
-SRC2 = SnakeAllegro.cpp main.cpp
+SRC = SnakeFLTK.cpp
+SRC2 = main.cpp SnakeFLTK.cpp
 CC =  g++ -g -Wall -Wextra -Werror -std=c++11
 
-FLAGS = -lallegro  -lallegro_acodec -lallegro_audio -lallegro_color -lallegro_dialog -lallegro_font -lallegro_image -lallegro_main -lallegro_memfile -lallegro_physfs -lallegro_primitives -lallegro -lallegro_ttf -lallegro_video
-
+FLAGS =  -L FLTK/lib -lfltk -lfltk_gl -lfltk_forms -lfltk_images
 all: $(NAME)
 
 $(NAME): fclean
-	@ # $(CC) -o snake $(SRC2) $(INCL) $(LIBS) $(FLAGS)
-	@  $(CC) -shared -fPIC -o $(NAME) $(SRC) $(INCL) $(LIBS) $(FLAGS)
+	@  $(CC) -o snake $(SRC2) -I ../ -I FLTK/include $(FLAGS)
+	@ # $(CC) -shared -fPIC -o $(NAME) $(SRC) -I ../ -I FLTK/include $(FLAGS)
 
 clean:
 	@rm -fr $(NAME)
