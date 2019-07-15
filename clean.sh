@@ -5,3 +5,6 @@ rm -fr CMakeFiles cmake_install.cmake CMakeCache.txt Makefile nibbler lib
 make clean -C SnakeAllegro >/dev/null 2>&1 &&
 make clean -C SnakeSFML >/dev/null 2>&1 &&
 make clean -C SnakeSDL >/dev/null 2>&1
+rm -fr SnakeAllegro/allegro
+rm -fr SnakeSFML/SFML
+rm -fr SnakeSDL/SDL2

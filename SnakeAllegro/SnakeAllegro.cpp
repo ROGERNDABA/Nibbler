@@ -101,9 +101,6 @@ void SnakeAllegro::init() {
     if (!al_init_primitives_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init primitives");
 
-    if (!al_init_main_addon())
-        throw SnakeAllegro::SnakeAllegroException("Can't init al_main");
-
     if (!al_init_ttf_addon())
         throw SnakeAllegro::SnakeAllegroException("Can't init ttf adon");
 
