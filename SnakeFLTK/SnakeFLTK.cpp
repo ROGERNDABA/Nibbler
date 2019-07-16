@@ -6,16 +6,26 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/16 12:40:35 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/16 17:12:56 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SnakeFLTK.hpp"
 
+int keyhandler(int event) {
+    if (event == FL_KEYBOARD) {
+        if (Fl::event_key() == 'y') {
+            std::cout << "-----> yyy" << std::endl;
+            //do something because the y key was pressed
+            return 1;
+        }  // here you can test for other keys, as wanted
+    }
+    return 0;  // we had no interest in the event
+}
+
 SnakeFLTK::SnakeFLTK(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
-    (void)_prevKey,
-        (void)_doExit,
+    (void)_doExit,
         (void)_speed,
         (void)_score,
         (void)_trackFood,
@@ -87,7 +97,6 @@ void SnakeFLTK::init() {
     }
     _display->position(0, 0);
     _display->color(FL_BLACK);
-    _display->clear_border();
 
     while (!_doExit) {
         int ev = Fl::event();
@@ -105,16 +114,15 @@ void SnakeFLTK::init() {
         //     box->labeltype(FL_SHADOW_LABEL);
         // }
         // Fl::handle(FL_KEYDOWN, _display);
-        if (ev == FL_KEYBOARD) {
-            std::cout << "Hey-----------------" << std::endl;
-
+        // std::cout << "event = " << ev << std::endl;
+        if (ev == FL_SHORTCUT) {
+            std::cout << "===== " << ev << std::endl;
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
                     tmp = i;
             }
-            int key = Fl::event_key();
-            switch (key) {
+            switch (Fl::event_key()) {
                 case FL_Up: {
                     if (tmp != KEY_DOWN && tmp != KEY_UP) {
                         _prevKey = tmp;
@@ -142,6 +150,7 @@ void SnakeFLTK::init() {
                         std::fill(_key, _key + 4, false);
                         _key[KEY_RIGHT] = true;
                         std::cout << "Hey++++++++++++++" << std::endl;
+                        _doExit = true;
                     }
                 } break;
                 // case FL:
@@ -161,6 +170,7 @@ void SnakeFLTK::init() {
                     _doExit = true;
                 } break;
             }
+            ev = 0;
             // prevEvent = 1;
         }
         _display->end();
