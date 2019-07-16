@@ -10,7 +10,10 @@
                 "~/.brew/opt/sdl2_mixer/include",
                 "~/.brew/opt/sdl2_ttf/include",
                 "~/.brew/opt/fltk/include/**"
-            ]
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "/usr/bin/g++"
         }
     ],
     "version": 4

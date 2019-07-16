@@ -6,7 +6,7 @@
 #    By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/15 11:47:19 by Roger Ndaba       #+#    #+#              #
-#    Updated: 2019/07/15 11:48:32 by Roger Ndaba      ###   ########.fr        #
+#    Updated: 2019/07/16 11:07:16 by Roger Ndaba      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libSnakeFLTK.so
 INCL = -I ../ -I $$HOME/.brew/opt/FLTK/include
 LIBS = -L $$HOME/.brew/opt/FLTK/lib
 SRC = SnakeFLTK.cpp
-SRC2 = main.cpp # SnakeFLTK.cpp 
+SRC2 = main.cpp SnakeFLTK.cpp 
 CC =  g++ -g -Wall -Wextra -Werror -std=c++11
 
 FLAGS = -lfltk

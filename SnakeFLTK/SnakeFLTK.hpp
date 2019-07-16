@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:14:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/15 13:20:08 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/16 12:14:21 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ class SnakeFLTK {
     bool _valBonus;
     int _softExit;
 
-    double _start;
-    double _now;
+    clock_t _start;
+    clock_t _now;
 
    public:
     class SnakeFLTKException : public NibblerException {
@@ -67,4 +67,5 @@ class SnakeFLTK {
     void init();
 };
 
+double diffclock(clock_t, clock_t);
 #endif  //SNAKEFLTK_HPP

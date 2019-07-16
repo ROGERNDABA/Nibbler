@@ -5,3 +5,4 @@ snake
 CMakeFiles
 cmake_install.cmake
 CMakeCache.txt
+*.dSYM
