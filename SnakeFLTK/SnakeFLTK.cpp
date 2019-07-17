@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 13:03:27 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 13:11:51 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,89 +83,9 @@ void SnakeFLTK::init() {
     int prevEvent;
 
     while (!_doExit && !_softExit) {
-        _now = clock();
         int ev = Fl::event();
 
-        if (diffclock(_now, _start) >= (1.0 / (_speed + 2))) {
-            _display->damage(FL_DAMAGE_ALL);
-
-            _display->begin();
-            _display->color(FL_BLACK);
-
-            if (checkFood()) {
-                randFood();
-                // al_play_sample(_sample, 0.05, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-                _score += _speed;
-            }
-            if (_key[KEY_UP]) {
-                _doExit = moveHead(KEY_UP);
-            } else if (_key[KEY_DOWN]) {
-                _doExit = moveHead(KEY_DOWN);
-            } else if (_key[KEY_LEFT]) {
-                _doExit = moveHead(KEY_LEFT);
-            } else if (_key[KEY_RIGHT]) {
-                _doExit = moveHead(KEY_RIGHT);
-            } else {
-                _doExit = moveHead(-1);
-            }
-            boxes.push_back(new Fl_Box(0, 0, WINW, 60));
-            boxes.back()->color(fl_rgb_color(236, 194, 255));
-            boxes.back()->box(FL_FLAT_BOX);
-
-            // al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
-            // al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
-
-            std::stringstream ss;
-            ss << _score;
-            std::string s = "Score : " + ss.str();
-            boxes.push_back(new Fl_Box(20, 35, 60, 20, s.c_str()));
-            boxes.back()->box(FL_FLAT_BOX);
-            boxes.back()->color(fl_rgb_color(236, 194, 255));
-            boxes.back()->labelfont(FL_BOLD);
-            boxes.back()->labelsize(18);
-
-            boxes.push_back(new Fl_Box((WINW / 2) - 30, 5, 0, 25, "Snake FLTK"));
-            boxes.back()->box(FL_FLAT_BOX);
-            // boxes.back()->color(fl_rgb_color(236, 194, 255));
-            boxes.back()->labelfont(FL_BOLD);
-            boxes.back()->labelsize(24);
-
-            for (std::vector<TVertex>::iterator it = _obstacles->begin();
-                 it != _obstacles->end(); ++it) {
-                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
-                boxes.back()->color(fl_rgb_color(236, 194, 255));
-                boxes.back()->box(FL_FLAT_BOX);
-            }
-            // std::cout << "roger --> " << diffclock(_now, _start) << std::endl;
-            for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
-                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
-                if (it == _body->begin()) {
-                    boxes.back()->color(fl_rgb_color(255, 0, 0));
-                    boxes.back()->box(FL_FLAT_BOX);
-                } else {
-                    boxes.back()->color(fl_rgb_color(209, 102, 255));
-                    boxes.back()->box(FL_FLAT_BOX);
-                }
-            }
-            boxes.push_back(new Fl_Box(_food.x1, _food.y1, 14, 14));
-            boxes.back()->color(fl_rgb_color(0, 255, 0));
-            boxes.back()->box(FL_FLAT_BOX);
-
-            if (_valBonus) {
-                boxes.push_back(new Fl_Box(_bonus.x1, _bonus.y1, 14, 14));
-                boxes.back()->color(fl_rgb_color(0, 100, 255));
-                boxes.back()->box(FL_FLAT_BOX);
-            }
-            _start = _now;
-            prevEvent = 0;
-            _display->show();
-        }
-        // for (int i = 0; i < 3; ++i) {
-
-        // }
-        // Fl::handle(FL_KEYDOWN, _display);
-        // std::cout << "event = " << ev << std::endl;
-        if (ev == FL_SHORTCUT) {
+        if (ev == FL_SHORTCUT ) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -215,6 +135,85 @@ void SnakeFLTK::init() {
                 } break;
             }
             prevEvent = 1;
+        }
+        _now = clock();
+        if (diffclock(_now, _start) >= (1.0 / (_speed + 2))) {
+            _display->damage(FL_DAMAGE_ALL);
+
+            _display->begin();
+            _display->color(FL_BLACK);
+
+            if (checkFood()) {
+                randFood();
+                // al_play_sample(_sample, 0.05, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                _score += _speed;
+            }
+            if (_key[KEY_UP]) {
+                _doExit = moveHead(KEY_UP);
+            } else if (_key[KEY_DOWN]) {
+                _doExit = moveHead(KEY_DOWN);
+            } else if (_key[KEY_LEFT]) {
+                _doExit = moveHead(KEY_LEFT);
+            } else if (_key[KEY_RIGHT]) {
+                _doExit = moveHead(KEY_RIGHT);
+            } else {
+                _doExit = moveHead(-1);
+            }
+            boxes.push_back(new Fl_Box(0, 0, WINW, WINH + 60));
+            boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->box(FL_FLAT_BOX);
+
+            boxes.push_back(new Fl_Box(2, 60, WINW - 4, WINH - 2));
+            boxes.back()->color(FL_BLACK);
+            boxes.back()->box(FL_FLAT_BOX);
+
+            // al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
+            // al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
+
+            std::stringstream ss;
+            ss << _score;
+            std::string s = "Score : " + ss.str();
+            boxes.push_back(new Fl_Box(20, 35, 60, 20, s.c_str()));
+            boxes.back()->box(FL_FLAT_BOX);
+            boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->labelfont(FL_BOLD);
+            boxes.back()->labelsize(18);
+
+            boxes.push_back(new Fl_Box((WINW / 2) - 30, 5, 0, 25, "Snake FLTK"));
+            boxes.back()->box(FL_FLAT_BOX);
+            // boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->labelfont(FL_BOLD);
+            boxes.back()->labelsize(24);
+
+            for (std::vector<TVertex>::iterator it = _obstacles->begin();
+                 it != _obstacles->end(); ++it) {
+                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
+                boxes.back()->color(fl_rgb_color(236, 194, 255));
+                boxes.back()->box(FL_FLAT_BOX);
+            }
+            // std::cout << "roger --> " << diffclock(_now, _start) << std::endl;
+            for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
+                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
+                if (it == _body->begin()) {
+                    boxes.back()->color(fl_rgb_color(255, 0, 0));
+                    boxes.back()->box(FL_FLAT_BOX);
+                } else {
+                    boxes.back()->color(fl_rgb_color(209, 102, 255));
+                    boxes.back()->box(FL_FLAT_BOX);
+                }
+            }
+            boxes.push_back(new Fl_Box(_food.x1, _food.y1, 14, 14));
+            boxes.back()->color(fl_rgb_color(0, 255, 0));
+            boxes.back()->box(FL_FLAT_BOX);
+
+            if (_valBonus) {
+                boxes.push_back(new Fl_Box(_bonus.x1, _bonus.y1, 14, 14));
+                boxes.back()->color(fl_rgb_color(0, 100, 255));
+                boxes.back()->box(FL_FLAT_BOX);
+            }
+            _start = _now;
+            prevEvent = 0;
+            _display->show();
         }
         Fl::check();
         for (unsigned long i = 0; i < boxes.size(); i++)
