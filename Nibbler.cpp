@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:26:00 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:47:13 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void Nibbler::play(int softExit) {
                     _gameSnake = _snake(_w, _h);
                     _gameSnake->init();
                     _softExit = _gameSnake->getEvent();
+                    std::cout << "+++ " << _softExit << std::endl;
                     _snakeInfo = _gameSnake->getSnake();
                     _gameSnake->stop();
                     if (_softExit) {

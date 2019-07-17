@@ -19,7 +19,7 @@ if [[ $? != 0 ]] ; then
     source ~/.zshrc
 else
     echo "\033[33mUpdating Homebrew...\e[0m"
-    brew update
+    # brew update
 fi
 
 

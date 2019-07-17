@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:38:27 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:45:09 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,9 +447,10 @@ int SnakeFLTK::getEvent() const {
 }
 
 void SnakeFLTK::stop() {
-    if (_display)
+    if (_display) {
         _display->end();
-    delete _display;
+        delete _display;
+    }
     _display = NULL;
 }
 
