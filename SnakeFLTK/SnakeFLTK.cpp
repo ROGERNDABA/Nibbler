@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 13:11:51 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 13:40:50 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void SnakeFLTK::init() {
     while (!_doExit && !_softExit) {
         int ev = Fl::event();
 
-        if (ev == FL_SHORTCUT ) {
+        if (ev == FL_SHORTCUT) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -130,7 +130,7 @@ void SnakeFLTK::init() {
                     _softExit = 3;
                     break;
                 case FL_Escape: {
-                    // this->gameOver();
+                    this->gameOver();
                     _doExit = true;
                 } break;
             }
@@ -139,8 +139,8 @@ void SnakeFLTK::init() {
         _now = clock();
         if (diffclock(_now, _start) >= (1.0 / (_speed + 2))) {
             _display->damage(FL_DAMAGE_ALL);
-
             _display->begin();
+
             _display->color(FL_BLACK);
 
             if (checkFood()) {
@@ -179,9 +179,9 @@ void SnakeFLTK::init() {
             boxes.back()->labelfont(FL_BOLD);
             boxes.back()->labelsize(18);
 
-            boxes.push_back(new Fl_Box((WINW / 2) - 30, 5, 0, 25, "Snake FLTK"));
+            boxes.push_back(new Fl_Box((WINW / 2) - 30, 5, 100, 25, "Snake FLTK"));
             boxes.back()->box(FL_FLAT_BOX);
-            // boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->color(fl_rgb_color(236, 194, 255));
             boxes.back()->labelfont(FL_BOLD);
             boxes.back()->labelsize(24);
 
@@ -315,7 +315,7 @@ bool SnakeFLTK::moveHead(int key) {
     }
     if (checkCollusion(tail)) {
         // al_play_sample(_sample2, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-        // this->gameOver();
+        this->gameOver();
         return true;
     } else {
         return false;
@@ -370,6 +370,46 @@ void SnakeFLTK::initObstacles() {
         tv2.x1 = tv.x1, tv2.y1 = tv.y2, tv2.x2 = tv2.x1 + 15, tv2.y2 = tv2.y1 + 15;
         _obstacles->push_back(tv2);
         _obstacles->push_back(tv);
+    }
+}
+
+void SnakeFLTK::gameOver() {
+    clock_t start = clock();
+    clock_t now = clock();
+    std::vector<Fl_Box*> boxes;
+
+    while (difftime(now, start) <= 5000) {
+        std::cout << "---> " << difftime(now, start) << std::endl;
+        _display->damage(FL_DAMAGE_ALL);
+        _display->begin();
+
+        _display->color(FL_BLACK);
+
+        boxes.push_back(new Fl_Box((WINW / 2) - 100, (WINH / 2) - 120, 200, 90, "GAME OVER"));
+        boxes.back()->box(FL_FLAT_BOX);
+        boxes.back()->color(FL_BLACK);
+        boxes.back()->labelcolor(FL_RED);
+        boxes.back()->labelfont(FL_BOLD);
+        boxes.back()->labelsize(60);
+
+        std::stringstream ss;
+        ss << _score;
+        std::string s = "Score : " + ss.str();
+        boxes.push_back(new Fl_Box((WINW / 2) - 30, (WINH / 2), 60, 30, s.c_str()));
+        boxes.back()->box(FL_FLAT_BOX);
+        boxes.back()->color(FL_BLACK);
+        boxes.back()->labelcolor(FL_WHITE);
+        boxes.back()->labelfont(FL_BOLD);
+        boxes.back()->labelsize(24);
+
+        _display->show();
+
+        // now = clock();
+        std::cout << "---> " << difftime(now, start) << std::endl;
+        Fl::check();
+        for (unsigned long i = 0; i < boxes.size(); i++)
+            delete boxes[i];
+        boxes.clear();
     }
 }
 

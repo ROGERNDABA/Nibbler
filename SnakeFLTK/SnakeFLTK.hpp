@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:14:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 09:06:41 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 13:17:42 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ class SnakeFLTK {
     void randFood();
     bool moveHead(int);
     bool checkCollusion(TVertex &);
-    // void gameOver();
+    void gameOver();
 };
 
 double diffclock(clock_t, clock_t);
