@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:14:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:11:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:27:31 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <NibblerException.hpp>
 #include <Snake.hpp>
 
-class SnakeFLTK {
+class SnakeFLTK : public Snake {
    private:
     std::vector<TVertex> *_body;
     std::vector<TVertex> *_obstacles;

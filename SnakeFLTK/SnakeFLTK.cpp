@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:24:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:38:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 SnakeFLTK::SnakeFLTK(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
     _start = clock();
-
-    (void)SNAKE,
-
-        _display = NULL;  //, _eQueue = NULL, _timer = NULL, _sample = NULL, _sample2 = NULL;
+    _display = NULL;  //, _eQueue = NULL, _timer = NULL, _sample = NULL, _sample2 = NULL;
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -34,7 +31,7 @@ SnakeFLTK::SnakeFLTK(int w, int h)
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
     this->initObstacles();
-    this->init();
+    // this->init();
 }
 
 void SnakeFLTK::updateSnake(SnakeT Snake) {
@@ -452,6 +449,7 @@ int SnakeFLTK::getEvent() const {
 void SnakeFLTK::stop() {
     if (_display)
         _display->end();
+    delete _display;
     _display = NULL;
 }
 
