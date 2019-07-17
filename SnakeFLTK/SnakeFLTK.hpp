@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:14:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 13:17:42 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:11:07 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ class SnakeFLTK {
     SnakeFLTK &operator=(SnakeFLTK const &);
     ~SnakeFLTK();
 
+    SnakeT getSnake(void) const;
+    int getEvent(void) const;
+    void updateSnake(SnakeT);
+    void stop();
+
     void init();
     void initObstacles();
     bool checkFood();
@@ -72,6 +77,11 @@ class SnakeFLTK {
     bool checkCollusion(TVertex &);
     void gameOver();
 };
+
+extern "C" {
+SnakeFLTK *createSnake(int, int);
+void deleteSnake(SnakeFLTK *);
+}
 
 double diffclock(clock_t, clock_t);
 #endif  //SNAKEFLTK_HPP

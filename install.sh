@@ -4,7 +4,9 @@ echo -e "\e[31mCleaning up project...\e[0m"
 rm -fr CMakeFiles cmake_install.cmake CMakeCache.txt Makefile nibbler lib
 make clean -C SnakeAllegro >/dev/null 2>&1 &&
 make clean -C SnakeSFML >/dev/null 2>&1 &&
-make clean -C SnakeSDL >/dev/null 2>&1
+make clean -C SnakeSDL >/dev/null 2>&1 &&
+make clean -C SnakeFLTK >/dev/null 2>&1
+
 unset LD_LIBRARY_PATH
 unset DYLD_LIBRARY_PATH
 
@@ -46,9 +48,9 @@ fi
 
 echo -e "\e[33m---Creating project lib folder---\e[0m"
 mkdir lib
-echo -e "\e[33m---Making libSnakeAllegro.so---\e[0m"
-make -C SnakeAllegro >/dev/null 2>&1 && \
-cp -fr SnakeAllegro/libSnakeAllegro.so lib >/dev/null 2>&1
+echo -e "\e[33m---Making libSnakeFLTK.so---\e[0m"
+make -C SnakeFLTK >/dev/null 2>&1 && \
+cp -fr SnakeAllegro/libSnakeFLTK.so lib >/dev/null 2>&1
 echo -e "\e[33m---Making libSnakeSDL.so---\e[0m"
 make -C SnakeSDL >/dev/null 2>&1 && \
 cp -fr SnakeSDL/libSnakeSDL.so lib >/dev/null 2>&1

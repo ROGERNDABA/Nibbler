@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Nibbler.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 17:17:32 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:26:00 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ Nibbler& Nibbler::operator=(Nibbler const& rhs) {
 }
 
 void Nibbler::setup(std::string lib) {
-    _libs[1] = "lib/libSnakeAllegro.so";
+    _libs[1] = "lib/libSnakeFLTK.so";
     _libs[2] = "lib/libSnakeSDL.so";
     _libs[3] = "lib/libSnakeSFML.so";
 
-    if (lib == "ALLEGRO") {
+    if (lib == "FLTK") {
         _softExit = 1;
     } else if (lib == "SDL") {
         _softExit = 2;

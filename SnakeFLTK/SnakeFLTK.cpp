@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 13:40:50 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 16:24:32 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ SnakeFLTK::SnakeFLTK(int w, int h)
     this->init();
 }
 
+void SnakeFLTK::updateSnake(SnakeT Snake) {
+    _start = 0;
+    _softExit = 0;
+    WINW = Snake.WINW;
+    WINH = Snake.WINH;
+    _body = Snake.body;
+    _obstacles = Snake.obstacles;
+    _food = Snake.food;
+    _key = Snake.key;
+    _prevKey = Snake.prevKey;
+    _doExit = Snake.doExit;
+    _speed = Snake.speed;
+    _score = Snake.score;
+    _bonus = Snake.bonus;
+    _trackFood = Snake.trackFood;
+    _valBonus = Snake.valBonus;
+}
+
 SnakeFLTK::SnakeFLTKException::SnakeFLTKException(std::string exc) {
     this->_exc = "\033[31m" + exc + "\033[0m";
 }
@@ -58,7 +76,10 @@ SnakeFLTK::SnakeFLTKException& SnakeFLTK::SnakeFLTKException::operator=(SnakeFLT
 SnakeFLTK::~SnakeFLTK() {
     delete _body;
     delete _obstacles;
-    if (_display) delete _display;
+    if (_display) {
+        _display->end();
+        delete _display;
+    }
 }
 
 SnakeFLTK::SnakeFLTK(SnakeFLTK const& copy) {
@@ -167,9 +188,6 @@ void SnakeFLTK::init() {
             boxes.back()->color(FL_BLACK);
             boxes.back()->box(FL_FLAT_BOX);
 
-            // al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
-            // al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
-
             std::stringstream ss;
             ss << _score;
             std::string s = "Score : " + ss.str();
@@ -191,7 +209,6 @@ void SnakeFLTK::init() {
                 boxes.back()->color(fl_rgb_color(236, 194, 255));
                 boxes.back()->box(FL_FLAT_BOX);
             }
-            // std::cout << "roger --> " << diffclock(_now, _start) << std::endl;
             for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
                 boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
                 if (it == _body->begin()) {
@@ -220,6 +237,19 @@ void SnakeFLTK::init() {
             delete boxes[i];
         boxes.clear();
     }
+    SNAKE.WINW = WINW;
+    SNAKE.WINH = WINH;
+    SNAKE.body = _body;
+    SNAKE.obstacles = _obstacles;
+    SNAKE.food = _food;
+    SNAKE.key = _key;
+    SNAKE.prevKey = _prevKey;
+    SNAKE.doExit = _doExit;
+    SNAKE.speed = _speed;
+    SNAKE.score = _score;
+    SNAKE.bonus = _bonus;
+    SNAKE.trackFood = _trackFood;
+    SNAKE.valBonus = _valBonus;
 }
 
 void SnakeFLTK::randFood() {
@@ -378,8 +408,7 @@ void SnakeFLTK::gameOver() {
     clock_t now = clock();
     std::vector<Fl_Box*> boxes;
 
-    while (difftime(now, start) <= 5000) {
-        std::cout << "---> " << difftime(now, start) << std::endl;
+    while (diffclock(now, start) <= 5) {
         _display->damage(FL_DAMAGE_ALL);
         _display->begin();
 
@@ -394,7 +423,7 @@ void SnakeFLTK::gameOver() {
 
         std::stringstream ss;
         ss << _score;
-        std::string s = "Score : " + ss.str();
+        std::string s = "Score " + ss.str();
         boxes.push_back(new Fl_Box((WINW / 2) - 30, (WINH / 2), 60, 30, s.c_str()));
         boxes.back()->box(FL_FLAT_BOX);
         boxes.back()->color(FL_BLACK);
@@ -404,13 +433,34 @@ void SnakeFLTK::gameOver() {
 
         _display->show();
 
-        // now = clock();
-        std::cout << "---> " << difftime(now, start) << std::endl;
+        now = clock();
         Fl::check();
         for (unsigned long i = 0; i < boxes.size(); i++)
             delete boxes[i];
         boxes.clear();
     }
+}
+
+SnakeT SnakeFLTK::getSnake() const {
+    return this->SNAKE;
+}
+
+int SnakeFLTK::getEvent() const {
+    return this->_softExit;
+}
+
+void SnakeFLTK::stop() {
+    if (_display)
+        _display->end();
+    _display = NULL;
+}
+
+SnakeFLTK* createSnake(const int w, const int h) {
+    return new SnakeFLTK(w, h);
+}
+
+void deleteSnake(SnakeFLTK* sa) {
+    delete sa;
 }
 
 double diffclock(clock_t clock1, clock_t clock2) {
