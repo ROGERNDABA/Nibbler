@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 10:33:31 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/17 13:03:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 SnakeFLTK::SnakeFLTK(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
-    (void)_softExit,
-        _start = clock();
+    _start = clock();
 
     (void)SNAKE,
 
@@ -34,7 +33,7 @@ SnakeFLTK::SnakeFLTK(int w, int h)
     this->_body = tvt;
     this->_obstacles = new std::vector<TVertex>;
     this->randFood();
-    // this->initObstacles();
+    this->initObstacles();
     this->init();
 }
 
@@ -57,8 +56,9 @@ SnakeFLTK::SnakeFLTKException& SnakeFLTK::SnakeFLTKException::operator=(SnakeFLT
 }
 
 SnakeFLTK::~SnakeFLTK() {
-    if (_display)
-        delete _display;
+    delete _body;
+    delete _obstacles;
+    if (_display) delete _display;
 }
 
 SnakeFLTK::SnakeFLTK(SnakeFLTK const& copy) {
@@ -80,11 +80,15 @@ void SnakeFLTK::init() {
     _display->color(FL_BLACK);
 
     std::vector<Fl_Box*> boxes;
-    while (!_doExit) {
-        int ev = Fl::event();
-        _now = clock();
+    int prevEvent;
 
-        if (diffclock(_now, _start) >= (1.0 / 8)) {
+    while (!_doExit && !_softExit) {
+        _now = clock();
+        int ev = Fl::event();
+
+        if (diffclock(_now, _start) >= (1.0 / (_speed + 2))) {
+            _display->damage(FL_DAMAGE_ALL);
+
             _display->begin();
             _display->color(FL_BLACK);
 
@@ -104,26 +108,64 @@ void SnakeFLTK::init() {
             } else {
                 _doExit = moveHead(-1);
             }
-            // std::cout << "roger --> " << diffclock(_now, _start) << std::endl;
-            _start = _now;
-        }
-        // for (int i = 0; i < 3; ++i) {
-        for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
-            if (it == _body->begin()) {
-                std::cout << "((((((((((())))))))))))))))" << std::endl;
-                boxes.push_back(new Fl_Box(it->x1, it->x2, 15, 15));
-                boxes.back()->color(FL_RED);
+            boxes.push_back(new Fl_Box(0, 0, WINW, 60));
+            boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->box(FL_FLAT_BOX);
+
+            // al_draw_textf(font, al_map_rgb(0, 0, 0), 20, 35, ALLEGRO_ALIGN_LEFT, "Score : %d", _score);
+            // al_draw_textf(fontH, al_map_rgb(0, 0, 0), WINW / 2, 5, ALLEGRO_ALIGN_CENTER, "SNAKE ALLEGRO");
+
+            std::stringstream ss;
+            ss << _score;
+            std::string s = "Score : " + ss.str();
+            boxes.push_back(new Fl_Box(20, 35, 60, 20, s.c_str()));
+            boxes.back()->box(FL_FLAT_BOX);
+            boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->labelfont(FL_BOLD);
+            boxes.back()->labelsize(18);
+
+            boxes.push_back(new Fl_Box((WINW / 2) - 30, 5, 0, 25, "Snake FLTK"));
+            boxes.back()->box(FL_FLAT_BOX);
+            // boxes.back()->color(fl_rgb_color(236, 194, 255));
+            boxes.back()->labelfont(FL_BOLD);
+            boxes.back()->labelsize(24);
+
+            for (std::vector<TVertex>::iterator it = _obstacles->begin();
+                 it != _obstacles->end(); ++it) {
+                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
+                boxes.back()->color(fl_rgb_color(236, 194, 255));
                 boxes.back()->box(FL_FLAT_BOX);
             }
-            // else {
-            //     drawRect(*it, al_map_rgb(209, 102, 255));
-            // }
+            // std::cout << "roger --> " << diffclock(_now, _start) << std::endl;
+            for (std::vector<TVertex>::iterator it = _body->begin(); it != _body->end(); ++it) {
+                boxes.push_back(new Fl_Box(it->x1, it->y1, 14, 14));
+                if (it == _body->begin()) {
+                    boxes.back()->color(fl_rgb_color(255, 0, 0));
+                    boxes.back()->box(FL_FLAT_BOX);
+                } else {
+                    boxes.back()->color(fl_rgb_color(209, 102, 255));
+                    boxes.back()->box(FL_FLAT_BOX);
+                }
+            }
+            boxes.push_back(new Fl_Box(_food.x1, _food.y1, 14, 14));
+            boxes.back()->color(fl_rgb_color(0, 255, 0));
+            boxes.back()->box(FL_FLAT_BOX);
+
+            if (_valBonus) {
+                boxes.push_back(new Fl_Box(_bonus.x1, _bonus.y1, 14, 14));
+                boxes.back()->color(fl_rgb_color(0, 100, 255));
+                boxes.back()->box(FL_FLAT_BOX);
+            }
+            _start = _now;
+            prevEvent = 0;
+            _display->show();
         }
+        // for (int i = 0; i < 3; ++i) {
 
         // }
         // Fl::handle(FL_KEYDOWN, _display);
         // std::cout << "event = " << ev << std::endl;
-        if (ev == FL_KEYUP) {
+        if (ev == FL_SHORTCUT) {
             int tmp;
             for (int i = 0; i < 4; i++) {
                 if (_key[i])
@@ -131,57 +173,49 @@ void SnakeFLTK::init() {
             }
             switch (Fl::event_key()) {
                 case FL_Up: {
-                    // if (tmp != KEY_DOWN && tmp != KEY_UP) {
-                    _prevKey = tmp;
-                    std::fill(_key, _key + 4, false);
-                    _key[KEY_UP] = true;
-                    // }
+                    if (tmp != KEY_DOWN && tmp != KEY_UP) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_UP] = true;
+                    }
                 } break;
                 case FL_Down: {
-                    // if (tmp != KEY_UP && tmp != KEY_DOWN) {
-                    _prevKey = tmp;
-                    std::fill(_key, _key + 4, false);
-                    _key[KEY_DOWN] = true;
-                    // }
+                    if (tmp != KEY_UP && tmp != KEY_DOWN) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_DOWN] = true;
+                    }
                 } break;
                 case FL_Left: {
-                    // if (tmp != KEY_RIGHT && tmp != KEY_LEFT) {
-                    _prevKey = tmp;
-                    std::fill(_key, _key + 4, false);
-                    _key[KEY_LEFT] = true;
-                    // }
+                    if (tmp != KEY_RIGHT && tmp != KEY_LEFT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_LEFT] = true;
+                    }
                 } break;
                 case FL_Right: {
-                    // if (tmp != KEY_LEFT && tmp != KEY_RIGHT) {
-                    _prevKey = tmp;
-                    std::fill(_key, _key + 4, false);
-                    _key[KEY_RIGHT] = true;
-                    // }
+                    if (tmp != KEY_LEFT && tmp != KEY_RIGHT) {
+                        _prevKey = tmp;
+                        std::fill(_key, _key + 4, false);
+                        _key[KEY_RIGHT] = true;
+                    }
                 } break;
                 case '1':
-                    _doExit = true;
-                // case ALLEGRO_KEY_PAD_1:
-                //     _softExit = 1;
-                //     break;
-                // case ALLEGRO_KEY_2:
-                // case ALLEGRO_KEY_PAD_2:
-                //     _softExit = 2;
-                //     break;
-                // case ALLEGRO_KEY_3:
-                // case ALLEGRO_KEY_PAD_3:
-                //     _softExit = 3;
-                //     break;
+                    _softExit = 1;
+                    break;
+                case '2':
+                    _softExit = 2;
+                    break;
+                case '3':
+                    _softExit = 3;
+                    break;
                 case FL_Escape: {
                     // this->gameOver();
                     _doExit = true;
                 } break;
             }
-            ev = 0;
-            // prevEvent = 1;
+            prevEvent = 1;
         }
-        // _display->end();
-        Fl::flush();
-        _display->show();
         Fl::check();
         for (unsigned long i = 0; i < boxes.size(); i++)
             delete boxes[i];
