@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 10:52:59 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:59:56 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ void Nibbler::setup(std::string lib) {
     _snakes[3] = _snake(_w, _h);
     _snakes[3]->init();
 
-    (void)_snakeInfo;
-    (void)_snake;
     // _libs[1] = "lib/libSnakeFLTK.so";
     // _libs[2] = "lib/libSnakeSDL.so";
     // _libs[3] = "lib/libSnakeSFML.so";

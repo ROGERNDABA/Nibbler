@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:14:21 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:27:31 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:32:00 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ class SnakeFLTK : public Snake {
     SnakeT getSnake(void) const;
     int getEvent(void) const;
     void updateSnake(SnakeT);
+    void gameLoop();
     void stop();
 
     void init();

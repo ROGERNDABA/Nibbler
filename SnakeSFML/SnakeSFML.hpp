@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeSFML.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 17:07:48 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:25:34 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class SnakeSFML : public Snake {
     SnakeT getSnake() const;
     int getEvent() const;
     void updateSnake(SnakeT);
+    void gameLoop();
     void stop();
 
     void init();

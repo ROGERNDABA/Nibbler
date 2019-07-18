@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeSDL.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 17:34:59 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:54:44 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,10 @@ void SnakeSDL::init() {
         throw SnakeSDLException("SDL could init music");
     }
     _buzz->volume = 30;
+    std::cout << "SDL init" << std::endl;
+}
 
+void SnakeSDL::gameLoop() {
     TTF_Font* font = TTF_OpenFont("fonts/big_noodle_titling.ttf", 18);
     TTF_Font* fontH = TTF_OpenFont("fonts/big_noodle_titling.ttf", 24);
     if (!font) {
@@ -152,6 +155,7 @@ void SnakeSDL::init() {
     SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_renderer);
 
+    std::cout << "0000000000000000000000000000" << std::endl;
     int prevEvent = 0;
     while (!_doExit && !_softExit) {
         SDL_Event ev;

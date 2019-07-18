@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeSDL.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:21:34 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 15:50:33 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:27:55 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ class SnakeSDL : public Snake {
     SnakeT getSnake() const;
     int getEvent() const;
     void updateSnake(SnakeT);
+    void gameLoop();
     void stop();
 
     void init();

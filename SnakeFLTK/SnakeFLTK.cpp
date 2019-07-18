@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:45:09 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:55:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ void SnakeFLTK::init() {
     }
     _display->position(0, 0);
     _display->color(FL_BLACK);
+    std::cout << "FLTK init" << std::endl;
+}
 
+void SnakeFLTK::gameLoop() {
     std::vector<Fl_Box*> boxes;
     int prevEvent;
 

@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 08:46:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:56:02 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ void SnakeSFML::init() {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
     _buzz.setVolume(30);
+    std::cout << "SFML init" << std::endl;
+}
 
+void SnakeSFML::gameLoop() {
     sf::Text text;
     sf::Font font;
     if (!font.loadFromFile("fonts/big_noodle_titling.ttf")) {
@@ -253,6 +256,7 @@ void SnakeSFML::init() {
     SNAKE.bonus = _bonus;
     SNAKE.trackFood = _trackFood;
     SNAKE.valBonus = _valBonus;
+    std::cout << "----------------------------->" << std::endl;
 }
 
 bool SnakeSFML::checkFood() {
