@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:13:56 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/16 12:06:07 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 10:25:19 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ class Snake {
     virtual SnakeT getSnake(void) const = 0;
     virtual int getEvent(void) const = 0;
     virtual void updateSnake(SnakeT) = 0;
+    virtual void gameLoop() = 0;
     virtual void stop() = 0;
     virtual ~Snake(){};
 };

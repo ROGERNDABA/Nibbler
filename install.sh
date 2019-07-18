@@ -49,13 +49,13 @@ fi
 
 echo "\033[33m---Creating project lib folder---\e[0m"
 mkdir lib
-echo "\033[33m---Making libSnakeFLTK.so---\e[0m"
+echo "\033[34m---Making libSnakeFLTK.so---\e[0m"
 make -C SnakeFLTK >/dev/null 2>&1 && \
 cp -fr SnakeFLTK/libSnakeFLTK.so lib >/dev/null 2>&1
-echo "\033[33m---Making libSnakeSDL.so---\e[0m"
+echo "\033[34m---Making libSnakeSDL.so---\e[0m"
 make -C SnakeSDL >/dev/null 2>&1 && \
 cp -fr SnakeSDL/libSnakeSDL.so lib >/dev/null 2>&1
-echo "\033[33m---Making libSnakeSFML.so---\e[0m"
+echo "\033[34m---Making libSnakeSFML.so---\e[0m"
 make -C SnakeSFML >/dev/null 2>&1 && \
 cp -fr SnakeSFML/libSnakeSFML.so lib >/dev/null 2>&1
 echo "\033[33m---Running CMake---\e[0m"
