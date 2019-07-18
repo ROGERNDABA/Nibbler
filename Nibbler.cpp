@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/17 16:47:13 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 08:22:13 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ void Nibbler::play(int softExit) {
     try {
         if (softExit != 1 && softExit != 2 && softExit != 3) {
             _dl = dlopen(_libs[_softExit].c_str(), RTLD_LAZY | RTLD_LOCAL);
-            if (!_dl) {
+            if (!_dl)
                 throw NibblerExceptionE("dl_error : " + std::string(dlerror()));
-            }
             _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
             if (!_snake)
                 throw NibblerExceptionE("Some snake Error");
