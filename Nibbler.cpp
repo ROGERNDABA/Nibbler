@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 08:22:13 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 08:39:40 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ Nibbler::Nibbler(std::string w, std::string h, std::string lib) : _dl(NULL), _ga
         if ((_w == 600 && _h == 510) || (_w == 900 && _h == 600)) {  // || (_w == 6 && _h == 510))
             for (auto& c : lib) c = toupper(c);
             this->setup(lib);
+            this->play(-1);
         } else {
             throw NibblerExceptionE("Invalid dimensions\nChoose between 600 x 510, 900 x 600 and ");
         }

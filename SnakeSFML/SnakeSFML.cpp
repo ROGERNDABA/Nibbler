@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SnakeSFML.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Roger Ndaba <rogerndaba@gmil.com>          +#+  +:+       +#+        */
+/*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/06 17:28:49 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/18 08:46:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ bool SnakeSFML::checkFood() {
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
         _beep.play();
+
         _body->push_back(tmp);
         _speed += 0.2;
         _score += 20;
