@@ -105,6 +105,7 @@ void Nibbler::play(int softExit) {
                 _gameSnake = _snake(_w, _h);
                 _gameSnake->updateSnake(_snakeInfo);
                 _gameSnake->init();
+                _gameSnake->gameLoop();
                 _softExit = _gameSnake->getEvent();
                 _snakeInfo = _gameSnake->getSnake();
                 _gameSnake->stop();
