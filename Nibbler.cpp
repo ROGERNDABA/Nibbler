@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:48 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 10:59:04 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 11:05:36 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void Nibbler::play(int softExit) {
         if (!_dl)
             throw NibblerExceptionE("dl_error : " + std::string(dlerror()));
         _snake = reinterpret_cast<SNAKE>(dlsym(_dl, "createSnake"));
+
         if (!_snake)
             throw NibblerExceptionE("Some snake Error");
         else {
@@ -109,6 +110,7 @@ void Nibbler::play(int softExit) {
                 _softExit = _gameSnake->getEvent();
                 _snakeInfo = _gameSnake->getSnake();
                 _gameSnake->stop();
+                dlclose(_dl);
                 if (_softExit) {
                     Nibbler::play(_softExit);
                 }

@@ -5,10 +5,10 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "~/.brew/opt/allegro/include",
-                "~/.brew/opt/sdl2/include",
+                "~/.brew/opt/sdl2/include/SDL2",
                 "~/.brew/opt/sfml/include",
-                "~/.brew/opt/sdl2_mixer/include",
-                "~/.brew/opt/sdl2_ttf/include",
+                "~/.brew/opt/sdl2_mixer/include/SDL2",
+                "~/.brew/opt/sdl2_ttf/include/SDL2",
                 "~/.brew/opt/fltk/include/**"
             ],
             "cStandard": "c11",
