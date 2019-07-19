@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 10:56:02 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 12:53:23 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void SnakeSFML::init() {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
     _buzz.setVolume(30);
-    std::cout << "SFML init" << std::endl;
 }
 
 void SnakeSFML::gameLoop() {
@@ -232,7 +231,7 @@ void SnakeSFML::gameLoop() {
                     _softExit = 3;
                     break;
                 case sf::Keyboard::Escape: {
-                    _doExit = true;
+                    _doExit = true, _softExit = 0;
                     this->gameOver();
                 } break;
                 default:
@@ -256,7 +255,6 @@ void SnakeSFML::gameLoop() {
     SNAKE.bonus = _bonus;
     SNAKE.trackFood = _trackFood;
     SNAKE.valBonus = _valBonus;
-    std::cout << "----------------------------->" << std::endl;
 }
 
 bool SnakeSFML::checkFood() {

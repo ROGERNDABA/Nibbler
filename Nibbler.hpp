@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 19:24:13 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 10:34:12 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 12:20:36 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ class Nibbler {
     ~Nibbler();
 
     void setup(std::string);
-    void play(int);
+    void play();
 };
 
 #endif  //NIBBLER_HPP
