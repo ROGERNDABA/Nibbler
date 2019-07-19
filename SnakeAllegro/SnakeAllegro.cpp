@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 12:37:43 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/10 08:46:01 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 13:22:06 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,7 +338,7 @@ bool SnakeAllegro::checkFood() {
         _trackFood++;
         if (_trackFood % 5 == 0) {
             _valBonus = true;
-            _speed += 0.2;
+            _speed += 0.3;
         } else {
             _valBonus = false;
         }
@@ -348,7 +348,7 @@ bool SnakeAllegro::checkFood() {
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
         _body->push_back(tmp);
-        _speed += 0.2;
+        _speed += 0.5;
         _score += 20;
         _trackFood = 0;
         _valBonus = false;

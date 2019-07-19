@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 12:40:31 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 13:22:12 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 SnakeFLTK::SnakeFLTK(int w, int h)
     : WINW(w), WINH(h), _prevKey(3), _doExit(false), _speed(8), _score(0), _trackFood(0), _valBonus(false), _softExit(false), _start(0) {
     _start = clock();
-    _display = NULL;  //, _eQueue = NULL, _timer = NULL, _sample = NULL, _sample2 = NULL;
+    _display = NULL;
     TVertex tv;
 
     tv.x1 = (WINW / 2);
@@ -289,7 +289,7 @@ bool SnakeFLTK::checkFood() {
         _trackFood++;
         if (_trackFood % 5 == 0) {
             _valBonus = true;
-            _speed += 0.2;
+            _speed += 0.3;
         } else {
             _valBonus = false;
         }
@@ -299,7 +299,9 @@ bool SnakeFLTK::checkFood() {
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
         _body->push_back(tmp);
-        _speed += 0.2;
+        _body->push_back(tmp);
+        _body->push_back(tmp);
+        _speed += 0.5;
         _score += 20;
         _trackFood = 0;
         _valBonus = false;

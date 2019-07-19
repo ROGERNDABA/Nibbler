@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 12:53:23 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 13:22:24 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ bool SnakeSFML::checkFood() {
         _trackFood++;
         if (_trackFood % 5 == 0) {
             _valBonus = true;
-            _speed += 0.2;
+            _speed += 0.3;
         } else {
             _valBonus = false;
         }
@@ -277,9 +277,10 @@ bool SnakeSFML::checkFood() {
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
         _beep.play();
-
         _body->push_back(tmp);
-        _speed += 0.2;
+        _body->push_back(tmp);
+        _body->push_back(tmp);
+        _speed += 0.5;
         _score += 20;
         _trackFood = 0;
         _valBonus = false;
