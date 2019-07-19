@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 10:54:44 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/19 10:58:27 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -525,6 +525,10 @@ void SnakeSDL::stop() {
         Mix_FreeChunk(_beep);
     if (_buzz)
         Mix_FreeChunk(_buzz);
+    _renderer = NULL;
+    _display = NULL;
+    _buzz = NULL;
+    _beep = NULL;
     Mix_CloseAudio();
     TTF_Quit();
     SDL_Quit();
