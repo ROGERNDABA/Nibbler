@@ -34,17 +34,16 @@ echo "\033[33mChecking lib folders...\e[0m"
 if [ -d "$HOME/.brew/opt/allegro" ] && [ -d "$HOME/.brew/opt/sfml" ] \
     && [ -d "$HOME/.brew/opt/sdl2" ] && [ -d "$HOME/.brew/opt/sdl2_mixer" ] \
     && [ -d "$HOME/.brew/opt/sdl2_ttf" ] && [ -d "$HOME/.brew/opt/fltk" ]; then
-    export DYLD_LIBRARY_PATH=$HOME/.brew/opt/allegro/lib:$HOME/.brew/opt/sdl2/lib:$HOME/.brew/opt/sdl2_mixer/lib:$HOME/.brew/opt/sdl2_ttf/lib:$HOME/.brew/opt/sfml/lib:$HOME/.brew/opt/fltk/lib
+    export DYLD_LIBRARY_PATH=$HOME/.brew/opt/sdl2/lib:$HOME/.brew/opt/sdl2_mixer/lib:$HOME/.brew/opt/sdl2_ttf/lib:$HOME/.brew/opt/sfml/lib:$HOME/.brew/opt/fltk/lib
 else
     echo "\033[31mLib folders not found...\e[0m"
     echo "\033[33mInstalling libs. This may take a while...\e[0m"
-    brew install allegro
     brew install sdl2
     brew install sdl2_mixer
     brew install sdl2_ttf
     brew install sfml
     brew install fltk
-    export DYLD_LIBRARY_PATH=$HOME/.brew/opt/allegro/lib:$HOME/.brew/opt/sdl2/lib:$HOME/.brew/opt/sdl2_mixer/lib:$HOME/.brew/opt/sdl2_ttf/lib:$HOME/.brew/opt/sfml/lib:$HOME/.brew/opt/fltk/lib
+    export DYLD_LIBRARY_PATH=$HOME/.brew/opt/sdl2/lib:$HOME/.brew/opt/sdl2_mixer/lib:$HOME/.brew/opt/sdl2_ttf/lib:$HOME/.brew/opt/sfml/lib:$HOME/.brew/opt/fltk/lib
 fi
 
 echo "\033[33m---Creating project lib folder---\e[0m"
