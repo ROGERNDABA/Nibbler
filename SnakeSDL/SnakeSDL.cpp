@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/29 13:24:19 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 13:22:19 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/22 10:14:59 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void SnakeSDL::init() {
         throw SnakeSDLException("SDL could not initialize audio!");
     }
 
-    _display = SDL_CreateWindow("NIBBLER SDL", 0, 0, WINW, WINH + 60, SDL_WINDOW_SHOWN);
+    _display = SDL_CreateWindow("NIBBLER SDL", 0, 0, WINW, WINH + 60, SDL_WINDOW_BORDERLESS);
     if (_display == NULL) {
         throw SnakeSDLException("Window could not be created!");
     }

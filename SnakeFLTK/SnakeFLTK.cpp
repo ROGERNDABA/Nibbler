@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 13:17:30 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/22 09:41:08 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/22 10:25:14 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void SnakeFLTK::init() {
 	}
 	_display->color(FL_BLACK);
 	_display->position(0, 0);
+	_display->border(false);
 }
 
 void SnakeFLTK::gameLoop() {
@@ -457,8 +458,6 @@ int SnakeFLTK::getEvent() const {
 void SnakeFLTK::stop() {
 	if (_display) {
 		_display->end();
-		Fl::delete_widget(_display);
-		Fl::do_widget_deletion();
 		Fl::clear_widget_pointer(_display);
 		delete _display;
 	}

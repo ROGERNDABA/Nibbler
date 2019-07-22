@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/22 09:59:08 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/22 10:07:53 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,16 @@ SnakeSFML& SnakeSFML::operator=(SnakeSFML const& rhs) {
 }
 
 void SnakeSFML::init() {
-    _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
+    _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML", sf::Style::None);
     _display.setPosition(sf::Vector2<int>(0, 0));
 
     if (!_beep.loadFromFile("audio/beep.wav")) {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
-    // _beep.setVolume(2);
 
     if (!_buzz.loadFromFile("audio/error.wav")) {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
-    // _buzz.setVolume(30);
 }
 
 void SnakeSFML::gameLoop() {
