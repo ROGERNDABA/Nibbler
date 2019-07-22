@@ -4,6 +4,8 @@ The C++ classic snake game made with dynamic class loading
 
 ## Usage
 ### Installation
+	$ git clone https://github.com/ROGERNDABA/Nibbler.git
+	$ cd Nibbler
 	$ . ./install
 ### Usage
 	$ ./nibbler <width> <height> <libname>
