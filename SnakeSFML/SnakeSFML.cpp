@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:16:26 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/19 13:22:24 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/22 09:59:08 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,15 @@ void SnakeSFML::init() {
     _display.create(sf::VideoMode(WINW, WINH + 60), "Snake SFML");
     _display.setPosition(sf::Vector2<int>(0, 0));
 
-    if (!_beep.openFromFile("audio/beep.wav")) {
+    if (!_beep.loadFromFile("audio/beep.wav")) {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
-    _beep.setVolume(2);
+    // _beep.setVolume(2);
 
-    if (!_buzz.openFromFile("audio/error.wav")) {
+    if (!_buzz.loadFromFile("audio/error.wav")) {
         throw SnakeSFMLException("SFML Could not load beep audio!");
     }
-    _buzz.setVolume(30);
+    // _buzz.setVolume(30);
 }
 
 void SnakeSFML::gameLoop() {
@@ -103,6 +103,10 @@ void SnakeSFML::gameLoop() {
     if (!font.loadFromFile("fonts/big_noodle_titling.ttf")) {
         throw SnakeSFMLException("SFML No font");
     }
+
+    sf::Sound sound;
+    sound.setVolume(2);
+
     int prevEvent = 0;
     while (!_doExit && !_softExit) {
         sf::Event ev;
@@ -114,7 +118,9 @@ void SnakeSFML::gameLoop() {
 
             if (checkFood()) {
                 randFood();
-                _beep.play();
+                sound.stop();
+                sound.setBuffer(_beep);
+                sound.play();
                 _score += _speed;
             }
 
@@ -258,6 +264,8 @@ void SnakeSFML::gameLoop() {
 }
 
 bool SnakeSFML::checkFood() {
+    sf::Sound sound;
+    sound.setVolume(50);
     TVertex tmp = (*_body)[0];
     if (tmp.y1 == _food.y1 &&
         tmp.x1 == _food.x1 &&
@@ -276,7 +284,9 @@ bool SnakeSFML::checkFood() {
                tmp.x1 == _bonus.x1 &&
                tmp.x2 == _bonus.x2 &&
                tmp.y2 == _bonus.y2) {
-        _beep.play();
+        sound.stop();
+        sound.setBuffer(_beep);
+        sound.play();
         _body->push_back(tmp);
         _body->push_back(tmp);
         _body->push_back(tmp);
@@ -324,7 +334,11 @@ bool SnakeSFML::moveHead(int key) {
         } break;
     }
     if (checkCollusion(tail)) {
-        _buzz.play();
+        sf::Sound sound;
+        sound.setVolume(50);
+        sound.stop();
+        sound.setBuffer(_buzz);
+        sound.play();
         this->gameOver();
         return true;
     } else {

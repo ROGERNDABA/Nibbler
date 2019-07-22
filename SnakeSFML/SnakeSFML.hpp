@@ -6,7 +6,7 @@
 /*   By: Roger Ndaba <rogerndaba@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/30 18:13:31 by Roger Ndaba       #+#    #+#             */
-/*   Updated: 2019/07/18 10:25:34 by Roger Ndaba      ###   ########.fr       */
+/*   Updated: 2019/07/22 09:45:15 by Roger Ndaba      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ class SnakeSFML : public Snake {
     std::vector<TVertex> *_obstacles;
     sf::RenderWindow _display;
     sf::Clock _clock;
-    sf::Music _beep;
-    sf::Music _buzz;
+    sf::SoundBuffer _beep;
+    sf::SoundBuffer _buzz;
     float _start;
     float _now;
     TVertex _food;
